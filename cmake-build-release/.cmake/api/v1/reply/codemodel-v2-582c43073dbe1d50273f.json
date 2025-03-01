@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/Marcel/Documents/CLionProjects/Lang/cmake-build-release",
-		"source" : "C:/Users/Marcel/Documents/CLionProjects/Lang"
+		"build" : "C:/Users/Marcel/Documents/CLionProjects/LANG/cmake-build-release",
+		"source" : "C:/Users/Marcel/Documents/CLionProjects/LANG"
 	},
 	"version" : 
 	{

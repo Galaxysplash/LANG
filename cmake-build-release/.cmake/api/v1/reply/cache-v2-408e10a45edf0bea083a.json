@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "c:/Users/Marcel/Documents/CLionProjects/Lang/cmake-build-release"
+			"value" : "c:/Users/Marcel/Documents/CLionProjects/LANG/cmake-build-release"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -575,7 +575,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/Marcel/Documents/CLionProjects/Lang/cmake-build-release/CMakeFiles/pkgRedirects"
+			"value" : "C:/Users/Marcel/Documents/CLionProjects/LANG/cmake-build-release/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -1279,7 +1279,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/Marcel/Documents/CLionProjects/Lang/cmake-build-release"
+			"value" : "C:/Users/Marcel/Documents/CLionProjects/LANG/cmake-build-release"
 		},
 		{
 			"name" : "Lang_IS_TOP_LEVEL",
@@ -1303,7 +1303,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/Marcel/Documents/CLionProjects/Lang"
+			"value" : "C:/Users/Marcel/Documents/CLionProjects/LANG"
 		},
 		{
 			"name" : "_CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED",
