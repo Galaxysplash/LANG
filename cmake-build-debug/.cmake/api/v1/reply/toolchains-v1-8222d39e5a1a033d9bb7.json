@@ -8,10 +8,40 @@
 				"id" : "GNU",
 				"implicit" : 
 				{
-					"includeDirectories" : [],
-					"linkDirectories" : [],
+					"includeDirectories" : 
+					[
+						"C:/Users/Marcel/AppData/Local/Programs/CLion/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include",
+						"C:/Users/Marcel/AppData/Local/Programs/CLion/bin/mingw/include",
+						"C:/Users/Marcel/AppData/Local/Programs/CLion/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed",
+						"C:/Users/Marcel/AppData/Local/Programs/CLion/bin/mingw/x86_64-w64-mingw32/include"
+					],
+					"linkDirectories" : 
+					[
+						"C:/Users/Marcel/AppData/Local/Programs/CLion/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0",
+						"C:/Users/Marcel/AppData/Local/Programs/CLion/bin/mingw/lib/gcc",
+						"C:/Users/Marcel/AppData/Local/Programs/CLion/bin/mingw/x86_64-w64-mingw32/lib",
+						"C:/Users/Marcel/AppData/Local/Programs/CLion/bin/mingw/lib"
+					],
 					"linkFrameworkDirectories" : [],
-					"linkLibraries" : []
+					"linkLibraries" : 
+					[
+						"mingw32",
+						"gcc",
+						"moldname",
+						"mingwex",
+						"kernel32",
+						"pthread",
+						"advapi32",
+						"shell32",
+						"user32",
+						"kernel32",
+						"iconv",
+						"mingw32",
+						"gcc",
+						"moldname",
+						"mingwex",
+						"kernel32"
+					]
 				},
 				"path" : "C:/Users/Marcel/AppData/Local/Programs/CLion/bin/mingw/bin/gcc.exe",
 				"version" : "13.1.0"

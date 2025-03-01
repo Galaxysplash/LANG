@@ -1,6 +1,6 @@
 # ninja log v6
-2	211	7625494175255741	build.ninja	906a1df0e694e101
-3	248	7624592384074750	CMakeFiles/Lang.dir/src/main.cpp.obj	d0c4299296293503
-248	327	7624592386533010	Lang.exe	5eae306de4e60c1
+2	211	7625531658554370	build.ninja	906a1df0e694e101
+4	380	7625525812838525	CMakeFiles/Lang.dir/src/main.cpp.obj	ea6f51ac90a9bec7
+378	445	7625527032784540	Lang.exe	5eae306de4e60c1
 8	380	7624524968540126	CMakeFiles/Lang.dir/src/lang.cpp.obj	5ab9b6d5c9c0a615
-3	367	7624581846424477	CMakeFiles/Lang.dir/src/kit.cpp.obj	fe64e018121dd093
+4	377	7625527029047146	CMakeFiles/Lang.dir/src/kit.cpp.obj	9754394444383dc2

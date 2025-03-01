@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "c:/Users/Marcel/Documents/CLionProjects/Lang/cmake-build-debug"
+			"value" : "c:/Users/Marcel/Documents/CLionProjects/LANG/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -298,7 +298,7 @@
 					"value" : "C compiler"
 				}
 			],
-			"type" : "FILEPATH",
+			"type" : "STRING",
 			"value" : "C:/Users/Marcel/AppData/Local/Programs/CLion/bin/mingw/bin/gcc.exe"
 		},
 		{
@@ -575,7 +575,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/Marcel/Documents/CLionProjects/Lang/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "C:/Users/Marcel/Documents/CLionProjects/LANG/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -1279,7 +1279,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/Marcel/Documents/CLionProjects/Lang/cmake-build-debug"
+			"value" : "C:/Users/Marcel/Documents/CLionProjects/LANG/cmake-build-debug"
 		},
 		{
 			"name" : "Lang_IS_TOP_LEVEL",
@@ -1303,7 +1303,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/Marcel/Documents/CLionProjects/Lang"
+			"value" : "C:/Users/Marcel/Documents/CLionProjects/LANG"
 		},
 		{
 			"name" : "_CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED",

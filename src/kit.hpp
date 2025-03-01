@@ -5,13 +5,14 @@
 #include <functional>
 
 namespace kit {
+    void read(
+        int argc,
+        const char** argv,
+        std::string& ret
+    );
+
     void split(
         std::vector<std::string>& ret,
         const std::string_view& txt
-    );
-
-    void scan(
-        const std::vector<std::string>& instructions,
-        const std::function<void()>&&
     );
 }

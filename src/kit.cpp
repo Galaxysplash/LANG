@@ -1,41 +1,57 @@
 #include "kit.hpp"
 
 #include <string>
+#include <fstream>
 #include <functional>
 
 namespace kit {
-    static constexpr char sign_list[] = {'\n', ',', ' '};
-    static constexpr unsigned char str_start_size = 5;
+    static constexpr unsigned char STR_START_SIZE = 5;
+    static constexpr char RETURN = '\n';
+    static constexpr char SIGN_LIST[] = {',', ' '};
+
+
+    void read(
+        const int argc, const char** argv, std::string& ret
+    ) {
+        if (argc < 2) return;
+
+        std::ifstream file;
+
+        file.open(argv[1]);
+        file >> ret;
+        file.close();
+    }
 
     void split(
-        std::vector<std::string>& ret,
-        const std::string_view& txt
+        std::vector<std::string>& ret, const std::string_view& txt
     ) {
         std::string word{};
-        word.reserve(str_start_size);
+        word.reserve(STR_START_SIZE);
+
+        const std::function new_word = [&]() -> void {
+            ret.emplace_back(word);
+            word.clear();
+            word.reserve(STR_START_SIZE);
+        };
 
         for (const char c : txt) {
-            for (const char sign : sign_list) {
+            for (const char sign : SIGN_LIST) {
                 if (c == sign) {
-                    ret.push_back(word);
-                    word.clear();
-                    word.reserve(str_start_size);
+                    new_word();
+                    break;
                 }
             }
-            word.push_back(c);
+
+            if (c != RETURN) {
+                word.push_back(c);
+            }
+            else {
+                new_word();
+                word.push_back(c);
+                new_word();
+            }
         }
 
         ret.push_back(word);
     }
-
-    void scan(
-        const std::vector<std::string>& instructions,
-        const std::function<void(std::array<const std::string&, 5> arr)>&&
-    ) {
-        std::string_view words{};
-
-        for (const std::string& instruction : instructions) {
-            
-        }
-    }
-}
+} //namespace kit
