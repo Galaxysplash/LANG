@@ -1,5 +1,5 @@
 ## Lang
 
-My own programming language
+My own programming language.
 
-the higher the num of the priority in the operators, the more important the operator
+The higher the num of the priority in the operators, the more important the operator.
