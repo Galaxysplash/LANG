@@ -6,9 +6,8 @@
 
 #include <bits/locale_facets_nonio.h>
 
-
+//private
 static constexpr unsigned char STR_START_SIZE = 5;
-static constexpr unsigned char TXT_INDICATOR = '"';
 static constexpr char SPECIAL_SIGNS[] = {',', ';', '\n', ':', '.', '\t', '\r', '='};
 static constexpr char CUT_OUT_SIGNS[] = {' '};
 
@@ -26,7 +25,7 @@ void read(
 }
 
 void split(
-    std::vector<std::string_view>& ret, const std::string_view& txt
+    std::vector<std::string>& ret, const std::string& txt
 ) {
     std::string word{};
     word.reserve(STR_START_SIZE);
@@ -43,6 +42,7 @@ void split(
         if (c != TXT_INDICATOR) {
             for (const char SIGN : CUT_OUT_SIGNS) {
                 if (c == SIGN) {
+                    special_char = true;
                     new_word();
                     break;
                 }
@@ -58,7 +58,7 @@ void split(
                 }
             }
         }
-        
+
         if (!special_char) {
             word.push_back(c);
         }
