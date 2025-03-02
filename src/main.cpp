@@ -1,22 +1,12 @@
-#include <algorithm>
-
-#include "kit.hpp"
-
-#include <cstdio>
-#include <iostream>
-#include <ostream>
 #include <string>
 #include <vector>
 
+#include <summary/program.h>
+
 int main(const int argc, const char** argv) {
-    std::string txt;
-    std::vector<std::string> instructions;
+    std::vector<std::string_view> instructions;
 
-    kit::read(argc, argv, txt);
-    
-    kit::split(instructions, txt);
+    get_code(argc, argv, instructions);
 
-    for (const std::string& instruction: instructions) {
-        printf("%s", instruction.c_str());
-    }
+
 }

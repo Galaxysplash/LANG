@@ -52,14 +52,30 @@ build cmake_object_order_depends_target_Lang: phony || .
 build CMakeFiles/Lang.dir/src/main.cpp.obj: CXX_COMPILER__Lang_unscanned_Release C$:/Users/Marcel/Documents/CLionProjects/LANG/src/main.cpp || cmake_object_order_depends_target_Lang
   DEP_FILE = CMakeFiles\Lang.dir\src\main.cpp.obj.d
   FLAGS = -O3 -DNDEBUG -std=gnu++20 -fdiagnostics-color=always
+  INCLUDES = -IC:/Users/Marcel/Documents/CLionProjects/LANG/src
   OBJECT_DIR = CMakeFiles\Lang.dir
   OBJECT_FILE_DIR = CMakeFiles\Lang.dir\src
 
-build CMakeFiles/Lang.dir/src/kit.cpp.obj: CXX_COMPILER__Lang_unscanned_Release C$:/Users/Marcel/Documents/CLionProjects/LANG/src/kit.cpp || cmake_object_order_depends_target_Lang
-  DEP_FILE = CMakeFiles\Lang.dir\src\kit.cpp.obj.d
+build CMakeFiles/Lang.dir/src/framework/init.cpp.obj: CXX_COMPILER__Lang_unscanned_Release C$:/Users/Marcel/Documents/CLionProjects/LANG/src/framework/init.cpp || cmake_object_order_depends_target_Lang
+  DEP_FILE = CMakeFiles\Lang.dir\src\framework\init.cpp.obj.d
   FLAGS = -O3 -DNDEBUG -std=gnu++20 -fdiagnostics-color=always
+  INCLUDES = -IC:/Users/Marcel/Documents/CLionProjects/LANG/src
   OBJECT_DIR = CMakeFiles\Lang.dir
-  OBJECT_FILE_DIR = CMakeFiles\Lang.dir\src
+  OBJECT_FILE_DIR = CMakeFiles\Lang.dir\src\framework
+
+build CMakeFiles/Lang.dir/src/framework/syntax.cpp.obj: CXX_COMPILER__Lang_unscanned_Release C$:/Users/Marcel/Documents/CLionProjects/LANG/src/framework/syntax.cpp || cmake_object_order_depends_target_Lang
+  DEP_FILE = CMakeFiles\Lang.dir\src\framework\syntax.cpp.obj.d
+  FLAGS = -O3 -DNDEBUG -std=gnu++20 -fdiagnostics-color=always
+  INCLUDES = -IC:/Users/Marcel/Documents/CLionProjects/LANG/src
+  OBJECT_DIR = CMakeFiles\Lang.dir
+  OBJECT_FILE_DIR = CMakeFiles\Lang.dir\src\framework
+
+build CMakeFiles/Lang.dir/src/summary/program.cpp.obj: CXX_COMPILER__Lang_unscanned_Release C$:/Users/Marcel/Documents/CLionProjects/LANG/src/summary/program.cpp || cmake_object_order_depends_target_Lang
+  DEP_FILE = CMakeFiles\Lang.dir\src\summary\program.cpp.obj.d
+  FLAGS = -O3 -DNDEBUG -std=gnu++20 -fdiagnostics-color=always
+  INCLUDES = -IC:/Users/Marcel/Documents/CLionProjects/LANG/src
+  OBJECT_DIR = CMakeFiles\Lang.dir
+  OBJECT_FILE_DIR = CMakeFiles\Lang.dir\src\summary
 
 
 # =============================================================================
@@ -69,7 +85,7 @@ build CMakeFiles/Lang.dir/src/kit.cpp.obj: CXX_COMPILER__Lang_unscanned_Release 
 #############################################
 # Link the executable Lang.exe
 
-build Lang.exe: CXX_EXECUTABLE_LINKER__Lang_Release CMakeFiles/Lang.dir/src/main.cpp.obj CMakeFiles/Lang.dir/src/kit.cpp.obj
+build Lang.exe: CXX_EXECUTABLE_LINKER__Lang_Release CMakeFiles/Lang.dir/src/main.cpp.obj CMakeFiles/Lang.dir/src/framework/init.cpp.obj CMakeFiles/Lang.dir/src/framework/syntax.cpp.obj CMakeFiles/Lang.dir/src/summary/program.cpp.obj
   FLAGS = -O3 -DNDEBUG
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Lang.dir

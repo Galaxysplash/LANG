@@ -3,7 +3,17 @@ project(Lang)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Lang
+include_directories(
+    src
+)
+
+add_executable(
+    Lang
     src/main.cpp
-    src/kit.cpp
+        src/framework/init.cpp
+        src/framework/init.h
+        src/framework/syntax.cpp
+        src/framework/syntax.h
+        src/summary/program.cpp
+        src/summary/program.h
 )
