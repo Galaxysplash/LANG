@@ -9,8 +9,6 @@ static constexpr inline unsigned char CODE_VIEW_SIZE = 5;
 
 static_assert(CODE_VIEW_SIZE % 2 != 0 && CODE_VIEW_SIZE > 4, "'code_view_size' has to be odd!");
 
-void filter();
-
 
 void bind_instruction(
     const std::string& instruction,

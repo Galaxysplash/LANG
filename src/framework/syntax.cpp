@@ -2,9 +2,6 @@
 
 #include <iostream>
 
-void filter() {
-
-}
 
 void bind_instruction(
     const std::string& instruction,
