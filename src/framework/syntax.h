@@ -10,7 +10,8 @@ static_assert(CODE_VIEW_SIZE % 2 != 0 && CODE_VIEW_SIZE > 4, "'code_view_size' h
 
 
 void varibales(
-    const std::string& code
+    const std::string& instructions,
+    const std::function<void()>&& func
 );
 
 
