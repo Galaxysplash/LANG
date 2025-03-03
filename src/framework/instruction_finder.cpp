@@ -1,8 +1,9 @@
 #include "instruction_finder.h"
 
-#include <ranges>
+
 #include <string_view>
-#include <bits/ranges_algo.h>
+
+#include "foundation/get_index.h"
 
 bool instruction_finder(
     const std::vector<std::string> &txt_list,
@@ -13,7 +14,10 @@ bool instruction_finder(
     counter = 0;
 
     for (const std::string& str: txt_list) {
-        if (str == ) {
+        std::string_view str_view_buffer{};
+        get_index_for_string_view_iterator(filter, str_view_buffer, counter);
+
+        if (str.c_str() == str_view_buffer.data()) {
             ++counter;
         }
         else {

@@ -1,6 +1,6 @@
 #pragma once
 
 #include <initializer_list>
+#include <string_view>
 
-template <typename T>
-void get_index(const std::initializer_list<T>& ini_list);
+void get_index_for_string_view_iterator(const std::initializer_list<std::string_view> &ini_list, std::string_view& buffer, unsigned char index);
