@@ -1,10 +1,8 @@
-#include <string_view>
+#include "init.h"
+
 #include <fstream>
 #include <functional>
 
-#include "init.h"
-
-#include <bits/locale_facets_nonio.h>
 
 //private
 static constexpr unsigned char STR_START_SIZE = 5;
@@ -13,7 +11,7 @@ static constexpr char CUT_OUT_SIGNS[] = {' '};
 
 
 void read(
-    const int argc, const char** argv, std::string& ret
+    const int argc, const char **argv, std::string &ret
 ) {
     if (argc < 2) return;
 
@@ -25,7 +23,7 @@ void read(
 }
 
 void split(
-    std::vector<std::string>& ret, const std::string& txt
+    std::vector<std::string> &ret, const std::string &txt
 ) {
     std::string word{};
     word.reserve(STR_START_SIZE);
@@ -36,11 +34,11 @@ void split(
         word.reserve(STR_START_SIZE);
     };
 
-    for (const char c : txt) {
+    for (const char c: txt) {
         bool special_char = false;
 
         if (c != TXT_INDICATOR) {
-            for (const char SIGN : CUT_OUT_SIGNS) {
+            for (const char SIGN: CUT_OUT_SIGNS) {
                 if (c == SIGN) {
                     special_char = true;
                     new_word();
@@ -48,7 +46,7 @@ void split(
                 }
             }
 
-            for (const char SIGN : SPECIAL_SIGNS) {
+            for (const char SIGN: SPECIAL_SIGNS) {
                 if (c == SIGN) {
                     special_char = true;
                     new_word();
