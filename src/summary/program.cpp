@@ -25,7 +25,7 @@ void process_code(
 )
 {
     instruction_finder(instructions, {"num", "="}, [&]() {
-
+        printf("test\n");
     });
 }
 

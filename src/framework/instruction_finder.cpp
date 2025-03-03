@@ -20,6 +20,7 @@ bool instruction_finder(
         counter = str.c_str() == str_view_buffer.data() ? counter + 1 : 0;
     }
 
+    printf("counter = %d\n", counter);
     return counter == filter.size();
 }
 
