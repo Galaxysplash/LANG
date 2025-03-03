@@ -1,44 +1,33 @@
 #include "instruction_finder.h"
 
 #include <ranges>
+#include <string_view>
+#include <bits/ranges_algo.h>
 
 bool instruction_finder(
     const std::vector<std::string> &txt_list,
     const std::initializer_list<std::string_view> &filter
 )
 {
-    unsigned char unconfirmed = filter.size();
+    unsigned char
+    confirmed = 0,
+    counter = 0;
 
-    for (const auto& item: filter) {
+    bool previous_success = true;
 
-        printf("for loop in 'instruction_finder.cpp' executed!\n");
-
-        auto a = txt_list | std::views::filter([&](const std::string_view& str) -> bool
-            {
-                const bool ret = str == item;
-
-                printf("filter executed in 'instruction_finder.cpp'!\n");
-
-                if (ret) {
-                   --unconfirmed;
-                    printf("conformation succeeded in 'instruction_finder.cpp'!\n");
-                }
-                else {
-                    printf("conformation failed in 'instruction_finder.cpp'!\n");
-                }
-
-                return ret;
+    for (const std::string& str: txt_list) {
+        for (const auto& item: filter) {
+            if (str == item) {
+                printf("succeed!\n");
+                ++confirmed;
             }
-        );
-
-        for (const auto& _item: a) {
-            printf("\n%s\n", _item.c_str());
+            else {
+                printf(" f! ");
+            }
         }
     }
 
-    printf("unconfirmed in %d 'instruction_finder.cpp'\n", unconfirmed);
-
-    return unconfirmed <= 0;
+    return confirmed == filter.size();
 }
 
 bool instruction_finder(
