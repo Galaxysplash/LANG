@@ -31,7 +31,8 @@ git" and "How to install cmake on [YOUR OPERATING SYSTEM]")
 
 1. Create a file with the name of your choice but make sure, that it has the '.lang' extension
 
-2. Than right click it and tell you OS to open the file with the 'Lang.exe'
+2. Then right click it and tell you OS to open the file with the 'Lang.exe'<br> (at this Point you should know where
+   this file is located)
 
 ## QUICK NOTES
 
