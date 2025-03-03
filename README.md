@@ -1,6 +1,6 @@
 # LANGUAGE
 
-## A programming language written in C++.
+### A programming language written in C++.
 
 ## PREREQUISITES!
 
