@@ -1,3 +1,0 @@
-/Users/marcel/CLionProjects/LANG/cmake-build-release/CMakeFiles/Lang.dir
-/Users/marcel/CLionProjects/LANG/cmake-build-release/CMakeFiles/edit_cache.dir
-/Users/marcel/CLionProjects/LANG/cmake-build-release/CMakeFiles/rebuild_cache.dir

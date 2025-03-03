@@ -4,7 +4,7 @@
 #include <iostream>
 
 
-void varibales(
+void variables(
     const std::vector<std::string>& instructions,
     std::vector<std::string_view>&& filter,
     const std::function<void(std::string)>&& func
