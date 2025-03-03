@@ -23,7 +23,6 @@ void process_code(
     const std::initializer_list<std::string>&& ops_priority
 )
 {
-
 }
 
 void execute_code()
