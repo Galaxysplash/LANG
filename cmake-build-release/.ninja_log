@@ -1,0 +1,6 @@
+# ninja log v6
+3	312	7627134328417290	CMakeFiles/Lang.dir/src/main.cpp.obj	5e3f0f7bb48a8a0e
+11	409	7627134328497908	CMakeFiles/Lang.dir/src/summary/program.cpp.obj	468f5f757c1f8ed7
+6	469	7627134328447419	CMakeFiles/Lang.dir/src/framework/init.cpp.obj	d9da557c764fd265
+6	391	7627143478039616	CMakeFiles/Lang.dir/src/framework/syntax.cpp.obj	73ec91474918c440
+392	469	7627143481898598	Lang.exe	404e493971dc4b17

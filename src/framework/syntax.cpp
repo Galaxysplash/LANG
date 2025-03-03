@@ -4,22 +4,23 @@
 #include <iostream>
 
 
-void variables(
+template <typename T>
+void multi_filter(
     const std::vector<std::string>& instructions,
-    std::vector<std::string_view>&& filter,
-    const std::function<void(std::string)>&& func
+    std::vector<T>&& filter,
+    const std::function<void(const std::vector<T>&&)>&& func
 )
 {
     unsigned char unconfirmed = filter.size();
 
     std::views::reverse(filter);
 
-    instructions | std::views::filter([&](const std::string& str) -> bool
+    instructions | std::views::filter([&](const T& str) -> bool
         {
             if (filter.front() == str)
             {
                 filter.pop_back();
-                unconfirmed--;
+                --unconfirmed;
                 return true;
             }
 
@@ -29,7 +30,7 @@ void variables(
 
     if (unconfirmed == 0)
     {
-        func();
+        func(filter);
     }
 }
 
