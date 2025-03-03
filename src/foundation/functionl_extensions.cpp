@@ -10,7 +10,6 @@ void multi_filter(
     const std::function<void(const std::vector<T>&&)>&& func
 )
 {
-
     unsigned char unconfirmed = filter.size();
 
     std::views::reverse(filter);
