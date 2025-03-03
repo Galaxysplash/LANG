@@ -13,7 +13,6 @@ void bind_instruction(
     {
         if (instruction == comparison)
         {
-
             func();
             return;
         }
