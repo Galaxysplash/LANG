@@ -2,10 +2,9 @@
 
 #include <ranges>
 
-void instruction_finder(
-    const std::vector<std::string>& txt_list,
-    const std::initializer_list<std::string_view> && filter,
-    const std::function<void(const std::initializer_list<std::string_view> & list)>&& func
+bool instruction_finder(
+    const std::vector<std::string> &txt_list,
+    const std::initializer_list<std::string_view> &filter
 )
 {
     unsigned char unconfirmed = filter.size();
@@ -24,8 +23,25 @@ void instruction_finder(
         );
     }
 
-    if (unconfirmed == 0)
+    return unconfirmed <= 0;
+}
+
+bool instruction_finder(
+    const std::vector<std::string> &txt_list,
+    const std::initializer_list<std::string_view> &&filter
+)
+{
+    return instruction_finder(txt_list, filter);
+}
+
+void instruction_finder(
+    const std::vector<std::string>& txt_list,
+    const std::initializer_list<std::string_view> && filter,
+    const std::function<void()>&& func
+)
+{
+    if (instruction_finder(txt_list, filter))
     {
-        func(filter);
+        func();
     }
 }

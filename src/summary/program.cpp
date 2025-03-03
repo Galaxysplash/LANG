@@ -24,10 +24,8 @@ void process_code(
     const std::initializer_list<std::string>&& ops_priority
 )
 {
-    instruction_finder(instructions, {"num", "="}, [&](const auto & list) {
-        for (const auto & op : list) {
-            std::cout << op << " ";
-        }
+    instruction_finder(instructions, {"num", "="}, [&]() {
+        printf("test");
     });
 }
 
