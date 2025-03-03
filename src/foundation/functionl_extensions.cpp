@@ -2,30 +2,30 @@
 
 #include <ranges>
 
-
-template <typename T>
+template <unsigned char N>
 void multi_filter(
     const std::vector<std::string>& instructions,
-    std::vector<T>&& filter,
-    const std::function<void(const std::vector<T>&& list)>&& func
+    std::array<std::string_view, N>&& filter,
+    const std::function<void(const std::array<std::string_view, N>&& list)>&& func
 )
 {
     unsigned char unconfirmed = filter.size();
 
     std::views::reverse(filter);
 
-    instructions | std::views::filter([&](const T& str) -> bool
-        {
-            if (filter.front() == str)
+    for (const auto& item: filter) {
+        instructions | std::views::filter([&](const std::string_view& str) -> bool
             {
-                filter.pop_back();
-                --unconfirmed;
-                return true;
-            }
+                const bool ret = str == item;
 
-            return false;
-        }
-    );
+                if (ret) {
+                   --unconfirmed;
+                }
+
+                return ret;
+            }
+        );
+    }
 
     if (unconfirmed == 0)
     {
