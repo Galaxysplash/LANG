@@ -27,7 +27,6 @@ void instruction_finder(
         );
     }
 
-
     if (unconfirmed == 0)
     {
         func(filter);
