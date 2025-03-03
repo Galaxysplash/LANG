@@ -10,18 +10,14 @@ bool instruction_finder(
     const std::initializer_list<std::string_view> &filter
 )
 {
-    unsigned char
-    counter = 0;
+    unsigned char counter = 0;
 
     for (const std::string& str: txt_list) {
         std::string_view str_view_buffer{};
-        get_index_for_string_view_iterator(filter, str_view_buffer, counter);
 
-        if (str.c_str() == str_view_buffer.data()) {
-            ++counter;
-        }
-        else {
-        }
+        get_element_for_index_in_string_view_iterator(filter, str_view_buffer, counter);
+
+        counter = str.c_str() == str_view_buffer.data() ? counter + 1 : 0;
     }
 
     return counter == filter.size();
