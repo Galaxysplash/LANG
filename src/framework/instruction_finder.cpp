@@ -10,24 +10,17 @@ bool instruction_finder(
 )
 {
     unsigned char
-    confirmed = 0,
     counter = 0;
 
-    bool previous_success = true;
-
     for (const std::string& str: txt_list) {
-        for (const auto& item: filter) {
-            if (str == item) {
-                printf("succeed!\n");
-                ++confirmed;
-            }
-            else {
-                printf(" f! ");
-            }
+        if (str == ) {
+            ++counter;
+        }
+        else {
         }
     }
 
-    return confirmed == filter.size();
+    return counter == filter.size();
 }
 
 bool instruction_finder(

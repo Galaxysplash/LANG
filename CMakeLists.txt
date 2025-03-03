@@ -18,4 +18,6 @@ add_executable(
         src/summary/program.h
         src/framework/instruction_finder.cpp
         src/framework/instruction_finder.h
+        src/foundation/get_index.cpp
+        src/foundation/get_index.h
 )
