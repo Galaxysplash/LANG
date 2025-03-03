@@ -1,19 +1,35 @@
 #include "syntax.h"
 
+#include <ranges>
 #include <iostream>
 
 
 void varibales(
     const std::vector<std::string>& instructions,
-    const std::function<void()>&& func
+    std::vector<std::string_view>&& filter,
+    const std::function<void(std::string)>&& func
 )
 {
-    auto filterd = instructions | std::views::filter([&](const std::string& str) -> bool
-    {
-    });
+    unsigned char unconfirmed = filter.size();
 
-    for (const auto& i : filterd)
+    std::views::reverse(filter);
+
+    instructions | std::views::filter([&](const std::string& str) -> bool
+        {
+            if (filter.front() == str)
+            {
+                filter.pop_back();
+                unconfirmed--;
+                return true;
+            }
+
+            return false;
+        }
+    );
+
+    if (unconfirmed == 0)
     {
+        func();
     }
 }
 
