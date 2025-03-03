@@ -1,4 +1,4 @@
-## Lang
+## Language
 
 My own programming language.
 

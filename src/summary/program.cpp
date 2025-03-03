@@ -25,7 +25,6 @@ void process_code(
 {
     auto filterd = instructions | std::views::filter([&](const std::string& str) -> bool
     {
-
     });
 
     for (const auto& i : filterd)
