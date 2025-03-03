@@ -16,6 +16,6 @@ add_executable(
         src/framework/syntax.h
         src/summary/program.cpp
         src/summary/program.h
-        src/foundation/functionl_extensions.cpp
-        src/foundation/functionl_extensions.h
+        src/framework/instruction_finder.cpp
+        src/framework/instruction_finder.h
 )

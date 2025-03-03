@@ -1,5 +1,5 @@
 #include "program.h"
-#include "foundation/functionl_extensions.h"
+#include "../framework/functionl_extensions.h"
 #include "framework/init.h"
 
 #include <iostream>
@@ -24,14 +24,7 @@ void process_code(
     const std::initializer_list<std::string>&& ops_priority
 )
 {
-    multi_filter<std::string>(
-        instructions,
-        {":", "num", "="},
-        [](const std::vector<std::string>& list) {
-        for (const auto& item : list) {
-            std::cout << item << " ";
-        }
-    });
+
 }
 
 void execute_code()

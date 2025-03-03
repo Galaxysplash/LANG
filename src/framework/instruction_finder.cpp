@@ -1,10 +1,10 @@
-#include "functionl_extensions.h"
+#include "instruction_finder.h"
 
 #include <ranges>
 
 template <unsigned char N>
-void multi_filter(
-    const std::vector<std::string>& instructions,
+void instruction_finder(
+    const std::vector<std::string>& txt_list,
     std::array<std::string_view, N>&& filter,
     const std::function<void(const std::array<std::string_view, N>&& list)>&& func
 )
@@ -14,7 +14,7 @@ void multi_filter(
     std::views::reverse(filter);
 
     for (const auto& item: filter) {
-        instructions | std::views::filter([&](const std::string_view& str) -> bool
+        txt_list | std::views::filter([&](const std::string_view& str) -> bool
             {
                 const bool ret = str == item;
 
