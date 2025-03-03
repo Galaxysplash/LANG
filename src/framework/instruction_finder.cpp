@@ -10,18 +10,33 @@ bool instruction_finder(
     unsigned char unconfirmed = filter.size();
 
     for (const auto& item: filter) {
-        txt_list | std::views::filter([&](const std::string_view& str) -> bool
+
+        printf("for loop in 'instruction_finder.cpp' executed!\n");
+
+        auto a = txt_list | std::views::filter([&](const std::string_view& str) -> bool
             {
                 const bool ret = str == item;
 
+                printf("filter executed in 'instruction_finder.cpp'!\n");
+
                 if (ret) {
                    --unconfirmed;
+                    printf("conformation succeeded in 'instruction_finder.cpp'!\n");
+                }
+                else {
+                    printf("conformation failed in 'instruction_finder.cpp'!\n");
                 }
 
                 return ret;
             }
         );
+
+        for (const auto& _item: a) {
+            printf("\n%s\n", _item.c_str());
+        }
     }
+
+    printf("unconfirmed in %d 'instruction_finder.cpp'\n", unconfirmed);
 
     return unconfirmed <= 0;
 }
