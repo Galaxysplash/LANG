@@ -7,7 +7,7 @@ template <typename T>
 void multi_filter(
     const std::vector<std::string>& instructions,
     std::vector<T>&& filter,
-    const std::function<void(const std::vector<T>&&)>&& func
+    const std::function<void(const std::vector<T>&& list)>&& func
 )
 {
     unsigned char unconfirmed = filter.size();
