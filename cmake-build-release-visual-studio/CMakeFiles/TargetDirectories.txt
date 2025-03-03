@@ -1,0 +1,3 @@
+C:/Users/Marcel/Documents/CLionProjects/LANG/cmake-build-release-visual-studio/CMakeFiles/Lang.dir
+C:/Users/Marcel/Documents/CLionProjects/LANG/cmake-build-release-visual-studio/CMakeFiles/edit_cache.dir
+C:/Users/Marcel/Documents/CLionProjects/LANG/cmake-build-release-visual-studio/CMakeFiles/rebuild_cache.dir
