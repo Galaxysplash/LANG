@@ -1,5 +1,5 @@
 #include "program.h"
-#include "../framework/functionl_extensions.h"
+#include "framework/instruction_finder.h"
 #include "framework/init.h"
 
 #include <iostream>
