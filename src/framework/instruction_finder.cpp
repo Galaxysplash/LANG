@@ -17,7 +17,11 @@ bool instruction_finder(
 
         get_element_for_index_in_string_view_iterator(filter, str_view_buffer, counter);
 
+        printf("\ndata: %s\n", str_view_buffer.data());
+
         counter = str.c_str() == str_view_buffer.data() ? counter + 1 : 0;
+
+        printf("counter: %d\n", counter);
     }
 
     printf("counter = %d\n", counter);
