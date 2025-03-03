@@ -23,12 +23,12 @@ void process_code(
     const std::initializer_list<std::string>&& ops_priority
 )
 {
-    auto filtert = instructions | std::views::filter([](const std::string& i) -> bool
+    auto filterd = instructions | std::views::filter([](const std::string& i) -> bool
     {
         return true;
     });
 
-    for (const auto& i : filtert)
+    for (const auto& i : filterd)
     {
         std::cout << i;
     }
