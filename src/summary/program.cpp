@@ -41,10 +41,10 @@ void app(
                 first_time = false;
             }
 
-            while (code.empty()) {
+            do {
                 printf("=>");
                 std::cin >> str_buffer;
-            }
+            } while (str_buffer.empty());
         }
 
         run(argc, argv, in_terminal, str_buffer, EXIT_INSTRUCTION, code);
@@ -70,6 +70,7 @@ void run(
 )
 {
     if (in_terminal) {
+        printf("run!");
         split(instructions_ref, str);
     }
     else {
