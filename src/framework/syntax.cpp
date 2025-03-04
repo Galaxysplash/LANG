@@ -51,6 +51,7 @@ void filter_variable(
         {ANYTHING_STR, ":", str_view_ref, "=", ANYTHING_STR},
         // ReSharper disable once CppParameterMayBeConstPtrOrRef
         [&](std::vector<std::string>& str_list_ref) {
+            printf("filter_variable\n");
             func(str_list_ref.front(), str_list_ref.back());
         }
     );
