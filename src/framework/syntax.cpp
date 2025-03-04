@@ -1,5 +1,7 @@
 #include "syntax.h"
 
+#include "tests/unit_test.h"
+
 void filter_instruction(
     const std::vector<std::string> &instructions,
     const std::vector<std::string_view> & filter,
@@ -22,10 +24,14 @@ void filter_instruction(
         }
     }
     if (counter == filter.size()) {
-        printf("test\n");
         func(unknown_instructions);
     }
 }
+
+unit_test(test1)
+    bool passed = false;
+
+unit_test_end(passed, "filter_instruction")
 
 void filter_instruction(
     const std::vector<std::string> &instructions,
