@@ -33,3 +33,11 @@ void try_add_variable(
     std::unordered_map<std::string, T>& map_ref
 );
 
+/*
+template <typename... TS>
+void try_add_variables(
+    const std::initializer_list<std::vector<std::string>>& instructions,
+    const std::initializer_list<std::string_view>&& type_name,
+    std::tuple<std::unordered_map<std::string, TS...>>& map_ref
+);
+*/

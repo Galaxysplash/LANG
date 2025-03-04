@@ -64,3 +64,11 @@ void try_add_variable(
         }
     });
 }
+/*
+template<typename ... TS>
+void try_add_variables(const std::initializer_list<std::vector<std::string>> &instructions,
+    const std::initializer_list<std::string_view> &&type_name,
+    std::tuple<std::unordered_map<std::string, TS...>> &map_ref) {
+
+}
+*/
