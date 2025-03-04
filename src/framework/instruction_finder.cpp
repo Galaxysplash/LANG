@@ -3,7 +3,7 @@
 
 #include <string_view>
 
-#include "foundation/get_index.h"
+#include "get_index.h"
 
 bool instruction_finder(
     const std::vector<std::string> &txt_list,
@@ -19,9 +19,11 @@ bool instruction_finder(
 
         printf("\ndata: %s\n", str_view_buffer.data());
 
-        counter = str.c_str() == str_view_buffer.data() ? counter + 1 : 0;
-
-        printf("counter: %d\n", counter);
+        //counter = str.c_str() == str_view_buffer.data() ? counter + 1 : 0;
+        if (str.c_str() == str_view_buffer.data()) {
+            printf("\nstr: %s\n", str.c_str());
+            ++counter;
+        }
     }
 
     printf("counter = %d\n", counter);

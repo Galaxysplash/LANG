@@ -3,22 +3,23 @@
 #include <cstdio>
 #include <format>
 
-unit_test::unit_test(
-    const std::function<bool()> &&func,
-    const std::string_view &&str
+unit_test_struct::unit_test_struct(
+    const std::function<std::pair<bool, const std::string_view>()> && func
 )
 {
-    print_result(func(), str);
+    const auto&[success, str] = func();
+
+    print_result(success, str);
 }
 
-void unit_test::print_result(const bool passed, const std::string_view & str) {
+void unit_test_struct::print_result(const bool passed, const std::string_view & str) {
     std::string_view
     uint_test_str {"Unit test"},
     success_or_failure {};
 
     success_or_failure = passed ? "passed" : "failed";
 
-    if (str != "") {
+    if (!str.empty()) {
         printf(
             std::format("{} {} for {}!\n", uint_test_str, success_or_failure, str.data()).c_str()
         );

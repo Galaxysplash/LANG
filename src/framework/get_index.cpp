@@ -2,7 +2,7 @@
 
 #include <string_view>
 
-#include "unit_test.h"
+#include "tests/unit_test.h"
 
 void get_element_for_index_in_string_view_iterator(const std::initializer_list<std::string_view> &ini_list, std::string_view& buffer, const unsigned char index) {
     unsigned short counter = 0;
@@ -17,3 +17,11 @@ void get_element_for_index_in_string_view_iterator(const std::initializer_list<s
 }
 
 
+unit_test(
+    test1,
+    {
+        auto passed = false;
+
+        passed(passed, "get_element_for_index_in_string_view_iterator")
+    }
+)
