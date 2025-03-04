@@ -16,8 +16,6 @@ add_executable(
         src/framework/syntax.h
         src/summary/program.cpp
         src/summary/program.h
-        src/framework/instruction_finder.cpp
-        src/framework/instruction_finder.h
         src/tests/unit_test.cpp
         src/tests/unit_test.h
 )

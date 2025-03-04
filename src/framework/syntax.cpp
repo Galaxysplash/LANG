@@ -1,23 +1,22 @@
 #include "syntax.h"
 
-#include <ranges>
-#include <iostream>
-
-void bind_instruction(
-    const std::string& instruction,
-    const std::initializer_list<std::pair<const std::string, std::function<void()>>>&& compare_list,
-    const std::function<void()>&& default_case_func
+bool filter_instruction(
+    const std::vector<std::string> & instructions,
+    const std::vector<std::string_view> && filter
 )
 {
-    for (const auto& [comparison, func] : compare_list)
-    {
-        if (instruction == comparison)
-        {
-            func();
-            return;
+    unsigned char counter = 0;
+
+    for (const std::string& instruction: instructions) {
+        if (counter == filter.size()) {
+            break;
         }
+
+        counter =
+            filter[counter] == instruction ||
+            filter[counter] == ANYTHING_STR && !instruction.empty() ?
+            counter + 1 : 0;
     }
 
-    default_case_func();
+    return counter == filter.size();
 }
-

@@ -1,5 +1,5 @@
 #include "program.h"
-#include "framework/instruction_finder.h"
+#include "framework/syntax.h"
 #include "framework/init.h"
 
 #include <iostream>
@@ -24,12 +24,20 @@ void process_code(
     const std::initializer_list<std::string>&& ops_priority
 )
 {
-    if (instruction_finder(instructions, {"???", ":", "num", "=", "???"})) {
-        printf("test");
+    if (filter_instruction(instructions, {ANYTHING_STR, ":", "num", "=", ANYTHING_STR})) {
+
     }
 }
 
 void execute_code()
 {
     printf("\ne.size: %d\n", static_cast<int>(num_list.size()));
+}
+
+void run(const int argc, const char** argv, std::vector<std::string>& instructions_ref) {
+    split(instructions_ref, "a: num = 10");
+
+    process_code(instructions_ref, {"+-", "*/"});
+
+    execute_code();
 }

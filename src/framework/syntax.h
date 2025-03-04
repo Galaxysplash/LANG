@@ -1,20 +1,12 @@
 #pragma once
 
-#include <functional>
-#include <utility>
+#include <vector>
 #include <string>
+#include <string_view>
 
-static constexpr inline unsigned char CODE_VIEW_SIZE = 5;
+constexpr std::string_view ANYTHING_STR = "???";
 
-static_assert(CODE_VIEW_SIZE % 2 != 0 && CODE_VIEW_SIZE > 4, "'code_view_size' has to be odd!");
-
-
-void bind_instruction(
-    const std::string& instruction,
-    const std::initializer_list<std::pair<const std::string, std::function<void()>>>&& compare_list,
-    const std::function<void()>&& default_case_func = []()
-    {
-    }
+bool filter_instruction(
+    const std::vector<std::string> & instructions,
+    const std::vector<std::string_view> && filter
 );
-
-
