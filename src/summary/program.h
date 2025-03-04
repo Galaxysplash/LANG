@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-void app_loop(
+void app(
     int argc,
     const char** argv,
     std::vector<std::string>& code

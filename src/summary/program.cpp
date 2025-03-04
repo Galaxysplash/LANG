@@ -18,7 +18,7 @@ static std::unordered_map<std::string, bool> bit_list;
 
 
 
-void app_loop(
+void app(
     const int argc,
     const char** argv,
     std::vector<std::string>& code
