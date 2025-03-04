@@ -25,6 +25,7 @@ void filter_instruction(
             unknown_instructions.emplace_back(instruction);
         }
     }
+
     if (counter == filter.size()) {
         func(unknown_instructions);
     }
