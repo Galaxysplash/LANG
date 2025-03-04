@@ -15,6 +15,6 @@ private:
 };
 
 
-#define unit_test(name) const unit_test_struct name { []() -> std::pair<bool, const std::string_view> {
+#define unit_test(name_inst_name) const unit_test_struct name_inst_name { []() -> std::pair<bool, const std::string_view> {
 
-#define unit_test_end(success, name) return {success, name};}};
+#define unit_test_end(success_boolean, tested_func_name) return {success_boolean, tested_func_name};}};
