@@ -1,5 +1,7 @@
 # pragma once
 
+#include "framework/typedefs.h"
+
 #include <initializer_list>
 #include <string>
 #include <vector>

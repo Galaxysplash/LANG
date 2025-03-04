@@ -4,6 +4,7 @@
 #include <string_view>
 #include <utility>
 
+
 struct unit_test_struct {
     unit_test_struct(
         const std::function<std::pair<bool, const std::string_view>()> && func
