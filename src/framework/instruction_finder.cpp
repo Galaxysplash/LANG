@@ -17,7 +17,10 @@ bool instruction_finder(
             break;
         }
 
-        counter = instruction == filter[counter] || instruction == ANYTHING_STR ? counter + 1 : 0;
+        counter =
+            filter[counter] == instruction ||
+            filter[counter] == ANYTHING_STR && !instruction.empty() ?
+            counter + 1 : 0;
     }
 
     return counter == filter.size();
