@@ -1,5 +1,7 @@
 #include "syntax.h"
 
+#include "init.h"
+#include "typedefs.h"
 #include "tests/unit_test.h"
 
 void filter_instruction(
@@ -30,8 +32,17 @@ void filter_instruction(
 
 unit_test(test1)
     bool passed = false;
+    const std::string txt = "a: num = 10";
+    code_t code;
+
+    split(code, txt);
 
 
+    filter_instruction(
+        code, {"???", ":", "num", "=", "???"}, [&](std::vector<std::string>& str_list_ref) {
+            passed = true;
+        }
+    );
 unit_test_end(passed, "filter_instruction")
 
 void filter_instruction(
