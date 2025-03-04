@@ -33,14 +33,14 @@ void app(
         if (in_terminal) {
             if (first_time) {
                 printf(std::format(
-                    "type in code, or '{}' if you want to (pay attention to upper and lower case):\n",
+                    "Type in code, or '{}' if you want to. (Pay attention to upper and lower case!):\n",
                     EXIT_INSTRUCTION.data()
                ).c_str());
 
                 first_time = false;
             }
 
-            printf(">>>");
+            printf("=>");
         }
 
         run(argc, argv, in_terminal, EXIT_INSTRUCTION, code);

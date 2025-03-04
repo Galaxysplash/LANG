@@ -18,4 +18,5 @@ add_executable(
         src/summary/program.h
         src/tests/unit_test.cpp
         src/tests/unit_test.h
+        src/framework/typedefs.h
 )

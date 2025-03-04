@@ -1,7 +1,8 @@
+#include "framework/typedefs.h"
 #include "summary/program.h"
 
 int main(const int argc, const char **argv) {
-    std::vector<std::string> code;
+    code_t code;
 
     app(argc, argv, code);
 }
