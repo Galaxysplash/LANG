@@ -21,17 +21,29 @@ void get_code(const int argc, const char** argv, std::vector<std::string>& ret)
 
 void process_code(
     const std::vector<std::string>& instructions,
-    const std::initializer_list<std::string>&& ops_priority
+    const std::initializer_list<std::string_view>&& ops_priority
 )
 {
-    if (filter_instruction(instructions, {ANYTHING_STR, ":", "num", "=", ANYTHING_STR})) {
-
-    }
+    filter_variables(instructions);
 }
 
 void execute_code()
 {
     printf("\ne.size: %d\n", static_cast<int>(num_list.size()));
+}
+
+void filter_variables(const std::vector<std::string>& instructions) {
+    filter_variable(instructions, "num", [&](const std::string& name, const std::string& assigment) {
+
+    });
+
+    filter_variable(instructions, "txt", [&](const std::string& name, const std::string& assigment) {
+
+    });
+
+    filter_variable(instructions, "bit", [&](const std::string& name, const std::string& assigment) {
+
+    });
 }
 
 void run(const int argc, const char** argv, std::vector<std::string>& instructions_ref) {

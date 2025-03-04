@@ -3,10 +3,29 @@
 #include <vector>
 #include <string>
 #include <string_view>
+#include <functional>
+#include <map>
 
 constexpr std::string_view ANYTHING_STR = "???";
 
-bool filter_instruction(
-    const std::vector<std::string> & instructions,
-    const std::vector<std::string_view> && filter
+void filter_instruction(
+    const std::vector<std::string> &instructions,
+    const std::vector<std::string_view> & filter,
+    const std::function<void(const std::vector<std::string>& str_list_ref)> & func
 );
+
+void filter_instruction(
+    const std::vector<std::string> &instructions,
+    const std::vector<std::string_view> &&filter,
+    const std::function<void(const std::vector<std::string>& str_list_ref)> &&func
+);
+
+void filter_variable(
+    const std::vector<std::string>& instructions,
+    const std::string_view& str_view_ref,
+    std::function<void(const std::string& name, const std::string& assigment)>
+);
+
+template <typename T>
+void try_add_variable();
+
