@@ -24,7 +24,7 @@ void process_code(
     const std::initializer_list<std::string>&& ops_priority
 )
 {
-    if (instruction_finder(instructions, {"num", "="})) {
+    if (instruction_finder(instructions, {"???", "num", "="})) {
         printf("test");
     }
 }
