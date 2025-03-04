@@ -1,8 +1,14 @@
 # pragma once
 
 #include <initializer_list>
-#include <vector>
 #include <string>
+#include <vector>
+
+void app_loop(
+    int argc,
+    const char** argv,
+    std::vector<std::string>& code
+);
 
 ///Runs the code.
 void run(

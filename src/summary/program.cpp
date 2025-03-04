@@ -1,10 +1,11 @@
 #include "program.h"
 
-#include <format>
-
 #include "framework/syntax.h"
 #include "framework/init.h"
 
+#include <chrono>
+#include <thread>
+#include <format>
 #include <iostream>
 #include <ranges>
 #include <unordered_map>
@@ -14,6 +15,45 @@
 static std::unordered_map<std::string, double> num_list;
 static std::unordered_map<std::string, std::string> txt_list;
 static std::unordered_map<std::string, bool> bit_list;
+
+
+
+void app_loop(
+    const int argc,
+    const char** argv,
+    std::vector<std::string>& code
+)
+{
+    const bool in_terminal = argc <= 1;
+    bool first_time = true;
+    constexpr std::string_view EXIT_INSTRUCTION = "exit";
+    
+    // ReSharper disable once CppDFALoopConditionNotUpdated
+    do {
+        if (in_terminal) {
+            if (first_time) {
+                printf(std::format(
+                    "type in code, or '{}' if you want to (pay attention to upper and lower case):\n",
+                    EXIT_INSTRUCTION.data()
+               ).c_str());
+
+                first_time = false;
+            }
+
+            printf(">>>");
+        }
+
+        run(argc, argv, in_terminal, EXIT_INSTRUCTION, code);
+
+        if (in_terminal) {
+            code.clear();
+
+            std::this_thread::sleep_for(std::chrono::seconds(1));
+
+            printf("\n");
+        }
+    } while (in_terminal);
+}
 
 void run(
     const int argc,
