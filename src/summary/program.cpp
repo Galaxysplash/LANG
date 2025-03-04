@@ -27,7 +27,8 @@ void app(
     const bool in_terminal = argc <= 1;
     bool first_time = true;
     constexpr std::string_view EXIT_INSTRUCTION = "exit";
-    
+    std::string str_buffer;
+
     // ReSharper disable once CppDFALoopConditionNotUpdated
     do {
         if (in_terminal) {
@@ -40,13 +41,17 @@ void app(
                 first_time = false;
             }
 
-            printf("=>");
+            while (code.empty()) {
+                printf("=>");
+                std::cin >> str_buffer;
+            }
         }
 
-        run(argc, argv, in_terminal, EXIT_INSTRUCTION, code);
+        run(argc, argv, in_terminal, str_buffer, EXIT_INSTRUCTION, code);
 
         if (in_terminal) {
             code.clear();
+            str_buffer.clear();
 
             std::this_thread::sleep_for(std::chrono::seconds(1));
 
@@ -59,15 +64,13 @@ void run(
     const int argc,
     const char** argv,
     const bool in_terminal,
+    const std::string& str,
     const std::string_view& EXIT_INSTRUCTION,
     std::vector<std::string>& instructions_ref
 )
 {
     if (in_terminal) {
-        std::string str_buffer;
-        std::cin >> str_buffer;
-
-        split(instructions_ref, str_buffer);
+        split(instructions_ref, str);
     }
     else {
         get_code(argc, argv, instructions_ref);
@@ -118,6 +121,8 @@ void check_if_user_wants_to_exit____if_they_are_in_terminal(
 }
 
 void try_add_variables(const std::vector<std::string>& instructions) {
+    printf("try_add_variables\n");
+
     filter_variable(instructions, "num", [](const std::string& name, const std::string& assigment) {
         if (!num_list.contains(name)) {
             try {

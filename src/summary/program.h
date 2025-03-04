@@ -17,6 +17,7 @@ void run(
     int argc,
     const char** argv,
     bool in_terminal,
+    const std::string& str,
     const std::string_view& EXIT_INSTRUCTION,
     std::vector<std::string>& instructions_ref
 );
