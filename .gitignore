@@ -1,5 +1,8 @@
-!src/
-
+cmake-build-release-visual-studio/
+cmake-build-release/
+cmake-build-debug-visual-studio /
+cmake-build-debug /
+desktop.ini
 
 .idea/
 *.sln

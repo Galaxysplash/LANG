@@ -2,7 +2,7 @@
 
 #include <cstdio>
 #include <format>
-
+/*
 unit_test_struct::unit_test_struct(
     const std::function<std::pair<bool, const std::string_view>()> && func
 )
@@ -30,3 +30,4 @@ void unit_test_struct::print_result(const bool passed, const std::string_view & 
         );
     }
 }
+*/

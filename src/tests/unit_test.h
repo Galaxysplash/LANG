@@ -1,5 +1,5 @@
 #pragma once
-
+/*
 #include <functional>
 #include <string_view>
 #include <utility>
@@ -16,7 +16,7 @@ private:
 
 #define passed(success, name) return {success, name};
 
-#define unit_test(test_name, code) \
-unit_test_struct test_name { []() -> std::pair<bool, const std::string_view> \
-    code \
-};
+#define unit_test(name) const unit_test_struct name { []() -> std::pair<bool, const std::string_view> {
+
+#define end_unit_test }};
+*/
