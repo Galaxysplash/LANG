@@ -33,9 +33,6 @@ void execute_code()
 }
 
 void filter_variables(const std::vector<std::string>& instructions) {
-    filter_variable(instructions, "num", [&](const std::string& name, const std::string& assigment) {
-
-    });
 
     filter_variable(instructions, "txt", [&](const std::string& name, const std::string& assigment) {
 

@@ -27,5 +27,9 @@ void filter_variable(
 );
 
 template <typename T>
-void try_add_variable();
+void try_add_variable(
+    const std::vector<std::string>& instructions,
+    const std::string_view& type_name,
+    std::unordered_map<std::string, T>& map_ref
+);
 

@@ -49,6 +49,18 @@ void filter_variable(
 }
 
 template <typename T>
-void try_add_variable() {
-
+void try_add_variable(
+    const std::vector<std::string>& instructions,
+    const std::string_view& type_name,
+    std::unordered_map<std::string, T>& map_ref
+)
+{
+    filter_variable(instructions, type_name, [&](const std::string& name, const std::string& assigment) {
+        if (!map_ref.contains(name)) {
+            map_ref[name] = assigment;
+        }
+        else {
+            printf("variable creation failed! (The variable already exists.)\n");
+        }
+    });
 }
