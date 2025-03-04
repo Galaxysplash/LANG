@@ -34,7 +34,9 @@ void execute_code()
 
 void filter_variables(const std::vector<std::string>& instructions) {
     try_add_variable(instructions, "num", num_list, [](const std::string& name, std::string& assigment) {
-
+        try {
+            const double& num =
+        }catch (...){}
     });
 }
 

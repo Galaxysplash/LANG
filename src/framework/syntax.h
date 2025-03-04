@@ -26,10 +26,12 @@ void filter_variable(
     std::function<void(const std::string& name, const std::string& assigment)>
 );
 
+
+template <typename T>
 void try_add_variable(
     const std::vector<std::string>& instructions,
     const std::string_view&& type_name,
-    const std::unordered_map<std::string, double>& map_ref,
+    const std::unordered_map<std::string, T>& map_ref,
     const std::function<void(const std::string& name, std::string& assigment)> && func
 );
 
