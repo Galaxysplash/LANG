@@ -21,8 +21,10 @@ void filter_instruction(
             unknown_instructions.emplace_back(instruction);
         }
     }
-
-    func(unknown_instructions);
+    if (counter == filter.size()) {
+        printf("test\n");
+        func(unknown_instructions);
+    }
 }
 
 void filter_instruction(
@@ -36,41 +38,16 @@ void filter_instruction(
 
 void filter_variable(
     const std::vector<std::string>& instructions,
-    const std::string_view& str_view_ref,
-    std::function<void(const std::string& name, std::string& assigment)> && func
+    const std::string_view && str_view_ref,
+    std::function<void(const std::string& name, const std::string& assigment)> func
 )
 {
     filter_instruction(
         instructions,
         {ANYTHING_STR, ":", str_view_ref, "=", ANYTHING_STR},
+        // ReSharper disable once CppParameterMayBeConstPtrOrRef
         [&](std::vector<std::string>& str_list_ref) {
             func(str_list_ref.front(), str_list_ref.back());
-    });
-}
-
-
-template <typename T>
-void try_add_variable(
-    const std::vector<std::string>& instructions,
-    const std::string_view&& type_name,
-    const std::unordered_map<std::string, T>& map_ref,
-    const std::function<void(const std::string& name, std::string& assigment)> && func
-)
-{
-    filter_variable(instructions, type_name, [&](const std::string& name, std::string& assigment) {
-        if (!map_ref.contains(name)) {
-            func(name, assigment);
         }
-        else {
-            printf("variable creation failed! (The variable already exists.)\n");
-        }
-    });
+    );
 }
-/*
-template<typename ... TS>
-void try_add_variables(const std::initializer_list<std::vector<std::string>> &instructions,
-    const std::initializer_list<std::string_view> &&type_name,
-    std::tuple<std::unordered_map<std::string, TS...>> &map_ref) {
-
-}
-*/
