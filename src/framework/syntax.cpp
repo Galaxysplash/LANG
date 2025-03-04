@@ -39,7 +39,7 @@ void filter_instruction(
 void filter_variable(
     const std::vector<std::string>& instructions,
     const std::string_view && str_view_ref,
-    std::function<void(const std::string& name, const std::string& assigment)> func
+    const std::function<void(const std::string& name, const std::string& assigment)> && func
 )
 {
     filter_instruction(

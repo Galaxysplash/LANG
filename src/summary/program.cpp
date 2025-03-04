@@ -1,4 +1,7 @@
 #include "program.h"
+
+#include <format>
+
 #include "framework/syntax.h"
 #include "framework/init.h"
 
@@ -7,16 +10,21 @@
 #include <unordered_map>
 #include <string>
 
-static constexpr std::string_view EXIT_INSTRUCTION = "exit";
 
 static std::unordered_map<std::string, double> num_list;
 static std::unordered_map<std::string, std::string> txt_list;
 static std::unordered_map<std::string, bool> bit_list;
 
-void run(const int argc, const char** argv, const bool in_terminal, std::vector<std::string>& instructions_ref) {
+void run(
+    const int argc,
+    const char** argv,
+    const bool in_terminal,
+    const std::string_view& EXIT_INSTRUCTION,
+    std::vector<std::string>& instructions_ref
+)
+{
     if (in_terminal) {
         std::string str_buffer;
-        printf("type in code, or 'exit' if you want to:\n");
         std::cin >> str_buffer;
 
         split(instructions_ref, str_buffer);
@@ -25,7 +33,7 @@ void run(const int argc, const char** argv, const bool in_terminal, std::vector<
         get_code(argc, argv, instructions_ref);
     }
 
-    process_code(instructions_ref, {"+-", "*/"}, in_terminal);
+    process_code(instructions_ref, {"+-", "*/"}, in_terminal, EXIT_INSTRUCTION);
 
     execute_code();
 }
@@ -41,11 +49,12 @@ void get_code(const int argc, const char** argv, std::vector<std::string>& ret)
 void process_code(
     const std::vector<std::string>& instructions,
     const std::initializer_list<std::string_view>&& ops_priority,
-    const bool in_terminal
+    const bool in_terminal,
+    const std::string_view& EXIT_INSTRUCTION
 )
 {
     try_add_variables(instructions);
-    check_if_user_wants_to_exit____if_they_are_in_terminal(instructions, in_terminal);
+    check_if_user_wants_to_exit____if_they_are_in_terminal(instructions, in_terminal, EXIT_INSTRUCTION);
 }
 
 void execute_code()
@@ -55,7 +64,8 @@ void execute_code()
 
 void check_if_user_wants_to_exit____if_they_are_in_terminal(
     const std::vector<std::string>& instructions,
-    const bool in_terminal
+    const bool in_terminal,
+    const std::string_view& EXIT_INSTRUCTION
 )
 {
     if (in_terminal) {

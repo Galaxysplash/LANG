@@ -4,7 +4,6 @@
 #include <string>
 #include <string_view>
 #include <functional>
-#include <unordered_map>
 
 constexpr std::string_view ANYTHING_STR = "???";
 
@@ -23,5 +22,5 @@ void filter_instruction(
 void filter_variable(
     const std::vector<std::string>& instructions,
     const std::string_view && str_view_ref,
-    std::function<void(const std::string& name, const std::string& assigment)>
+    const std::function<void(const std::string& name, const std::string& assigment)> && func
 );
