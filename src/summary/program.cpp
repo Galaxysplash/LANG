@@ -34,7 +34,6 @@ void execute_code()
 
 void filter_variables(const std::vector<std::string>& instructions) {
     try_add_variable(instructions, "num", num_list);
-    
 }
 
 void run(const int argc, const char** argv, std::vector<std::string>& instructions_ref) {
