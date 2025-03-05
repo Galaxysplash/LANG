@@ -48,24 +48,29 @@ void new_word(code &ret, std::string &word_ref) {
 void process_char(code &ret_ref, std::string& word_ref, const char c) {
     bool special_char = false;
 
-    if (c != TXT_INDICATOR)
-    {
-        for (const char SIGN: SPECIAL_CHARS) {
-            if (c == SIGN) {
-                special_char = true;
-
-                new_word(ret_ref, word_ref);
-                word_ref.push_back(c);
-                new_word(ret_ref, word_ref);
-                break;
-            }
-        }
-        if (c == SPACE) {
-            new_word(ret_ref, word_ref);
-            special_char = true;
-        }
-    }
-    if (!special_char) {
+    if (c == TXT_INDICATOR) {
         word_ref.push_back(c);
+        return;
     }
+
+    if (c == SPACE) {
+        new_word(ret_ref, word_ref);
+        return;
+    }
+
+    for (const char SIGN: SPECIAL_CHARS) {
+        if (c == SIGN) {
+            special_char = true;
+
+            new_word(ret_ref, word_ref);
+            word_ref.push_back(c);
+            new_word(ret_ref, word_ref);
+            break;
+        }
+    }
+    if (special_char) {
+        return;
+    }
+
+    word_ref.push_back(c);
 }
