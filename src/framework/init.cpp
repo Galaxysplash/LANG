@@ -78,6 +78,7 @@ void process_char(const std::function<void()>& new_word_lambda, std::string& wor
 
 unit_test(test1, passed)
 code code_buffer;
+
 const std::string input = "a: num = 10";
 
 str_to_code(code_buffer, input);
