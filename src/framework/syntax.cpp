@@ -1,5 +1,7 @@
 #include "syntax.h"
 
+#include <string_view>
+
 #include "init.h"
 #include "framework/code.h"
 
@@ -49,13 +51,33 @@ void filter_variable(
         instructions,
         {ANYTHING_STR, ":", type_name_move, "=", ANYTHING_STR},
         // ReSharper disable once CppParameterMayBeConstPtrOrRef
-        [&](code& code_ref) {
-            for (const std::string& inst: instructions) {
-                printf("instruction: %s\n", inst.c_str());
+        [&](code& code_ref) -> void {
+            unsigned char counter = 0;
+
+            std::string instruction_1{}, instruction_2{};
+            /*   ^^^^^^
+             *This, is intentionally NOT a 'std::string_view'
+             * a std::string_view here,
+             * would break a lot off stuff (first and for most lambdas).
+             * also I have tried to make everything with txt a std::string_view
+             * and built wrappers around getting an index from it, which worked,
+             * but at the end of the day the buffers were completely messed up.
+            */ //------------------------------------------------------------
+
+            for (const std::string& instruction_ref: code_ref) {
+                if (counter == 0) {
+                    // ReSharper disable once CppJoinDeclarationAndAssignment
+                    instruction_1.append(instruction_ref);
+                }
+
+                if (counter == code_ref.get().size() -1) {
+                    // ReSharper disable once CppJoinDeclarationAndAssignment
+                    instruction_2.append(instruction_ref);
+                }
+                ++counter;
             }
-            func(code_ref.get().front(), code_ref.get().back());
+
+            func(instruction_1, instruction_2);
         }
     );
 }
-
-
