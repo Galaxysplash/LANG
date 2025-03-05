@@ -39,7 +39,6 @@ void str_to_code(
 
 void new_word(code &ret, std::string &word_ref) {
     if (!word_ref.empty()) {
-        printf("new word: %s\n", word_ref.c_str());
         ret.get().emplace_back(word_ref);
         word_ref.clear();
         word_ref.reserve(STR_START_SIZE);
