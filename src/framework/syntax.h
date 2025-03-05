@@ -6,6 +6,8 @@
 #include <functional>
 
 struct code;
+
+
 constexpr std::string_view ANYTHING_STR = "???";
 
 void filter_instruction(
@@ -22,6 +24,6 @@ void filter_instruction(
 
 void filter_variable(
     const code& instructions,
-    const std::string_view && str_view_ref,
+    const std::string_view && type_name_move,
     const std::function<void(const std::string& name, const std::string& assigment)> && func
 );

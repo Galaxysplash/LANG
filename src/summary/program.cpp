@@ -69,10 +69,10 @@ void app(
 void run(
     const bool in_terminal,
     const std::string_view& EXIT_INSTRUCTION,
-    const code& instructions_ref
+    const code& code_ref
 )
 {
-    analyze_code(instructions_ref, {"+-", "*/"}, in_terminal, EXIT_INSTRUCTION);
+    analyze_code(code_ref, {"+-", "*/"}, in_terminal, EXIT_INSTRUCTION);
 
     execute_absract_syntax_tree();
 }

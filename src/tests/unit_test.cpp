@@ -3,7 +3,7 @@
 #include <cstdio>
 #include <format>
 
-unit_test_struct::unit_test_struct(
+__unit_test_struct::__unit_test_struct(
     const std::function<std::pair<bool, const std::string_view>()> && func
 )
 {
@@ -12,7 +12,7 @@ unit_test_struct::unit_test_struct(
     print_result(success, str);
 }
 
-void unit_test_struct::print_result(const bool passed, const std::string_view & str) {
+void __unit_test_struct::print_result(const bool passed, const std::string_view & str) {
     std::string_view
     uint_test_str {"Unit test"},
     success_or_failure {};

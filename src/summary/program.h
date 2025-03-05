@@ -3,7 +3,6 @@
 
 #include <initializer_list>
 #include <string>
-#include <vector>
 
 #include "framework/code.h"
 
@@ -17,7 +16,7 @@ void app(
 void run(
     bool in_terminal,
     const std::string_view& EXIT_INSTRUCTION,
-    const code& instructions_ref
+    const code& code_ref
 );
 
 ///Pulls the code from the file and formats it.

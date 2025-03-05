@@ -5,8 +5,8 @@
 #include <utility>
 
 
-struct unit_test_struct {
-    unit_test_struct(
+struct __unit_test_struct {
+    __unit_test_struct(
         const std::function<std::pair<bool, const std::string_view>()> && func
     );
 
@@ -15,6 +15,6 @@ private:
 };
 
 
-#define unit_test(name_inst_name) const unit_test_struct name_inst_name { []() -> std::pair<bool, const std::string_view> {
+#define unit_test(name_inst_name) const __unit_test_struct name_inst_name { []() -> std::pair<bool, const std::string_view> {
 
-#define unit_test_end(success_boolean, tested_func_name) return {success_boolean, tested_func_name};}};
+#define end_unit_test(success_boolean, tested_func_name) return {success_boolean, tested_func_name};}};
