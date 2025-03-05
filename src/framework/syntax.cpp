@@ -50,6 +50,9 @@ void filter_variable(
         {ANYTHING_STR, ":", type_name_move, "=", ANYTHING_STR},
         // ReSharper disable once CppParameterMayBeConstPtrOrRef
         [&](code& code_ref) {
+            for (const std::string& inst: instructions) {
+                printf("instruction: %s\n", inst.c_str());
+            }
             func(code_ref.get().front(), code_ref.get().back());
         }
     );
