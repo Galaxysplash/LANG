@@ -16,6 +16,10 @@ std::string code::operator[](const int index) const {
     return _code_buffer[index];
 }
 
+std::vector<std::string> code::get() {
+    return _code_buffer;
+}
+
 void code::emplace_back(const std::string& str) {
     _code_buffer.emplace_back(str);
 }

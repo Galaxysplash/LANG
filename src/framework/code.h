@@ -10,6 +10,7 @@ struct code {
     bool operator==(const code & other) const;
     bool operator==(const code && other) const;
     std::string operator[](int index) const;
+    std::vector<std::string> get();
 
     void emplace_back(const std::string& str);
     void push_back(const std::string& str);
@@ -17,7 +18,7 @@ struct code {
     void clear();
 
 private:
-    std::pmr::vector<std::string> _code_buffer{};
+    std::vector<std::string> _code_buffer{};
 
     [[nodiscard]] bool is_equal(const code & other) const;
 
