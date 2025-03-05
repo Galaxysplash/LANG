@@ -77,6 +77,6 @@ void process_char(const std::function<void()>& new_word_lambda, std::string& wor
 }
 
 unit_test(test1, passed)
-code code_buffer{};
+code code_buffer;
 
 end_unit_test(passed, "str_to_code")
