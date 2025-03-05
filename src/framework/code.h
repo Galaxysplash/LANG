@@ -10,7 +10,8 @@ struct code {
     bool operator==(const code & other) const;
     bool operator==(const code && other) const;
     std::string operator[](int index) const;
-    std::vector<std::string> get();
+    std::vector<std::string>& get();
+    [[nodiscard]] const std::vector<std::string>& get() const;
 
     void clear();
 

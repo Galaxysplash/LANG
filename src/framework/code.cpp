@@ -16,7 +16,11 @@ std::string code::operator[](const int index) const {
     return _code_buffer[index];
 }
 
-std::vector<std::string> code::get() {
+std::vector<std::string>& code::get() {
+    return _code_buffer;
+}
+
+const std::vector<std::string>& code::get() const {
     return _code_buffer;
 }
 

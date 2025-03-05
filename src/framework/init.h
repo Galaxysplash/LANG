@@ -15,6 +15,6 @@ void str_to_code(
     code& ret, const std::string& txt
 );
 
-void process_char(
-    const std::function<void()>& new_word_lambda, std::string& word_ref, char c
-);
+void new_word(code &ret, std::string &word_ref);
+
+void process_char(code &ret_ref, std::string& word_ref, char c);

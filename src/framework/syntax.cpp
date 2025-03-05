@@ -1,10 +1,8 @@
 #include "syntax.h"
 
-#include <assert.h>
 #include <string_view>
 
 #include "init.h"
-#include "exceptions/custom_err.h"
 #include "framework/code.h"
 
 void filter_instruction(
@@ -16,18 +14,28 @@ void filter_instruction(
     unsigned char counter = 0;
     code unknown_code{};
 
+    printf("instructions_list_size: %d\n", static_cast<int>(instructions.get().size()));
+
     for (const std::string& instruction: instructions) {
         const bool any_is_ok = filter_ref[counter] == ANYTHING_STR && !instruction.empty();
         counter = filter_ref[counter] == instruction || any_is_ok ? counter + 1 : 0;
+
+        printf("instruction: %s\n", instruction.c_str());
 
         if (counter == filter_ref.size()) {
             break;
         }
 
         if (any_is_ok) {
-            unknown_code.get().emplace_back(instruction);
+            unknown_code.get().push_back(instruction);
         }
     }
+
+    for (const auto& e: unknown_code) {
+        printf("---->%s\n", e.data());
+    }
+
+    printf("unknown_code_size: %d\n", static_cast<int>(unknown_code.get().size()));
 
     if (counter == filter_ref.size()) {
         func(unknown_code);
