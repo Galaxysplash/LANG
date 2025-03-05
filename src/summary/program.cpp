@@ -53,7 +53,11 @@ void app(
 
             str_to_code(code_ref, c_str_buffer);
 
-            run(in_terminal, EXIT_INSTRUCTION, code_ref);
+            try {
+                run(in_terminal, EXIT_INSTRUCTION, code_ref);
+            }catch (std::exception& e) {
+                printf("internal error: %s\n", e.what());
+            }
 
             code_ref.clear();
 
