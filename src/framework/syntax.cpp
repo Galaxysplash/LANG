@@ -66,10 +66,6 @@ void filter_variable(
              * but at the end of the day the buffers were completely messed up.
             */ //------------------------------------------------------------
 
-            if (code_ref.get().size() < 2) {
-                throw custom_err{"arr size, smaller, then 2 in internal variable declaration finder"};
-            }
-
             for (const std::string& instruction_ref: code_ref) {
                 printf("instruction_ref %s\n", instruction_ref.c_str());
 
