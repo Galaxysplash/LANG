@@ -22,16 +22,16 @@ static std::unordered_map<std::string, bool> bit_list;
 void app(
     const int argc,
     const char** argv,
-    code& instructions_ref
+    code& code_ref
 )
 {
     const bool in_terminal = argc <= 1;
     constexpr std::string_view EXIT_INSTRUCTION = "exit";
 
     if (!in_terminal) {
-        get_code(argc, argv, instructions_ref);
+        get_code(argc, argv, code_ref);
 
-        run(in_terminal, EXIT_INSTRUCTION, instructions_ref);
+        run(in_terminal, EXIT_INSTRUCTION, code_ref);
     }
     else {
         bool first_time = true;
@@ -52,11 +52,11 @@ void app(
             std::cin >> str_buffer;
             printf("\n");
 
-            str_to_code(instructions_ref, str_buffer);
+            str_to_code(code_ref, str_buffer);
 
-            run(in_terminal, EXIT_INSTRUCTION, instructions_ref);
+            run(in_terminal, EXIT_INSTRUCTION, code_ref);
 
-            instructions_ref.clear();
+            code_ref.clear();
             str_buffer.clear();
 
             std::this_thread::sleep_for(std::chrono::seconds(1));

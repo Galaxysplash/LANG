@@ -9,7 +9,7 @@
 void app(
     int argc,
     const char** argv,
-    code& instructions_ref
+    code& code_ref
 );
 
 ///Runs the code.
