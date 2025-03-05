@@ -18,16 +18,16 @@ void filter_instruction(
 
     for (const std::string& instruction: instructions) {
         const bool any_is_ok = filter_ref[counter] == ANYTHING_STR && !instruction.empty();
-        counter = filter_ref[counter] == instruction || any_is_ok ? counter + 1 : 0;
-
-        printf("instruction: %s\n", instruction.c_str());
-
-        if (counter == filter_ref.size()) {
-            break;
-        }
+        counter = filter_ref[counter] == instruction ? counter + 1 : 0;
 
         if (any_is_ok) {
             unknown_code.get().push_back(instruction);
+            ++counter;
+        }
+
+        //this if statement has to be the last one in this for loop
+        if (counter == filter_ref.size()) {
+            break;
         }
     }
 

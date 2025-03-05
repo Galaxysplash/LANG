@@ -68,6 +68,7 @@ void process_char(code &ret_ref, std::string& word_ref, const char c) {
             break;
         }
     }
+
     if (special_char) {
         return;
     }
