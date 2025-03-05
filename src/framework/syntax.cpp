@@ -1,5 +1,7 @@
 #include "syntax.h"
 
+#include <iostream>
+#include <ostream>
 #include <string_view>
 
 #include "init.h"
@@ -13,8 +15,6 @@ void filter_instruction(
 {
     unsigned char counter = 0;
     code unknown_code{};
-
-    printf("instructions_list_size: %d\n", static_cast<int>(instructions.get().size()));
 
     for (const std::string& instruction: instructions) {
         const bool any_is_ok = filter_ref[counter] == ANYTHING_STR && !instruction.empty();
@@ -30,12 +30,6 @@ void filter_instruction(
             break;
         }
     }
-
-    for (const auto& e: unknown_code) {
-        printf("---->%s\n", e.data());
-    }
-
-    printf("unknown_code_size: %d\n", static_cast<int>(unknown_code.get().size()));
 
     if (counter == filter_ref.size()) {
         func(unknown_code);
@@ -75,8 +69,6 @@ void filter_variable(
             */ //------------------------------------------------------------
 
             for (const std::string& instruction_ref: code_ref) {
-                printf("instruction_ref %s\n", instruction_ref.c_str());
-
                 if (counter == 0) {
                     // ReSharper disable once CppJoinDeclarationAndAssignment
                     instruction_1.append(instruction_ref);
@@ -88,7 +80,7 @@ void filter_variable(
                 }
                 ++counter;
             }
-
+            std::cout << instruction_1 << " " << instruction_2 << std::endl;
             func(instruction_1, instruction_2);
         }
     );

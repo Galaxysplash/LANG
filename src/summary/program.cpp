@@ -50,12 +50,7 @@ void app(
 
             printf("=>");
             std::cin.getline(c_str_buffer, max_input_buffer_length);
-            printf("%s\n", c_str_buffer);
             str_to_code(code_ref, c_str_buffer);
-
-            for (const auto& instruction_ref: code_ref) {
-                std::cout << instruction_ref << std::endl;
-            }
 
             try {
                 run(in_terminal, EXIT_INSTRUCTION, code_ref);
@@ -78,12 +73,6 @@ void run(
     const code& code_ref
 )
 {
-    printf("instruction_list_size %d\n", static_cast<int>(code_ref.get().size()));
-
-    for (const auto& ref: code_ref.get()) {
-        printf("ref %s\n", ref.c_str());
-    }
-
     analyze_code(code_ref, {"+-", "*/"}, in_terminal, EXIT_INSTRUCTION);
 
     execute_absract_syntax_tree();
