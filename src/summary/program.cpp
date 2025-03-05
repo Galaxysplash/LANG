@@ -117,6 +117,13 @@ void check_for_exit(
 }
 
 void try_add_variables(const code& instructions, const bool in_terminal) {
+    filter_instruction(instructions, {"???", ":", "num", "=", "???"}, [&](const code& str_list_ref) -> void {
+        printf("test");
+        for (const auto& e: str_list_ref) {
+            std::cout << e.c_str() << "\n";
+        }
+    });
+
     filter_variable(instructions, "num", [&in_terminal](const std::string& name, const std::string& assigment) {
         if (!num_list.contains(name)) {
             try {

@@ -80,7 +80,7 @@ void filter_variable(
                 }
                 ++counter;
             }
-            std::cout << instruction_1 << " " << instruction_2 << std::endl;
+
             func(instruction_1, instruction_2);
         }
     );
