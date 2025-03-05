@@ -9,6 +9,7 @@ struct code {
 
     bool operator==(const code & other) const;
     bool operator==(const code && other) const;
+    bool operator==(const std::initializer_list<std::string_view> && compare_list_move) const;
 
     void emplace_back(const std::string& str);
     void push_back(const std::string& str);
