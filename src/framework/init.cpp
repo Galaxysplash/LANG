@@ -32,7 +32,7 @@ void str_to_code(
 
     const std::function new_word = [&]() -> void {
         if (!word.empty()) {
-            ret.emplace_back(word);
+            ret.get().emplace_back(word);
             word.clear();
             word.reserve(STR_START_SIZE);
         }
@@ -42,7 +42,7 @@ void str_to_code(
         process_char(new_word, word, c);
     }
 
-    ret.push_back(word);
+    ret.get().push_back(word);
 }
 
 void process_char(const std::function<void()>& new_word_lambda, std::string& word_ref, const char c) {
