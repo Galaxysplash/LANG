@@ -76,3 +76,6 @@ void process_char(const std::function<void()>& new_word_lambda, std::string& wor
     word_ref.push_back(c);
 }
 
+unit_test(test1, passed)
+
+end_unit_test(passed, "str_to_code")
