@@ -55,7 +55,7 @@ void app(
 
             try {
                 run(in_terminal, EXIT_INSTRUCTION, code_ref);
-            }catch (std::exception& e) {
+            }catch (const std::exception& e) {
                 printf("Internal C++ error, when running the code: %s\n", e.what());
             }
 
