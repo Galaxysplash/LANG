@@ -50,7 +50,6 @@ void app(
 
             printf("=>");
             std::cin.getline(c_str_buffer, max_input_buffer_length);
-            printf("\n");
 
             str_to_code(code_ref, c_str_buffer);
 
@@ -134,22 +133,40 @@ void try_add_variables(const code& instructions, const bool in_terminal) {
         }
     });
 
-    filter_variable(instructions, "txt", [](const std::string& name, const std::string& assigment) {
+    filter_variable(instructions, "txt", [&in_terminal](const std::string& name, const std::string& assigment) {
         if (!txt_list.contains(name)) {
             txt_list[name] = assigment;
+
+            if (in_terminal) {
+                printf("%s\n", std::format("NOTED: {} = '{}'", name, assigment).c_str());
+            }
         }
         else {
             printf("error, variable could not be created, it already exists.\n");
         }
     });
 
-    filter_variable(instructions, "bit", [](const std::string& name, const std::string& assigment) {
+    filter_variable(instructions, "bit", [&in_terminal](const std::string& name, const std::string& assigment) {
         if (!bit_list.contains(name)) {
+            enum class assigment_enum {
+                _null,
+                _true,
+                _false
+            };
+
+            assigment_enum assigment_buffer = assigment_enum::_null;
+
             if (assigment == "true") {
+                assigment_buffer = assigment_enum::_true;
                 bit_list[name] = true;
             }
             else if (assigment == "false") {
+                assigment_buffer = assigment_enum::_false;
                 bit_list[name] = false;
+            }
+
+            if (assigment_buffer != assigment_enum::_null) {
+                printf("%s\n", std::format("NOTED: {} = {}", name, assigment).c_str());
             }
         } else {
             printf("error, variable could not be created, it already exists.\n");
