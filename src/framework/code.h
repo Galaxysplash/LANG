@@ -12,9 +12,6 @@ struct code {
     std::string operator[](int index) const;
     std::vector<std::string> get();
 
-    void emplace_back(const std::string& str);
-    void push_back(const std::string& str);
-
     void clear();
 
 private:

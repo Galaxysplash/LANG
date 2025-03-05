@@ -25,7 +25,7 @@ void filter_instruction(
         }
 
         if (any_is_ok) {
-            unknown_code.emplace_back(instruction);
+            unknown_code.get().emplace_back(instruction);
         }
     }
 

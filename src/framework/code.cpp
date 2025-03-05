@@ -20,14 +20,6 @@ std::vector<std::string> code::get() {
     return _code_buffer;
 }
 
-void code::emplace_back(const std::string& str) {
-    _code_buffer.emplace_back(str);
-}
-
-void code::push_back(const std::string& str) {
-    _code_buffer.push_back(str);
-}
-
 void code::clear() {
     _code_buffer.clear();
 }
