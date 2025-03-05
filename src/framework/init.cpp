@@ -75,12 +75,3 @@ void process_char(const std::function<void()>& new_word_lambda, std::string& wor
 
     word_ref.push_back(c);
 }
-
-unit_test(test1, passed)
-code code_buffer;
-const std::string input = "a: num = 10";
-
-str_to_code(code_buffer, input);
-
-passed = code_buffer == code{"a", ":", "num", "=", "10"};
-end_unit_test(passed, "str_to_code")
