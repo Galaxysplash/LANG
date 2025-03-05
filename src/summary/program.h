@@ -41,4 +41,4 @@ void check_for_exit(
     const std::string_view& EXIT_INSTRUCTION
 );
 
-void try_add_variables(const code& instructions);
+void try_add_variables(const code& instructions, bool in_terminal);

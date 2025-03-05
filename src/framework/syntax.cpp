@@ -13,8 +13,6 @@ void filter_instruction(
     code unknown_code{};
 
     for (const std::string& instruction: instructions) {
-        printf("\ninstruction: %s\n", instruction.c_str());
-
         const bool any_is_ok = filter_ref[counter] == ANYTHING_STR && !instruction.empty();
         counter = filter_ref[counter] == instruction || any_is_ok ? counter + 1 : 0;
 
@@ -28,7 +26,6 @@ void filter_instruction(
     }
 
     if (counter == filter_ref.size()) {
-        printf("filter_instruction!\n");
         func(unknown_code);
     }
 }
