@@ -12,6 +12,10 @@ bool code::operator==(const code &&other) const {
     return is_equal(other);
 }
 
+std::string code::operator[](const int index) const {
+    return _code_buffer[index];
+}
+
 void code::emplace_back(const std::string& str) {
     _code_buffer.emplace_back(str);
 }

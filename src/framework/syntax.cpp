@@ -50,7 +50,7 @@ void filter_variable(
         {ANYTHING_STR, ":", type_name_move, "=", ANYTHING_STR},
         // ReSharper disable once CppParameterMayBeConstPtrOrRef
         [&](code& code_ref) {
-            func(code_ref.front(), code_ref.back());
+            func(code_ref[0], code_ref[1]);
         }
     );
 }

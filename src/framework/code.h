@@ -9,6 +9,7 @@ struct code {
 
     bool operator==(const code & other) const;
     bool operator==(const code && other) const;
+    std::string operator[](int index) const;
 
     void emplace_back(const std::string& str);
     void push_back(const std::string& str);

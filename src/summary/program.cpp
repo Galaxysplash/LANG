@@ -135,6 +135,7 @@ void try_add_variables(const code& instructions, const bool in_terminal) {
 
     filter_variable(instructions, "txt", [&in_terminal](const std::string& name, const std::string& assigment) {
         if (!txt_list.contains(name)) {
+            printf("ASSIGNEMENT: %s\n", assigment.c_str());
             txt_list[name] = assigment;
 
             if (in_terminal) {
