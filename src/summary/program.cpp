@@ -1,8 +1,5 @@
 #include "program.h"
 
-#include "framework/syntax.h"
-#include "framework/init.h"
-
 #include <chrono>
 #include <thread>
 #include <format>
@@ -10,6 +7,10 @@
 #include <ranges>
 #include <unordered_map>
 #include <string>
+
+#include "framework/syntax.h"
+#include "framework/init.h"
+#include "framework/code.h"
 
 
 static std::unordered_map<std::string, double> num_list;
@@ -21,17 +22,23 @@ static std::unordered_map<std::string, bool> bit_list;
 void app(
     const int argc,
     const char** argv,
-    std::vector<std::string>& code
+    code& instructions_ref
 )
 {
     const bool in_terminal = argc <= 1;
-    bool first_time = true;
     constexpr std::string_view EXIT_INSTRUCTION = "exit";
-    std::string str_buffer;
 
-    // ReSharper disable once CppDFALoopConditionNotUpdated
-    do {
-        if (in_terminal) {
+    if (!in_terminal) {
+        get_code(argc, argv, instructions_ref);
+
+        run(in_terminal, EXIT_INSTRUCTION, instructions_ref);
+    }
+    else {
+        bool first_time = true;
+        // ReSharper disable once CppDFAEndlessLoop
+        while (true) {
+            std::string str_buffer;
+
             if (first_time) {
                 printf(std::format(
                     "Type in code, or '{}' if you want to. (Pay attention to upper and lower case!):\n",
@@ -41,73 +48,60 @@ void app(
                 first_time = false;
             }
 
-            do {
-                printf("=>");
-                std::cin >> str_buffer;
-            } while (str_buffer.empty());
-        }
+            printf("=>");
+            std::cin >> str_buffer;
+            printf("\n");
 
-        run(argc, argv, in_terminal, str_buffer, EXIT_INSTRUCTION, code);
+            str_to_code(instructions_ref, str_buffer);
 
-        if (in_terminal) {
-            code.clear();
+            run(in_terminal, EXIT_INSTRUCTION, instructions_ref);
+
+            instructions_ref.clear();
             str_buffer.clear();
 
             std::this_thread::sleep_for(std::chrono::seconds(1));
 
             printf("\n");
         }
-    } while (in_terminal);
+    }
 }
 
 void run(
-    const int argc,
-    const char** argv,
     const bool in_terminal,
-    const std::string& str,
     const std::string_view& EXIT_INSTRUCTION,
-    std::vector<std::string>& instructions_ref
+    const code& instructions_ref
 )
 {
-    if (in_terminal) {
-        printf("run!");
-        split(instructions_ref, str);
-    }
-    else {
-        get_code(argc, argv, instructions_ref);
-    }
+    analyze_code(instructions_ref, {"+-", "*/"}, in_terminal, EXIT_INSTRUCTION);
 
-    process_code(instructions_ref, {"+-", "*/"}, in_terminal, EXIT_INSTRUCTION);
-
-    execute_code();
+    execute_absract_syntax_tree();
 }
 
-void get_code(const int argc, const char** argv, std::vector<std::string>& ret)
+void get_code(const int argc, const char** argv, code& ret)
 {
     std::string txt_buffer;
 
-    read(argc, argv, txt_buffer);
-    split(ret, txt_buffer);
+    read_file(argc, argv, txt_buffer);
+    str_to_code(ret, txt_buffer);
 }
 
-void process_code(
-    const std::vector<std::string>& instructions,
+void analyze_code(
+    const code& instructions,
     const std::initializer_list<std::string_view>&& ops_priority,
     const bool in_terminal,
     const std::string_view& EXIT_INSTRUCTION
 )
 {
     try_add_variables(instructions);
-    check_if_user_wants_to_exit____if_they_are_in_terminal(instructions, in_terminal, EXIT_INSTRUCTION);
+    check_for_exit(instructions, in_terminal, EXIT_INSTRUCTION);
 }
 
-void execute_code()
+void execute_absract_syntax_tree()
 {
-    //printf("\ne.size: %d\n", static_cast<int>(num_list.size()));
 }
 
-void check_if_user_wants_to_exit____if_they_are_in_terminal(
-    const std::vector<std::string>& instructions,
+void check_for_exit(
+    const code& instructions,
     const bool in_terminal,
     const std::string_view& EXIT_INSTRUCTION
 )
@@ -121,9 +115,7 @@ void check_if_user_wants_to_exit____if_they_are_in_terminal(
     }
 }
 
-void try_add_variables(const std::vector<std::string>& instructions) {
-    printf("try_add_variables\n");
-
+void try_add_variables(const code& instructions) {
     filter_variable(instructions, "num", [](const std::string& name, const std::string& assigment) {
         if (!num_list.contains(name)) {
             try {

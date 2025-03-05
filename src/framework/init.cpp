@@ -3,14 +3,16 @@
 #include <fstream>
 #include <functional>
 
+#include "framework/code.h"
+#include "framework/code.h"
 
 //private
 static constexpr unsigned char STR_START_SIZE = 5;
-static constexpr char SPECIAL_CHARS[] = {',', ';', '\n', ':', '.', '\t', '\r', '=', ' '};
+static constexpr char SPECIAL_CHARS[] = {',', ';', '\n', ':', '.', '\t', '\r', '='};
 static constexpr char SPACE = ' ';
 
 
-void read(
+void read_file(
     const int argc, const char **argv, std::string &ret
 ) {
     if (argc < 2) return;
@@ -22,8 +24,8 @@ void read(
     file.close();
 }
 
-void split(
-    std::vector<std::string> &ret, const std::string &txt
+void str_to_code(
+    code &ret, const std::string &txt
 ) {
     std::string word{};
     word.reserve(STR_START_SIZE);
@@ -73,3 +75,4 @@ void process_char(const std::function<void()>& new_word_lambda, std::string& wor
 
     word_ref.push_back(c);
 }
+
