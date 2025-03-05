@@ -1,8 +1,10 @@
 #include "syntax.h"
 
+#include <assert.h>
 #include <string_view>
 
 #include "init.h"
+#include "exceptions/custom_err.h"
 #include "framework/code.h"
 
 void filter_instruction(
@@ -64,7 +66,13 @@ void filter_variable(
              * but at the end of the day the buffers were completely messed up.
             */ //------------------------------------------------------------
 
+            if (code_ref.get().size() < 2) {
+                throw custom_err{"arr size, smaller, then 2 in internal variable declaration finder"};
+            }
+
             for (const std::string& instruction_ref: code_ref) {
+                printf("instruction_ref %s\n", instruction_ref.c_str());
+
                 if (counter == 0) {
                     // ReSharper disable once CppJoinDeclarationAndAssignment
                     instruction_1.append(instruction_ref);

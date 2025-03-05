@@ -20,4 +20,6 @@ add_executable(
         src/tests/unit_test.h
         src/framework/code.cpp
         src/framework/code.h
+        src/exceptions/custom_err.cpp
+        src/exceptions/custom_err.h
 )

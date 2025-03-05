@@ -26,7 +26,6 @@ void app(
 {
     const bool in_terminal = argc <= 1;
     constexpr std::string_view EXIT_INSTRUCTION = "exit";
-    constexpr unsigned char max_input_buffer_length = 100;
 
     if (!in_terminal) {
         get_code(argc, argv, code_ref);
@@ -37,6 +36,7 @@ void app(
         bool first_time = true;
         // ReSharper disable once CppDFAEndlessLoop
         while (true) {
+            constexpr unsigned char max_input_buffer_length = 100;
             char c_str_buffer[max_input_buffer_length];
 
             if (first_time) {
@@ -139,7 +139,7 @@ void try_add_variables(const code& instructions, const bool in_terminal) {
 
     filter_variable(instructions, "txt", [&in_terminal](const std::string& name, const std::string& assigment) {
         if (!txt_list.contains(name)) {
-            printf("ASSIGNEMENT: %s\n", assigment.c_str());
+            printf("ASSIGNMENT: %s\n", assigment.c_str());
             txt_list[name] = assigment;
 
             if (in_terminal) {
@@ -159,7 +159,7 @@ void try_add_variables(const code& instructions, const bool in_terminal) {
                 _false
             };
 
-            assigment_enum assigment_buffer = assigment_enum::_null;
+            auto assigment_buffer = assigment_enum::_null;
 
             if (assigment == "true") {
                 assigment_buffer = assigment_enum::_true;
@@ -172,6 +172,9 @@ void try_add_variables(const code& instructions, const bool in_terminal) {
 
             if (assigment_buffer != assigment_enum::_null) {
                 printf("%s\n", std::format("NOTED: {} = {}", name, assigment).c_str());
+            }
+            else {
+                printf("%s\n", std::format("error, bit could not be created, assignment is '{}'!", name).c_str());
             }
         } else {
             printf("error, variable could not be created, it already exists.\n");
