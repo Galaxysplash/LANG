@@ -1,5 +1,7 @@
 #include "code.h"
 
+code::code() {}
+
 code::code(const std::initializer_list<std::string> &&ini_list_move) : _code_buffer(ini_list_move) {}
 
 bool code::operator==(const code & other) const {

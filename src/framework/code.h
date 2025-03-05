@@ -4,6 +4,7 @@
 #include <vector>
 
 struct code {
+    code();
     code(const std::initializer_list<std::string>&& ini_list_move);
 
     bool operator==(const code & other) const;
