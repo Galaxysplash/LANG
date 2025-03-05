@@ -71,10 +71,6 @@ void run(
     const code& code_ref
 )
 {
-    for (const auto& str_ref: code_ref) {
-        printf("str: %s\n", str_ref.data());
-    }
-
     analyze_code(code_ref, {"+-", "*/"}, in_terminal, EXIT_INSTRUCTION);
 
     execute_absract_syntax_tree();
