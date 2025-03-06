@@ -26,11 +26,12 @@ void program::start(
 {
     const bool in_terminal = argc <= 1;
     constexpr std::string_view EXIT_INSTRUCTION = "exit";
+    constexpr std::string_view HELP_INSTRUCTION = "help";
 
     if (!in_terminal) {
         get_code(argc, argv, code_ref);
 
-        analyze_and_exec(in_terminal, EXIT_INSTRUCTION, code_ref);
+        analyze_and_exec(in_terminal, code_ref, EXIT_INSTRUCTION, HELP_INSTRUCTION);
     }
     else {
         bool first_time = true;
@@ -55,7 +56,7 @@ void program::start(
             printf("\n");
 
             try {
-                analyze_and_exec(in_terminal, EXIT_INSTRUCTION, code_ref);
+                analyze_and_exec(in_terminal, code_ref, EXIT_INSTRUCTION, HELP_INSTRUCTION);
             } catch (const std::exception& e) {
                 printf("Internal C++ error, when running the code: %s\n", e.what());
             }
@@ -71,13 +72,15 @@ void program::start(
 
 void program::analyze_and_exec(
     const bool in_terminal,
+    const code& code_in,
     const std::string_view& EXIT_INSTRUCTION,
-    const code& code_ref
+    const std::string_view& HELP_INSTRUCTION
 )
 {
-    analyze_code(code_ref, {"+-", "*/"}, in_terminal, EXIT_INSTRUCTION);
+    analyze_code(code_in, {"+-", "*/"}, in_terminal, EXIT_INSTRUCTION);
 
     exec_absract_syntax_tree();
+    exec_basic_instructions(code_in, in_terminal, EXIT_INSTRUCTION, HELP_INSTRUCTION);
 }
 
 void program::get_code(const int argc, const char** argv, code& ret)
@@ -89,42 +92,28 @@ void program::get_code(const int argc, const char** argv, code& ret)
 }
 
 void program::analyze_code(
-    const code& instructions,
+    const code& code_in,
     const std::initializer_list<std::string_view>&& ops_priority,
     const bool in_terminal,
     const std::string_view& EXIT_INSTRUCTION
 )
 {
-    try_add_variables(instructions, in_terminal);
-    exec_basic_instructions(instructions, in_terminal);
-    check_for_exit(instructions, in_terminal, EXIT_INSTRUCTION);
+    try_add_variables(code_in, in_terminal);
 }
 
 void program::exec_absract_syntax_tree()
 {
 }
 
-void program::check_for_one_word_cmd(const code& code_in, const bool in_terminal, const std::string_view& instruction_in) {
-    if (in_terminal) {
-        for (const auto& instruction: code_in) {
-            if (instruction == instruction_in) {
-                exit(0);
-            }
+void program::check_for_one_word_instruction(
+    const code& code_in,
+    const std::string_view& instruction_in
+) {
+    for (const auto& instruction: code_in) {
+        if (instruction == instruction_in) {
+            exit(0);
         }
     }
-}
-
-void program::check_for_exit(
-    const code& code_in,
-    const bool in_terminal,
-    const std::string_view& EXIT_INSTRUCTION
-)
-{
-
-}
-
-void program::check_for_help(const code &code_in, const bool in_terminal) {
-
 }
 
 void program::try_add_variables(const code& instructions, const bool in_terminal) {
@@ -191,8 +180,18 @@ void program::try_add_variables(const code& instructions, const bool in_terminal
     });
 }
 
-void program::exec_basic_instructions(const code& instructions, const bool in_terminal) {
+void program::exec_basic_instructions(
+    const code& instructions,
+    const bool in_terminal,
+    const std::string_view& EXIT_INSTRUCTION,
+    const std::string_view& HELP_INSTRUCTION
+) {
     syntax::filter_instruction(instructions, {"print"}, [&in_terminal](const std::vector<std::string_view>& txt) {
 
     });
+
+
+    if (in_terminal) {
+        check_for_one_word_instruction(instructions, EXIT_INSTRUCTION);
+    }
 }

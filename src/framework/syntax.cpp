@@ -1,12 +1,11 @@
 #include "syntax.h"
 
-#include <iostream>
-#include <ostream>
 #include <string_view>
 #include <cstdint>
 
 #include "init.h"
 #include "framework/code.h"
+
 
 void syntax::filter_instruction(
     const code & code_in,
