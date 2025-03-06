@@ -3,19 +3,22 @@
 #include <iostream>
 #include <ostream>
 #include <string_view>
+#include <cstdint>
 
 #include "init.h"
 #include "framework/code.h"
 
 void filter_instruction(
-    const code &code_in,
+    const code & code_in,
     const std::vector<std::string_view> & filter_ref,
-    const std::function<void(code& code_ref)> & func
+    const std::function<void(std::vector<std::string_view>& str_list_ref)> & func_in
 )
 {
-    unsigned char known_code_counter = 0;
+#define general_code_counter (known_code_counter + unknown_code_counter)
+#define unknown_is_wanted (filter_ref[i] == ANYTHING_STR && !code_in[i].empty())
 
-    unsigned char
+    uint8_t
+        known_code_counter = 0,
         unknown_code_counter = 0,
         unknown_code_counter_limit = 0;
 
@@ -24,88 +27,75 @@ void filter_instruction(
             ++unknown_code_counter_limit;
         }
     }
-    
-    code unknown_code_buffer{};
 
-    for (const std::string& instruction: code_in) {
-        const bool
-            unknown_is_ok = filter_ref[known_code_counter] == ANYTHING_STR && !instruction.empty(),
-            last_loop_go_through = known_code_counter >= filter_ref.size();
+    std::vector<std::string_view> unknown_code_buffer{};
 
-        known_code_counter = filter_ref[known_code_counter] == instruction ? known_code_counter + 1 : 0;
-
-        if (unknown_is_ok) {
-            if(
-                last_loop_go_through && unknown_code_counter == unknown_code_counter_limit
-            ) {
+    for (int32_t i = 0; i < code_in.get().size(); ++i) {
+        //body
+        if (unknown_is_wanted) {
+            unknown_code_buffer.push_back(filter_ref[i]);
+            ++unknown_code_counter;
+        }
+        else {
+            if ((filter_ref[i] == code_in[i])) {
+                ++known_code_counter;
+            }
+            else {
                 return;
             }
-
-            unknown_code_buffer.get().push_back(instruction);
-
-            ++unknown_code_counter;
-            ++known_code_counter;
         }
 
-        //this if statement has to be the last one in this for loop
-        if (last_loop_go_through) {
+        //foot
+        if (general_code_counter == filter_ref.size()) {
             break;
         }
     }
 
-    std::cout << "found: " << known_code_counter << "\n";
+    std::cout << "found: " << static_cast<unsigned short>(unknown_code_counter) << "\n";
 
-    if (known_code_counter == filter_ref.size()) {
-        func(unknown_code_buffer);
+    if (general_code_counter == filter_ref.size()) {
+        func_in(unknown_code_buffer);
     }
 }
 
 void filter_instruction(
-    const code &instructions,
-    const std::vector<std::string_view> &&filter,
-    const std::function<void(code& str_list_ref)> && func
+    const code & code_in,
+    const std::vector<std::string_view> && filter_move,
+    const std::function<void(std::vector<std::string_view>& str_list_ref)> && func_in
 )
 {
-    filter_instruction(instructions, filter, func);
+    filter_instruction(code_in, filter_move, func_in);
 }
 
 void filter_variable(
-    const code& instructions,
+    const code& code_in,
     const std::string_view && type_name_move,
-    const std::function<void(const std::string& name, const std::string& assigment)> && func
+    const std::function<void(const std::string_view& name, const std::string_view& assigment)> && func_in
 )
 {
     filter_instruction(
-        instructions,
+        code_in,
         {ANYTHING_STR, ":", type_name_move, "=", ANYTHING_STR},
         // ReSharper disable once CppParameterMayBeConstPtrOrRef
-        [&](code& code_ref) -> void {
+        [&](std::vector<std::string_view>& code_ref) -> void {
             unsigned char counter = 0;
 
-            std::string instruction_1{}, instruction_2{};
-            /*   ^^^^^^
-             *This, is intentionally NOT a 'std::string_view'
-             * a std::string_view here,
-             * would break a lot off stuff (first and for most lambdas).
-             * also I have tried to make everything with txt a std::string_view
-             * and built wrappers around getting an index from it, which worked,
-             * but at the end of the day the buffers were completely messed up.
-            */ //------------------------------------------------------------
+            std::string_view instruction_1{}, instruction_2{};
 
-            for (const std::string& instruction_ref: code_ref) {
+            for (const std::string_view& instruction_ref: code_ref) {
                 if (counter == 0) {
                     // ReSharper disable once CppJoinDeclarationAndAssignment
-                    instruction_1.append(instruction_ref);
+                    instruction_1 = instruction_ref;
                 }
 
-                if (counter == code_ref.get().size() -1) {
+                if (counter == code_ref.size() -1) {
                     // ReSharper disable once CppJoinDeclarationAndAssignment
-                    instruction_2.append(instruction_ref);
+                    instruction_2 = instruction_ref;
                 }
                 ++counter;
             }
 
-            func(instruction_1, instruction_2);
+            func_in(instruction_1, instruction_2);
         }
     );
 }
