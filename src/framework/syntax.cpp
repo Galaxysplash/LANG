@@ -13,7 +13,7 @@ void filter_instruction(
     const std::function<void(code& code_ref)> & func
 )
 {
-    unsigned char counter = 0;
+    unsigned char known_code_counter = 0;
 
     unsigned char
         unknown_code_counter = 0,
@@ -24,17 +24,15 @@ void filter_instruction(
             ++unknown_code_counter_limit;
         }
     }
-
-    std::cout << "unknown_code_counter_limit: " << static_cast<unsigned short>(unknown_code_counter_limit) << "\n";
-
+    
     code unknown_code_buffer{};
 
     for (const std::string& instruction: code_in) {
         const bool
-            unknown_is_ok = filter_ref[counter] == ANYTHING_STR && !instruction.empty(),
-            last_loop_go_through = counter >= filter_ref.size();
+            unknown_is_ok = filter_ref[known_code_counter] == ANYTHING_STR && !instruction.empty(),
+            last_loop_go_through = known_code_counter >= filter_ref.size();
 
-        counter = filter_ref[counter] == instruction ? counter + 1 : 0;
+        known_code_counter = filter_ref[known_code_counter] == instruction ? known_code_counter + 1 : 0;
 
         if (unknown_is_ok) {
             if(
@@ -46,7 +44,7 @@ void filter_instruction(
             unknown_code_buffer.get().push_back(instruction);
 
             ++unknown_code_counter;
-            ++counter;
+            ++known_code_counter;
         }
 
         //this if statement has to be the last one in this for loop
@@ -55,7 +53,9 @@ void filter_instruction(
         }
     }
 
-    if (counter == filter_ref.size()) {
+    std::cout << "found: " << known_code_counter << "\n";
+
+    if (known_code_counter == filter_ref.size()) {
         func(unknown_code_buffer);
     }
 }
