@@ -9,7 +9,7 @@
 #include <string>
 
 #include "framework/syntax.h"
-#include "framework/init.h"
+#include "framework/init/init.h"
 #include "framework/code.h"
 
 static std::unordered_map<std::string_view, double> num_list;
@@ -25,13 +25,24 @@ void program::start(
 )
 {
     const bool in_terminal = argc <= 1;
-    constexpr std::string_view EXIT_INSTRUCTION = "exit";
-    constexpr std::string_view HELP_INSTRUCTION = "help";
+    const std::unordered_map<std::string_view, std::function<void()>> one_word_commands = {
+        {"exit", [&]() {
+            exit(0);
+        }},
+        {"help", [&]() {
+            printf("create variables with: \n");
+            printf("a) foo: num = 10\n");
+            printf("b) foo: txt = \"hello world\"\n");
+            printf("c) foo: bit = true\n");
+            printf("\n");
+            printf("exit the program with: 'exit'\n");
+        }}
+    };
 
     if (!in_terminal) {
         get_code(argc, argv, code_ref);
 
-        analyze_and_exec(in_terminal, code_ref, EXIT_INSTRUCTION, HELP_INSTRUCTION);
+        analyze_and_exec(in_terminal, code_ref, one_word_commands);
     }
     else {
         bool first_time = true;
@@ -41,22 +52,17 @@ void program::start(
             char c_str_buffer[max_input_buffer_length];
 
             if (first_time) {
-                printf(std::format(
-                    "Type in code, or '{}' if you want to. (Pay attention to upper and lower case!):\n",
-                    EXIT_INSTRUCTION.data()
-               ).c_str());
+                printf("LANG: type in commands or 'help', if you don't know any.\n");
 
                 first_time = false;
             }
-
             printf("=>");
             std::cin.getline(c_str_buffer, max_input_buffer_length);
             str_to_code(code_ref, c_str_buffer);
-            std::cin.ignore();
             printf("\n");
 
             try {
-                analyze_and_exec(in_terminal, code_ref, EXIT_INSTRUCTION, HELP_INSTRUCTION);
+                analyze_and_exec(in_terminal, code_ref, one_word_commands);
             } catch (const std::exception& e) {
                 printf("Internal C++ error, when running the code: %s\n", e.what());
             }
@@ -73,14 +79,13 @@ void program::start(
 void program::analyze_and_exec(
     const bool in_terminal,
     const code& code_in,
-    const std::string_view& EXIT_INSTRUCTION,
-    const std::string_view& HELP_INSTRUCTION
+    const std::unordered_map<std::string_view, std::function<void()>>& one_word_commands_in
 )
 {
-    analyze_code(code_in, {"+-", "*/"}, in_terminal, EXIT_INSTRUCTION);
+    analyze_code(code_in, {"+-", "*/"}, in_terminal);
 
     exec_absract_syntax_tree();
-    exec_basic_instructions(code_in, in_terminal, EXIT_INSTRUCTION, HELP_INSTRUCTION);
+    exec_basic_instructions(code_in, in_terminal, one_word_commands_in);
 }
 
 void program::get_code(const int argc, const char** argv, code& ret)
@@ -94,8 +99,7 @@ void program::get_code(const int argc, const char** argv, code& ret)
 void program::analyze_code(
     const code& code_in,
     const std::initializer_list<std::string_view>&& ops_priority,
-    const bool in_terminal,
-    const std::string_view& EXIT_INSTRUCTION
+    const bool in_terminal
 )
 {
     try_add_variables(code_in, in_terminal);
@@ -107,11 +111,12 @@ void program::exec_absract_syntax_tree()
 
 void program::check_for_one_word_instruction(
     const code& code_in,
-    const std::string_view& instruction_in
+    const std::string_view& instruction_in,
+    const std::function<void()>& func_in
 ) {
     for (const auto& instruction: code_in) {
         if (instruction == instruction_in) {
-            exit(0);
+            func_in();
         }
     }
 }
@@ -183,15 +188,17 @@ void program::try_add_variables(const code& instructions, const bool in_terminal
 void program::exec_basic_instructions(
     const code& instructions,
     const bool in_terminal,
-    const std::string_view& EXIT_INSTRUCTION,
-    const std::string_view& HELP_INSTRUCTION
+    const std::unordered_map<std::string_view, std::function<void()>>& one_word_commands_in
 ) {
     syntax::filter_instruction(instructions, {"print"}, [&in_terminal](const std::vector<std::string_view>& txt) {
 
     });
 
-
     if (in_terminal) {
-        check_for_one_word_instruction(instructions, EXIT_INSTRUCTION);
+        for (const auto&[keyword, func]: one_word_commands_in) {
+            check_for_one_word_instruction(instructions, keyword, [&func]() {
+                func();
+            });
+        }
     }
 }

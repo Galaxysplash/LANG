@@ -10,8 +10,8 @@ include_directories(
 add_executable(
     Lang
     src/main.cpp
-        src/framework/init.cpp
-        src/framework/init.h
+        src/framework/init/init.cpp
+        src/framework/init/init.h
         src/framework/syntax.cpp
         src/framework/syntax.h
         src/summary/program.cpp
