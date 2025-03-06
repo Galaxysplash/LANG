@@ -37,7 +37,7 @@ void syntax::filter_instruction(
     for (int32_t i = 0; i < code_in.get().size(); ++i) {
         //body
         if (unknown_is_wanted) {
-            unknown_code_buffer.push_back(code_in.get().at(i));
+            unknown_code_buffer.emplace_back(code_in.get().at(i));
             ++unknown_code_counter;
         }
         else {

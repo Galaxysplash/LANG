@@ -18,7 +18,7 @@ static std::unordered_map<std::string_view, bool> bit_list;
 
 
 
-void app(
+void program::start(
     const int argc,
     const char** argv,
     code& code_ref
@@ -30,7 +30,7 @@ void app(
     if (!in_terminal) {
         get_code(argc, argv, code_ref);
 
-        run(in_terminal, EXIT_INSTRUCTION, code_ref);
+        analyze_and_exec(in_terminal, EXIT_INSTRUCTION, code_ref);
     }
     else {
         bool first_time = true;
@@ -51,10 +51,11 @@ void app(
             printf("=>");
             std::cin.getline(c_str_buffer, max_input_buffer_length);
             str_to_code(code_ref, c_str_buffer);
+            std::cin.ignore();
             printf("\n");
 
             try {
-                run(in_terminal, EXIT_INSTRUCTION, code_ref);
+                analyze_and_exec(in_terminal, EXIT_INSTRUCTION, code_ref);
             } catch (const std::exception& e) {
                 printf("Internal C++ error, when running the code: %s\n", e.what());
             }
@@ -68,7 +69,7 @@ void app(
     }
 }
 
-void run(
+void program::analyze_and_exec(
     const bool in_terminal,
     const std::string_view& EXIT_INSTRUCTION,
     const code& code_ref
@@ -76,10 +77,10 @@ void run(
 {
     analyze_code(code_ref, {"+-", "*/"}, in_terminal, EXIT_INSTRUCTION);
 
-    execute_absract_syntax_tree();
+    exec_absract_syntax_tree();
 }
 
-void get_code(const int argc, const char** argv, code& ret)
+void program::get_code(const int argc, const char** argv, code& ret)
 {
     std::string txt_buffer;
 
@@ -87,7 +88,7 @@ void get_code(const int argc, const char** argv, code& ret)
     str_to_code(ret, txt_buffer);
 }
 
-void analyze_code(
+void program::analyze_code(
     const code& instructions,
     const std::initializer_list<std::string_view>&& ops_priority,
     const bool in_terminal,
@@ -95,29 +96,38 @@ void analyze_code(
 )
 {
     try_add_variables(instructions, in_terminal);
+    exec_basic_instructions(instructions, in_terminal);
     check_for_exit(instructions, in_terminal, EXIT_INSTRUCTION);
 }
 
-void execute_absract_syntax_tree()
+void program::exec_absract_syntax_tree()
 {
 }
 
-void check_for_exit(
-    const code& instructions,
-    const bool in_terminal,
-    const std::string_view& EXIT_INSTRUCTION
-)
-{
+void program::check_for_one_word_cmd(const code& code_in, const bool in_terminal, const std::string_view& instruction_in) {
     if (in_terminal) {
-        for (const auto& instruction: instructions) {
-            if (instruction == EXIT_INSTRUCTION) {
+        for (const auto& instruction: code_in) {
+            if (instruction == instruction_in) {
                 exit(0);
             }
         }
     }
 }
 
-void try_add_variables(const code& instructions, const bool in_terminal) {
+void program::check_for_exit(
+    const code& code_in,
+    const bool in_terminal,
+    const std::string_view& EXIT_INSTRUCTION
+)
+{
+
+}
+
+void program::check_for_help(const code &code_in, const bool in_terminal) {
+
+}
+
+void program::try_add_variables(const code& instructions, const bool in_terminal) {
     syntax::filter_variable(instructions, "num", [&in_terminal](const std::string_view& name, const std::string_view& assigment) {
         if (!num_list.contains(name)) {
             try {
@@ -139,12 +149,10 @@ void try_add_variables(const code& instructions, const bool in_terminal) {
 
     syntax::filter_variable(instructions, "txt", [&in_terminal](const std::string_view& name, const std::string_view& assigment) {
         if (!txt_list.contains(name)) {
-            std::cout << "ASSIGNMENT: " << assigment << "\n";
-
             txt_list[name] = assigment;
 
             if (in_terminal) {
-                std::cout << std::format("NOTED: {} = '{}'", name, assigment) << "\n";
+                std::cout << std::format("NOTED: {} = {}", name, assigment) << "\n";
             }
         }
         else {
@@ -183,6 +191,8 @@ void try_add_variables(const code& instructions, const bool in_terminal) {
     });
 }
 
-void basic_instructions(const code& instructions, const bool in_terminal) {
+void program::exec_basic_instructions(const code& instructions, const bool in_terminal) {
+    syntax::filter_instruction(instructions, {"print"}, [&in_terminal](const std::vector<std::string_view>& txt) {
 
+    });
 }
