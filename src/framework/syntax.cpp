@@ -8,7 +8,7 @@
 #include "init.h"
 #include "framework/code.h"
 
-void filter_instruction(
+void syntax::filter_instruction(
     const code & code_in,
     const std::vector<std::string_view> & filter_ref,
     const std::function<void(std::vector<std::string_view>& str_list_ref)> & func_in
@@ -33,7 +33,7 @@ void filter_instruction(
     for (int32_t i = 0; i < code_in.get().size(); ++i) {
         //body
         if (unknown_is_wanted) {
-            unknown_code_buffer.push_back(filter_ref[i]);
+            unknown_code_buffer.push_back(code_in.get().at(i));
             ++unknown_code_counter;
         }
         else {
@@ -58,7 +58,7 @@ void filter_instruction(
     }
 }
 
-void filter_instruction(
+void syntax::filter_instruction(
     const code & code_in,
     const std::vector<std::string_view> && filter_move,
     const std::function<void(std::vector<std::string_view>& str_list_ref)> && func_in
@@ -67,8 +67,8 @@ void filter_instruction(
     filter_instruction(code_in, filter_move, func_in);
 }
 
-void filter_variable(
-    const code& code_in,
+void syntax::filter_variable(
+    const code & code_in,
     const std::string_view && type_name_move,
     const std::function<void(const std::string_view& name, const std::string_view& assigment)> && func_in
 )

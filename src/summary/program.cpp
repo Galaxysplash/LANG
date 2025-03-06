@@ -12,9 +12,9 @@
 #include "framework/init.h"
 #include "framework/code.h"
 
-static std::unordered_map<std::string, double> num_list;
-static std::unordered_map<std::string, std::string> txt_list;
-static std::unordered_map<std::string, bool> bit_list;
+static std::unordered_map<std::string_view, double> num_list;
+static std::unordered_map<std::string_view, std::string> txt_list;
+static std::unordered_map<std::string_view, bool> bit_list;
 
 
 
@@ -117,10 +117,10 @@ void check_for_exit(
 }
 
 void try_add_variables(const code& instructions, const bool in_terminal) {
-    filter_variable(instructions, "num", [&in_terminal](const std::string& name, const std::string& assigment) {
+    syntax::filter_variable(instructions, "num", [&in_terminal](const std::string_view& name, const std::string_view& assigment) {
         if (!num_list.contains(name)) {
             try {
-               const double& num = std::stod(assigment);
+               const double& num = std::stod(std::string(assigment));
 
                num_list[name] = num;
 
@@ -136,9 +136,10 @@ void try_add_variables(const code& instructions, const bool in_terminal) {
         }
     });
 
-    filter_variable(instructions, "txt", [&in_terminal](const std::string& name, const std::string& assigment) {
+    syntax::filter_variable(instructions, "txt", [&in_terminal](const std::string_view& name, const std::string_view& assigment) {
         if (!txt_list.contains(name)) {
-            printf("ASSIGNMENT: %s\n", assigment.c_str());
+            std::cout << "ASSIGNMENT: " << assigment << "\n";
+
             txt_list[name] = assigment;
 
             if (in_terminal) {
@@ -150,7 +151,7 @@ void try_add_variables(const code& instructions, const bool in_terminal) {
         }
     });
 
-    filter_variable(instructions, "bit", [&in_terminal](const std::string& name, const std::string& assigment) {
+    syntax::filter_variable(instructions, "bit", [&in_terminal](const std::string_view& name, const std::string_view& assigment) {
         if (!bit_list.contains(name)) {
             enum class assigment_enum {
                 _null,
