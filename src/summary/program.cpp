@@ -51,6 +51,7 @@ void app(
             printf("=>");
             std::cin.getline(c_str_buffer, max_input_buffer_length);
             str_to_code(code_ref, c_str_buffer);
+            printf("\n");
 
             try {
                 run(in_terminal, EXIT_INSTRUCTION, code_ref);
@@ -143,7 +144,7 @@ void try_add_variables(const code& instructions, const bool in_terminal) {
             txt_list[name] = assigment;
 
             if (in_terminal) {
-                printf("%s\n", std::format("NOTED: {} = '{}'", name, assigment).c_str());
+                std::cout << std::format("NOTED: {} = '{}'", name, assigment) << "\n";
             }
         }
         else {
@@ -180,4 +181,8 @@ void try_add_variables(const code& instructions, const bool in_terminal) {
             printf("error, variable could not be created, it already exists.\n");
         }
     });
+}
+
+void basic_instructions(const code& instructions, const bool in_terminal) {
+
 }

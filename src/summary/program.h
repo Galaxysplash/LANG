@@ -45,3 +45,5 @@ void try_add_variables(
     const code& instructions,
     bool in_terminal
 );
+
+void basic_instructions(const code& instructions, bool in_terminal);
