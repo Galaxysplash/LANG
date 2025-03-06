@@ -14,6 +14,10 @@ void syntax::filter_instruction(
     const std::function<void(std::vector<std::string_view>& str_list_ref)> & func_in
 )
 {
+    if (filter_ref.empty()) {
+        return;
+    }
+
 #define general_code_counter (known_code_counter + unknown_code_counter)
 #define unknown_is_wanted (filter_ref[i] == ANYTHING_STR && !code_in[i].empty())
 
@@ -50,8 +54,6 @@ void syntax::filter_instruction(
             break;
         }
     }
-
-    std::cout << "found: " << static_cast<unsigned short>(unknown_code_counter) << "\n";
 
     if (general_code_counter == filter_ref.size()) {
         func_in(unknown_code_buffer);
