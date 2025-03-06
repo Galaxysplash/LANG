@@ -3,7 +3,8 @@
 #include <string>
 #include <vector>
 
-struct code {
+class code {
+public:
     code();
     code(const std::initializer_list<std::string_view> && ini_list_move);
 
