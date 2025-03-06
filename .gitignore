@@ -1,5 +1,7 @@
 !src
 
+/src/CMakeFiles/*
+
 cmake-build-release/*
 cmake-build-release/
 

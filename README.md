@@ -1,41 +1,65 @@
 # LANGUAGE
 
-### A programming language written in C++.
+### A programming language.
 
-## PREREQUISITES!
+---
 
-Make sure you have cmake and git installed on you device. (You can google how to do that. e.g. with: "How to install
-git" and "How to install cmake on [YOUR OPERATING SYSTEM]")
+## **Prerequisites**
+- **CMake:** VERSION 3.30 or higher [Install CMake](https://cmake.org/install/)
+- **Git:** [Install Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- C++ Compiler (e.g., GCC, Clang, MSVC) with C++ 20 or higher
+---
 
-## HOW TO BUILD?<br>(short version)
+## FOR A CODE REVIEW:
+I tend to mix programming paradigms (Imperative, OOP, Functional & Declarative) and pick the parts of each, which help me the most in the current situation, so don't freak out if you see a class/struct.<br><br>I know that C++ is way more, than just a OOP lang, and you can ignore the whole OOP indirectly, but a part where it is especially useful, in C++ specially is when you often forget to update the headers after you changed the args for a func and do often also forget to use the IDE tools for this. BTW my IDE is CLion.
 
-1. Clone the GitHub repo
+---
 
-2. Go into the 'src' folder
+## **Building the Project**
 
-3. Open the Terminal and type in 'cmake ..'
 
-## HOW TO BUILD?<br>(detailed version)
+# LANG
 
-2. Clone the repository (You can google how to do that. e.g. with: "How to clone a GitHub repo")
+## Build Instructions
 
-3. Go into the 'src' directory (in the repo), then open the Terminal and type in 'cmake ..'
+### Building `LANG`
 
-4. In the file manager of your OS, go form the 'src' directory into the root directory of the repository, than in the '
-   cmake-build-release' or in the 'cmake-build-debug' or whatever you 'cmake-build-[Your build Profile]' is and open
-   the 'Lang.exe' file (from your OS's file explorer or from you terminal)
+1. **Clone the Repository**:
+```sh
+git clone https://github.com/yourusername/LANG.git
+cd LANG
+```
 
-## HOW TO USE?
+2. **Create a Build Directory**:
+```sh
+mkdir build
+cd build
+```
 
-#### (FOR THE PREBUILD BINARIES AS WELL AS FOR THE SELF BUILD VERSION):
+3. **Configure with CMake**:
+```sh
+cmake ..
+```
+Optional: Specify a build type (e.g., Debug, Release):
+```sh
+cmake .. -DCMAKE_BUILD_TYPE=Release
+```
 
-1. Create a file with the name of your choice but make sure, that it has the '.lang' extension
+4. **Build the Project**:
+```sh
+cmake --build .
+```
+Or with a specific build system (e.g., Make):
+```sh
+make -j4  # -j4 for parallel build
+```
 
-2. Then right click it and tell you OS to open the file with the 'Lang.exe'<br> (at this Point you should know where
-   this file is located)
+5. **Run the Application**:
+```sh
+./LANG
+```
+On Windows:
+```sh
+.\LANG.exe
+```
 
-## QUICK NOTES
-
--The higher the num of the priority in the operators, the more important the operator.
-
--I first tried doing everything with 'std::string_view', but this messed everything up for some reason
