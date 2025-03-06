@@ -13,6 +13,9 @@ struct code {
     std::vector<std::string>& get();
     [[nodiscard]] const std::vector<std::string>& get() const;
 
+    void push_back(const std::string & str);
+    void emplace_back(const std::string & str);
+
     void clear();
 
 private:

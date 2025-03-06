@@ -48,10 +48,8 @@ void filter_instruction(
             break;
         }
     }
-
-    std::cout << "\n";
+    
     if (counter == filter_ref.size()) {
-        std::cout << "worked!\n";
         func(unknown_code_buffer);
     }
 }
