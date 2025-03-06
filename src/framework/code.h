@@ -16,7 +16,6 @@ public:
     std::vector<std::string>& get();
     [[nodiscard]] const __CODE_BUFFER_TYPE_IN_CODE_CLASS & get() const;
 
-
     operator __CODE_BUFFER_TYPE_IN_CODE_CLASS &();
 
     void push_back(const std::string & str);
