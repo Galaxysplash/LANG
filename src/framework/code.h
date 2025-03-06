@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+#define __CODE_BUFFER_TYPE_IN_CODE_CLASS std::vector<std::string>
+
 class code {
 public:
     code();
@@ -12,7 +14,9 @@ public:
     bool operator==(const code && other) const;
     std::string operator[](int index) const;
     std::vector<std::string>& get();
-    [[nodiscard]] const std::vector<std::string>& get() const;
+    [[nodiscard]] const __CODE_BUFFER_TYPE_IN_CODE_CLASS & get() const;
+
+    operator __CODE_BUFFER_TYPE_IN_CODE_CLASS &();
 
     void push_back(const std::string & str);
     void emplace_back(const std::string & str);
@@ -20,7 +24,7 @@ public:
     void clear();
 
 private:
-    std::vector<std::string> _code_buffer{};
+     __CODE_BUFFER_TYPE_IN_CODE_CLASS _code_buffer{};
 
     [[nodiscard]] bool is_equal(const code & other) const;
 
