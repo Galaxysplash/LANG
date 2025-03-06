@@ -45,7 +45,7 @@ void syntax::filter_instruction(
             }
         }
 
-        //foot
+        //footer
         if (general_code_counter == filter_ref.size()) {
             break;
         }
