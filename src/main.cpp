@@ -4,5 +4,5 @@
 int main(const int argc, const char **argv) {
     code code_buffer{};
 
-    program::start(argc, argv, code_buffer);
+    program::run(argc, argv, code_buffer);
 }

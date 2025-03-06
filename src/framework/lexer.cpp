@@ -1,30 +1,16 @@
-#include "init.h"
+#include "lexer.h"
 
-#include <fstream>
-#include <functional>
-#include <iostream>
+#include <format>
 
-#include "framework/code.h"
+#include "code.h"
+#include "global/global_variables.h"
 
 //private
 static constexpr unsigned char STR_START_SIZE = 5;
 static constexpr char SPECIAL_CHARS[] = {',', ';', '\n', ':', '.', '\t', '\r', '='};
 static constexpr char SPACE = ' ';
 
-
-void read_file(
-    const int argc, const char **argv, std::string &ret
-) {
-    if (argc < 2) return;
-
-    std::ifstream file;
-
-    file.open(argv[1]);
-    file >> ret;
-    file.close();
-}
-
-void str_to_code(
+void lexer::str_to_code(
     code &ret, const std::string &txt
 ) {
     std::string word{};
@@ -37,7 +23,7 @@ void str_to_code(
     new_word(ret, word);
 }
 
-void new_word(code &ret, std::string &word_ref) {
+void lexer::new_word(code &ret, std::string &word_ref) {
     if (!word_ref.empty()) {
         ret.get().emplace_back(word_ref);
         word_ref.clear();
@@ -45,7 +31,7 @@ void new_word(code &ret, std::string &word_ref) {
     }
 }
 
-void process_char(code &ret_ref, std::string& word_ref, const char c) {
+void lexer::process_char(code &ret_ref, std::string& word_ref, const char c) {
     bool special_char = false;
 
     if (c == TXT_INDICATOR) {

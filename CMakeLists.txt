@@ -10,10 +10,10 @@ include_directories(
 add_executable(
     Lang
     src/main.cpp
-        src/framework/init/init.cpp
-        src/framework/init/init.h
-        src/framework/syntax.cpp
-        src/framework/syntax.h
+        src/framework/import.cpp
+        src/framework/import.h
+        src/framework/parser.cpp
+        src/framework/parser.h
         src/summary/program.cpp
         src/summary/program.h
         src/tests/unit_test.cpp
@@ -24,4 +24,10 @@ add_executable(
         src/exceptions/custom_err.h
         src/tests/run.cpp
         src/tests/run.h
+        src/framework/lexer.cpp
+        src/framework/lexer.h
+        src/framework/data_type.h
+        src/global/global_variables.h
+        src/framework/tree.cpp
+        src/framework/tree.h
 )
