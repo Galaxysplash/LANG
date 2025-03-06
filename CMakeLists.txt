@@ -22,4 +22,6 @@ add_executable(
         src/framework/code.h
         src/exceptions/custom_err.cpp
         src/exceptions/custom_err.h
+        src/tests/run.cpp
+        src/tests/run.h
 )

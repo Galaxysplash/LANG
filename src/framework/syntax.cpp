@@ -8,20 +8,38 @@
 #include "framework/code.h"
 
 void filter_instruction(
-    const code &instructions,
+    const code &code_in,
     const std::vector<std::string_view> & filter_ref,
     const std::function<void(code& code_ref)> & func
 )
 {
-    unsigned char counter = 0;
-    code unknown_code{};
+    unsigned char
+    counter = 0;
 
-    for (const std::string& instruction: instructions) {
-        const bool any_is_ok = filter_ref[counter] == ANYTHING_STR && !instruction.empty();
+    unsigned char
+    unknown_code_counter = 0,
+    unknown_code_counter_limit = 0;
+
+    for (const auto& filter_part_ref: filter_ref) {
+        if (filter_part_ref == ANYTHING_STR) {
+            ++unknown_code_counter_limit;
+        }
+    }
+
+    code unknown_code_buffer{};
+
+    for (const std::string& instruction: code_in) {
+        const bool unknown_is_ok = filter_ref[counter] == ANYTHING_STR && !instruction.empty();
+
         counter = filter_ref[counter] == instruction ? counter + 1 : 0;
 
-        if (any_is_ok) {
-            unknown_code.get().push_back(instruction);
+        if (unknown_is_ok) {
+            if (unknown_code_counter > unknown_code_counter_limit) {
+                return;
+            }
+            unknown_code_buffer.get().push_back(instruction);
+
+            ++unknown_code_counter;
             ++counter;
         }
 
@@ -31,8 +49,10 @@ void filter_instruction(
         }
     }
 
+    std::cout << "\n";
     if (counter == filter_ref.size()) {
-        func(unknown_code);
+        std::cout << "worked!\n";
+        func(unknown_code_buffer);
     }
 }
 

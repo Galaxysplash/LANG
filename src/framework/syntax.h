@@ -11,8 +11,8 @@ struct code;
 constexpr std::string_view ANYTHING_STR = "???";
 
 void filter_instruction(
-    const code &instructions,
-    const std::vector<std::string_view> & filter,
+    const code &code_in,
+    const std::vector<std::string_view> & filter_ref,
     const std::function<void(code& str_list_ref)> & func
 );
 

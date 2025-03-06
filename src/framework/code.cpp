@@ -2,7 +2,12 @@
 
 code::code() {}
 
-code::code(const std::initializer_list<std::string> &&ini_list_move) : _code_buffer(ini_list_move) {}
+code::code(const std::initializer_list<std::string_view> &&ini_list_move) {
+    for (unsigned char i = 0; auto& list_part: ini_list_move) {
+        _code_buffer[i] = list_part;
+        ++i;
+    }
+}
 
 bool code::operator==(const code & other) const {
     return is_equal(other);
