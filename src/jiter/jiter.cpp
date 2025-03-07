@@ -63,6 +63,7 @@ void jiter::run(
                 analyze_and_exec(in_terminal, code_ref, one_word_commands);
             } catch (const std::exception& e) {
                 std::cerr << "Internal C++ error, when running the code: " << e.what() << "\n";
+                std::cout << "Please report this error to the github repository:\n https://github.com/Galaxysplash/LANG!\n";
             }
 
             code_ref.clear();

@@ -161,11 +161,15 @@ void parser::try_add_variables(const instruction& instructions, const bool in_te
                }
             }
             else {
-                std::cerr << "error, variable of type txt could not be created assigment NEEDS the '\"' at the begin as well, as at the end.\n";
+                if (in_terminal) {
+                    std::cerr << "error, variable of type txt could not be created assigment NEEDS the '\"' at the begin as well, as at the end.\n";
+                }
             }
         }
         else {
-            std::cerr << "error, variable could not be created, it already exists.\n";
+            if (in_terminal) {
+                std::cerr << "error, variable could not be created, it already exists.\n";
+            }
         }
     });
 
@@ -192,10 +196,14 @@ void parser::try_add_variables(const instruction& instructions, const bool in_te
                 printf("%s\n", std::format("NOTED: {} = {}", name, assigment).c_str());
             }
             else {
-                std::cerr << "error, variable could not be created, because the assigment NEEDS to be true or false.\n";
+                if (in_terminal) {
+                    std::cerr << "error, variable could not be created, because the assigment NEEDS to be true or false.\n";
+                }
             }
         } else {
-            std::cerr <<"error, variable could not be created, it already exists.\n";
+            if (in_terminal) {
+                std::cerr <<"error, variable could not be created, it already exists.\n";
+            }
         }
     });
 }
