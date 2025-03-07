@@ -81,7 +81,7 @@ void jiter::analyze_and_exec(
     const std::unordered_map<std::string, std::function<void()>>& one_word_commands_in
 )
 {
-    parser::build_abstract_syntax_tree(instruction_in, {"+-", "*/"}, in_terminal);
+    tree::build(instruction_in, {"+-", "*/"}, in_terminal);
     parser::try_add_variables(instruction_in, in_terminal);
     tree::exec();
     parser::exec_basic_instructions(instruction_in, in_terminal, one_word_commands_in);
