@@ -13,8 +13,7 @@ void parser::filter_instruction(
     const instruction & code_in,
     const std::vector<std::string_view> & filter_ref,
     const std::function<void(std::vector<std::string_view>& str_list_ref)> & func_in
-)
-{
+) {
     if (filter_ref.empty()) {
         return;
     }
@@ -65,8 +64,7 @@ void parser::filter_instruction(
     const instruction & code_in,
     const std::vector<std::string_view> && filter_move,
     const std::function<void(std::vector<std::string_view>& str_list_ref)> && func_in
-)
-{
+) {
     filter_instruction(code_in, filter_move, func_in);
 }
 
@@ -74,8 +72,7 @@ void parser::filter_variable(
     const instruction & code_in,
     const std::string_view && type_name_move,
     const std::function<void(const std::string_view& name, const std::string_view& assigment)> && func_in
-)
-{
+) {
     filter_instruction(
         code_in,
         {ANYTHING_STR, ":", type_name_move, "=", ANYTHING_STR},
@@ -198,14 +195,15 @@ void parser::try_add_variables(const instruction& instructions, const bool in_te
 }
 
 void parser::analyze_code(
-    const instruction& code_in,
+    const instruction& instruction_in,
     const std::initializer_list<std::string_view>&& ops_priority,
     const bool in_terminal
-)
-{
-    try_add_variables(code_in, in_terminal);
+) {
+    try_add_variables(instruction_in, in_terminal);
 }
 
-void parser::check_if_its_txt(const instruction & instruction_in) {
+void parser::check_if_its_txt(
+    const instruction & instruction_in
+) {
 
 }

@@ -45,7 +45,7 @@ struct parser {
     );
 
     static void analyze_code(
-        const instruction &code_in,
+        const instruction &instruction_in,
         const std::initializer_list<std::string_view> &&ops_priority,
         bool in_terminal
     );
