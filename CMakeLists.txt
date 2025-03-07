@@ -16,15 +16,15 @@ add_executable(
         src/framework/parser.h
         src/jit/jit.cpp
         src/jit/jit.h
-        src/framework/code.cpp
-        src/framework/code.h
+        src/classes/code.cpp
+        src/classes/code.h
         src/exceptions/custom_err.cpp
         src/exceptions/custom_err.h
         src/tests/run.cpp
         src/tests/run.h
         src/framework/lexer.cpp
         src/framework/lexer.h
-        src/globals/data_types.h
+        src/globals/typedefs.h
         src/globals/global_variables.h
         src/framework/tree.cpp
         src/framework/tree.h

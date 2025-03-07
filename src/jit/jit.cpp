@@ -11,7 +11,7 @@
 #include "framework/parser.h"
 #include "framework/import.h"
 #include "framework/code.h"
-#include "../globals/data_types.h"
+#include "../globals/typedefs.h"
 #include "framework/lexer.h"
 #include "framework/tree.h"
 
