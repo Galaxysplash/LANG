@@ -11,5 +11,5 @@ struct lexer {
 
     static void new_word(instruction &ret, std::string &word_ref);
 
-    static void process_char(instruction &ret_ref, std::string& word_ref, char c);
+    static void process_char(instruction &ret_ref, std::string& word_ref, char c, bool& txt_indicator_ref);
 };

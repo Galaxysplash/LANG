@@ -190,8 +190,10 @@ void parser::exec_basic_instructions(
 }
 
 void parser::try_add_variables(const instruction& instructions, const bool in_terminal) {
-    filter_variable(instructions, "num", [&in_terminal](const std::string_view& name, const std::string_view& assigment) {
-        if (!num_list.contains(std::string(name))) {
+#pragma region try_add_variables
+#define new_variable_condition (!num_list.contains(name) && !txt_list.contains(name) && !bit_list.contains(name))
+    filter_variable(instructions, "num", [&in_terminal](const std::string& name, const std::string& assigment) {
+        if (new_variable_condition) {
             try {
                const double& num = std::stod(std::string(assigment));
 
@@ -209,10 +211,10 @@ void parser::try_add_variables(const instruction& instructions, const bool in_te
         }
     });
 
-    filter_variable(instructions, "txt", [&in_terminal](const std::string_view& name, const std::string_view& assigment) {
-        if (!txt_list.contains(std::string(name))) {
+    filter_variable(instructions, "txt", [&in_terminal](const std::string& name, const std::string& assigment) {
+        if (new_variable_condition) {
             if (is_txt(assigment)) {
-                txt_list[std::string(name)] = assigment;
+                txt_list[name] = assigment;
 
                if (in_terminal) {
                    std::cout << std::format("NOTED: {} = {}", name, assigment) << "\n";
@@ -231,8 +233,8 @@ void parser::try_add_variables(const instruction& instructions, const bool in_te
         }
     });
 
-    filter_variable(instructions, "bit", [&in_terminal](const std::string_view& name, const std::string_view& assigment) {
-        if (!bit_list.contains(std::string(name))) {
+    filter_variable(instructions, "bit", [&in_terminal](const std::string& name, const std::string& assigment) {
+        if (new_variable_condition) {
             enum class assigment_enum {
                 _null,
                 _true,
@@ -264,6 +266,7 @@ void parser::try_add_variables(const instruction& instructions, const bool in_te
             }
         }
     });
+#pragma endregion try_add_variables
 }
 
 void parser::analyze_code(

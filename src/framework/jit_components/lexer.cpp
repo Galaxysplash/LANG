@@ -15,9 +15,10 @@ void lexer::str_to_code(
 ) {
     std::string word{};
     word.reserve(STR_START_SIZE);
+    bool txt_indicator = false;
 
     for (const char c: txt) {
-        process_char(ret, word, c);
+        process_char(ret, word, c, txt_indicator);
     }
 
     new_word(ret, word);
@@ -31,32 +32,35 @@ void lexer::new_word(instruction &ret, std::string &word_ref) {
     }
 }
 
-void lexer::process_char(instruction &ret_ref, std::string& word_ref, const char c) {
-    bool special_char = false;
-
+void lexer::process_char(instruction &ret_ref, std::string& word_ref, const char c, bool& txt_indicator_ref) {
     if (c == TXT_INDICATOR) {
         word_ref.push_back(c);
+        txt_indicator_ref = !txt_indicator_ref;
         return;
     }
 
-    if (c == SPACE) {
-        new_word(ret_ref, word_ref);
-        return;
-    }
+    if (!txt_indicator_ref) {
+        bool special_char = false;
 
-    for (const char SIGN: SPECIAL_CHARS) {
-        if (c == SIGN) {
-            special_char = true;
-
+        if (c == SPACE) {
             new_word(ret_ref, word_ref);
-            word_ref.push_back(c);
-            new_word(ret_ref, word_ref);
-            break;
+            return;
         }
-    }
 
-    if (special_char) {
-        return;
+        for (const char SIGN: SPECIAL_CHARS) {
+            if (c == SIGN) {
+                special_char = true;
+
+                new_word(ret_ref, word_ref);
+                word_ref.push_back(c);
+                new_word(ret_ref, word_ref);
+                break;
+            }
+        }
+
+        if (special_char) {
+            return;
+        }
     }
 
     word_ref.push_back(c);
