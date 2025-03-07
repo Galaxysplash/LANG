@@ -203,16 +203,22 @@ void parser::analyze_code(
     try_add_variables(instruction_in, in_terminal);
 }
 
-void parser::check_if_its_txt(
-    const instruction & instruction_in
+bool parser::check_if_its_txt(
+    const std::string & str_in
 ) {
 #pragma region check_if_its_txt
-#define last
+#define last_instruction (i == str_in.size() - 1)
+#define first_instruction (i == 0)
+    bool is_txt = true;
 
-    for (uint32_t i = 0; i < instruction_in.get().size(); ++i) {
-        if (i == instruction_in.get().size() - 1) {
-
+    for (uint32_t i = 0; i < str_in.size(); ++i) {
+        if (first_instruction || last_instruction) {
+            if (str_in.at(i) != TXT_INDICATOR) {
+                is_txt = false;
+            }
         }
     }
+
+    return is_txt;
 #pragma endregion
 }

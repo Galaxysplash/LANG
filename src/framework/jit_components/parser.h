@@ -50,7 +50,7 @@ struct parser {
         bool in_terminal
     );
 
-    static void check_if_its_txt(
-        const instruction &instruction_in
+    static bool check_if_its_txt(
+        const std::string &str_in
     );
 };
