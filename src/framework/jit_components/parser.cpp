@@ -141,18 +141,20 @@ void parser::exec_basic_instructions(
                 std::cout << "info: known variables are: \n";
                 std::cout << "numbers:\n";
                 for (const auto&[num_ref, num_name_ref]: num_list) {
-                    std::cout << num_name_ref << " with the value " << num_ref << "\n";
+                    std::cout << num_ref << " with the value " << num_name_ref << "\n";
                 }
 
                 std::cout << "bits:\n";
                 for (const auto&[bit_ref, bit_name_ref]: bit_list) {
-                    std::cout << bit_name_ref << " with the value " << bit_ref << "\n";
+                    std::cout << bit_ref << " with the value " << bit_name_ref << "\n";
                 }
 
                 std::cout << "texts:\n";
                 for (const auto&[txt_ref, txt_name_ref]: txt_list) {
-                    std::cout << txt_name_ref << " with the value " << txt_ref << "\n";
+                    std::cout << txt_ref << " with the value " << txt_name_ref << "\n";
                 }
+
+                std::cout << "\n";
             }
         }
     });
