@@ -83,7 +83,7 @@ void jiter::analyze_and_exec(
 {
     parser::build_abstract_syntax_tree(instruction_in, {"+-", "*/"}, in_terminal);
     parser::try_add_variables(instruction_in, in_terminal);
-    tree::exec_absract_syntax_tree();
+    tree::exec();
     parser::exec_basic_instructions(instruction_in, in_terminal, one_word_commands_in);
 }
 
