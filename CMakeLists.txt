@@ -10,10 +10,10 @@ include_directories(
 add_executable(
     Lang
     src/main.cpp
-        src/framework/import.cpp
-        src/framework/import.h
-        src/framework/parser.cpp
-        src/framework/parser.h
+        src/framework/init/import.cpp
+        src/framework/init/import.h
+        src/framework/jit/parser.cpp
+        src/framework/jit/parser.h
         src/jit/jit.cpp
         src/jit/jit.h
         src/classes/code.cpp
@@ -22,10 +22,10 @@ add_executable(
         src/exceptions/custom_err.h
         src/tests/run.cpp
         src/tests/run.h
-        src/framework/lexer.cpp
-        src/framework/lexer.h
+        src/framework/jit/lexer.cpp
+        src/framework/jit/lexer.h
         src/globals/typedefs.h
         src/globals/global_variables.h
-        src/framework/tree.cpp
-        src/framework/tree.h
+        src/framework/jit/tree.cpp
+        src/framework/jit/tree.h
 )
