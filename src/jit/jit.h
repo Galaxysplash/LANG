@@ -1,14 +1,13 @@
 # pragma once
 
 
-#include <initializer_list>
 #include <string>
 #include <unordered_map>
 #include <functional>
 
 #include "framework/code.h"
 
-struct program {
+struct jit {
     static void run(
       int argc,
       const char** argv,

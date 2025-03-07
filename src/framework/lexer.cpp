@@ -3,7 +3,7 @@
 #include <format>
 
 #include "code.h"
-#include "global/global_variables.h"
+#include "globals/global_variables.h"
 
 //private
 static constexpr unsigned char STR_START_SIZE = 5;

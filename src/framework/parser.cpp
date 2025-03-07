@@ -6,7 +6,7 @@
 #include <iostream>
 
 #include "framework/code.h"
-#include "global/global_variables.h"
+#include "globals/global_variables.h"
 
 
 void parser::filter_instruction(
@@ -204,4 +204,8 @@ void parser::analyze_code(
 )
 {
     try_add_variables(code_in, in_terminal);
+}
+
+void parser::check_if_its_txt(const code &code_in) {
+
 }

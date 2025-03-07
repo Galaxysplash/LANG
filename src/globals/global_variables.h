@@ -1,6 +1,6 @@
 #pragma once
 
-#include "framework/data_type.h"
+#include "data_types.h"
 
 constexpr inline unsigned char TXT_INDICATOR = '"';
 

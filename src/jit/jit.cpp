@@ -1,4 +1,4 @@
-#include "program.h"
+#include "jit.h"
 
 #include <chrono>
 #include <thread>
@@ -11,12 +11,12 @@
 #include "framework/parser.h"
 #include "framework/import.h"
 #include "framework/code.h"
-#include "framework/data_type.h"
+#include "../globals/data_types.h"
 #include "framework/lexer.h"
 #include "framework/tree.h"
 
 
-void program::run(
+void jit::run(
     const int argc,
     const char** argv,
     code& code_ref
@@ -29,9 +29,9 @@ void program::run(
         }},
         {"help", [&]() {
             printf("create variables with: \n");
-            printf("a) foo: num = 10\n");
-            printf("b) foo: txt = \"hello world\"\n");
-            printf("c) foo: bit = true\n");
+            printf("a) x: num = 10\n");
+            printf("b) y: txt = \"hello world\"\n");
+            printf("c) z: bit = true\n");
             printf("\n");
             printf("exit the program with: 'exit'\n");
         }}
@@ -74,7 +74,7 @@ void program::run(
     }
 }
 
-void program::analyze_and_exec(
+void jit::analyze_and_exec(
     const bool in_terminal,
     const code& code_in,
     const std::unordered_map<std::string_view, std::function<void()>>& one_word_commands_in
@@ -86,7 +86,7 @@ void program::analyze_and_exec(
     parser::exec_basic_instructions(code_in, in_terminal, one_word_commands_in);
 }
 
-void program::get_code(const int argc, const char** argv, code& ret)
+void jit::get_code(const int argc, const char** argv, code& ret)
 {
     std::string str_buffer;
 

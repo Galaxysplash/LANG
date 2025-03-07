@@ -43,11 +43,14 @@ struct parser {
         const code &instructions,
         bool in_terminal
     );
-    
-    ///Analyzes the code and builds an abstract syntax tree.
+
     static void analyze_code(
         const code &code_in,
         const std::initializer_list<std::string_view> &&ops_priority,
         bool in_terminal
+    );
+
+    static void check_if_its_txt(
+        const code &code_in
     );
 };

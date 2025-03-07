@@ -14,10 +14,8 @@ add_executable(
         src/framework/import.h
         src/framework/parser.cpp
         src/framework/parser.h
-        src/summary/program.cpp
-        src/summary/program.h
-        src/tests/unit_test.cpp
-        src/tests/unit_test.h
+        src/jit/jit.cpp
+        src/jit/jit.h
         src/framework/code.cpp
         src/framework/code.h
         src/exceptions/custom_err.cpp
@@ -26,8 +24,8 @@ add_executable(
         src/tests/run.h
         src/framework/lexer.cpp
         src/framework/lexer.h
-        src/framework/data_type.h
-        src/global/global_variables.h
+        src/globals/data_types.h
+        src/globals/global_variables.h
         src/framework/tree.cpp
         src/framework/tree.h
 )
