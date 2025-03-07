@@ -6,7 +6,6 @@
 #define __CODE_BUFFER_TYPE_IN_CODE_CLASS std::vector<std::string>
 
 struct code {
-public:
     code();
     code(const std::initializer_list<std::string_view> && ini_list_move);
 

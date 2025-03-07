@@ -16,10 +16,10 @@ add_executable(
         src/framework/jit_components/parser.h
         src/jiter/jiter.cpp
         src/jiter/jiter.h
-        src/classes/code.cpp
-        src/classes/code.h
-        src/tests/run.cpp
-        src/tests/run.h
+        src/framework/classes/code.cpp
+        src/framework/classes/code.h
+        src/framework/tests/run.cpp
+        src/framework/tests/run.h
         src/framework/jit_components/lexer.cpp
         src/framework/jit_components/lexer.h
         src/globals/typedefs.h
