@@ -17,7 +17,7 @@ void parser::filter_instruction(
     if (filter_ref.empty()) {
         return;
     }
-
+#pragma region filter_instruction
 #define general_code_counter (known_code_counter + unknown_code_counter)
 #define unknown_is_wanted (filter_ref[i] == ANYTHING_STR && !code_in[i].empty())
 
@@ -58,6 +58,7 @@ void parser::filter_instruction(
     if (general_code_counter == filter_ref.size()) {
         func_in(unknown_code_buffer);
     }
+#pragma endregion
 }
 
 void parser::filter_instruction(
@@ -205,5 +206,13 @@ void parser::analyze_code(
 void parser::check_if_its_txt(
     const instruction & instruction_in
 ) {
+#pragma region check_if_its_txt
+#define last
 
+    for (uint32_t i = 0; i < instruction_in.get().size(); ++i) {
+        if (i == instruction_in.get().size() - 1) {
+
+        }
+    }
+#pragma endregion
 }
