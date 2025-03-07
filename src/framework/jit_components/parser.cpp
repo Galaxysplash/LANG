@@ -191,7 +191,7 @@ void parser::exec_basic_instructions(
 
 void parser::try_add_variables(const instruction& instructions, const bool in_terminal) {
 #pragma region try_add_variables
-    std::function is_in_special_signs = [&](const std::string& str_ref) -> bool {
+    const std::function is_in_special_signs = [&](const std::string& str_ref) -> bool {
         bool is_special_sign = false;
 
         for (const auto& special_sign: SPECIAL_SIGNS) {
@@ -204,10 +204,10 @@ void parser::try_add_variables(const instruction& instructions, const bool in_te
 
         return is_special_sign;
     };
-#define not_custom_for_new_variable_condition(X) X != "num" && X != "txt" && X != "bit" && is_special_sign(X)
+#define not_custom_for_new_variable_condition(X) (X != "num" && X != "txt" && X != "bit" && !is_in_special_signs(X))
 #define new_variable_condition (!num_list.contains(name) && !txt_list.contains(name) && !bit_list.contains(name) && \
-    name != "num" && name != "txt" && name != "bit" && \
-    assigment != "num" && assigment != "txt" && assigment != "bit"\
+    not_custom_for_new_variable_condition(name) && \
+    not_custom_for_new_variable_condition(assigment)\
     )
 #define filter_five_args_and_lamda(ARG1, ARG2, ARG3, ARG4, ARG5, LAMBDA) \
     filter_variable( \
@@ -217,7 +217,7 @@ void parser::try_add_variables(const instruction& instructions, const bool in_te
         LAMBDA(name, assigment); \
     });
 
-    const std::function try_create_num = [&in_terminal](const std::string& name, const std::string& assigment) {
+    const std::function try_create_num = [&](const std::string& name, const std::string& assigment) {
         if (new_variable_condition) {
             try {
                 const double& num = std::stod(std::string(assigment));
@@ -236,7 +236,7 @@ void parser::try_add_variables(const instruction& instructions, const bool in_te
         }
     };
 
-    const std::function try_create_txt = [&in_terminal](const std::string& name, const std::string& assigment) {
+    const std::function try_create_txt = [&](const std::string& name, const std::string& assigment) {
         if (new_variable_condition) {
             if (is_txt(assigment)) {
                 txt_list[name] = assigment;
@@ -258,7 +258,7 @@ void parser::try_add_variables(const instruction& instructions, const bool in_te
         }
     };
 
-    const std::function try_create_bit = [&in_terminal](const std::string& name, const std::string& assigment) {
+    const std::function try_create_bit = [&](const std::string& name, const std::string& assigment) {
         if (new_variable_condition) {
             enum class assigment_enum {
                 _null,
@@ -298,21 +298,13 @@ void parser::try_add_variables(const instruction& instructions, const bool in_te
 #pragma endregion
 
 #pragma region txt
-    filter_variable(
-        instructions,
-        {ANYTHING_STR, ":", "txt", "=", ANYTHING_STR},
-        [&try_create_txt](const std::string& name, const std::string& assigment) {
-        try_create_txt(name, assigment);
-    });
+    filter_five_args_and_lamda(ANYTHING_STR, ":", "txt", "=", ANYTHING_STR, try_create_txt)
+    filter_five_args_and_lamda("txt", ":", ANYTHING_STR, "=", ANYTHING_STR, try_create_txt)
 #pragma endregion
 
 #pragma region bit
-    filter_variable(
-        instructions,
-        {ANYTHING_STR, ":", "bit", "=", ANYTHING_STR},
-        [&try_create_bit](const std::string& name, const std::string& assigment) {
-        try_create_bit(name, assigment);
-    });
+    filter_five_args_and_lamda(ANYTHING_STR, ":", "bit", "=", ANYTHING_STR, try_create_bit)
+    filter_five_args_and_lamda("bit", ":", ANYTHING_STR, "=", ANYTHING_STR, try_create_bit)
 #pragma endregion
 #pragma endregion try_add_variables
 }
