@@ -120,7 +120,7 @@ void parser::exec_basic_instructions(
 ) {
     filter_instruction(instructions, {"print", ANYTHING_STR}, [&in_terminal](const std::vector<std::string_view>& list) {
         if (const std::string_view print_arg = list.at(0); is_txt(print_arg)) {
-            std::cout << print_arg << "\n";
+            std::cout << "printed: " << print_arg << "\n";
         }
         else if (num_list.contains(print_arg)) {
             std::cout << num_list[print_arg] << "\n";
@@ -133,7 +133,26 @@ void parser::exec_basic_instructions(
         }
         else {
             if (in_terminal) {
-                std::cerr << "error, what you wanted to be printed out was nor in '\"', neither could the system find it in the known variables.\n";
+                std::cerr << "error, what you wanted to be printed out was nor in '\"'," <<
+                " neither could the system find it in the known variables.\n";
+
+                std::cout << "info: what the system saw is '" << print_arg << "'\n";
+
+                std::cout << "info: known variables are: \n";
+                std::cout << "numbers:\n";
+                for (const auto&[num_ref, num_name_ref]: num_list) {
+                    std::cout << num_name_ref << " with the value " << num_ref << "\n";
+                }
+
+                std::cout << "bits:\n";
+                for (const auto&[bit_ref, bit_name_ref]: bit_list) {
+                    std::cout << bit_name_ref << " with the value " << bit_ref << "\n";
+                }
+
+                std::cout << "texts:\n";
+                for (const auto&[txt_ref, txt_name_ref]: txt_list) {
+                    std::cout << txt_name_ref << " with the value " << txt_ref << "\n";
+                }
             }
         }
     });
