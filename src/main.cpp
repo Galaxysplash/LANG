@@ -1,5 +1,5 @@
 #include "language/classes/instruction.h"
-#include "jiter/jiter.h"
+#include "language/jiter.h"
 
 int main(const int argc, const char **argv) {
     instruction code_buffer{};

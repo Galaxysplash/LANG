@@ -14,12 +14,12 @@ add_executable(
         src/language/init/import.h
         src/language/jit_components/parser.cpp
         src/language/jit_components/parser.h
-        src/jiter/jiter.cpp
-        src/jiter/jiter.h
+        src/language/jiter.cpp
+        src/language/jiter.h
         src/language/classes/instruction.cpp
         src/language/classes/instruction.h
-        src/language/tests/run.cpp
-        src/language/tests/run.h
+        src/tests/run.cpp
+        src/tests/run.h
         src/language/jit_components/lexer.cpp
         src/language/jit_components/lexer.h
         src/globals/typedefs.h

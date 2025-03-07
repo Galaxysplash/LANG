@@ -1,4 +1,4 @@
-#include "jiter.h"
+#include "language/jiter.h"
 
 #include <chrono>
 #include <thread>
@@ -8,12 +8,12 @@
 #include <unordered_map>
 #include <string>
 
-#include "language/jit_components/parser.h"
-#include "language/init/import.h"
-#include "language/classes/instruction.h"
+#include "init/import.h"
+#include "classes/instruction.h"
 #include "globals/typedefs.h"
-#include "language/jit_components/lexer.h"
-#include "language/jit_components/tree.h"
+#include "jit_components/lexer.h"
+#include "jit_components/parser.h"
+#include "jit_components/tree.h"
 
 
 void jiter::run(

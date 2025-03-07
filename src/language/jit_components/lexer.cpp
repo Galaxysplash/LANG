@@ -7,13 +7,13 @@
 #include "globals/globals_precompiled.h"
 
 //private
-static constexpr unsigned char STR_START_SIZE = 5;
+static constexpr unsigned char S_STR_START_SIZE = 5;
 
 void lexer::str_to_code(
     instruction &ret, const std::string &txt
 ) {
     std::string word{};
-    word.reserve(STR_START_SIZE);
+    word.reserve(S_STR_START_SIZE);
     bool txt_indicator = false;
 
     for (const char c: txt) {
@@ -27,12 +27,12 @@ void lexer::new_word(instruction &ret, std::string &word_ref) {
     if (!word_ref.empty()) {
         ret.get().emplace_back(word_ref);
         word_ref.clear();
-        word_ref.reserve(STR_START_SIZE);
+        word_ref.reserve(S_STR_START_SIZE);
     }
 }
 
 void lexer::process_char(instruction &ret_ref, std::string& word_ref, const char c, bool& txt_indicator_ref) {
-    if (c == TXT_INDICATOR) {
+    if (c == G_TXT_INDICATOR) {
         word_ref.push_back(c);
         txt_indicator_ref = !txt_indicator_ref;
         return;

@@ -122,14 +122,14 @@ void parser::exec_basic_instructions(
         if (const std::string_view print_arg = list.at(0); is_txt(print_arg)) {
             std::cout << "out: " << print_arg << "\n";
         }
-        else if (num_list.contains(std::string(print_arg))) {
-            std::cout << "out: " << num_list[std::string(print_arg)] << "\n";
+        else if (g_num_list.contains(std::string(print_arg))) {
+            std::cout << "out: " << g_num_list[std::string(print_arg)] << "\n";
         }
-        else if (bit_list.contains(std::string(print_arg))) {
-            std::cout << "out: " << bit_list[std::string(print_arg)] << "\n";
+        else if (g_bit_list.contains(std::string(print_arg))) {
+            std::cout << "out: " << g_bit_list[std::string(print_arg)] << "\n";
         }
-        else if (txt_list.contains(std::string(print_arg))) {
-            std::cout << "out: " << txt_list[std::string(print_arg)] << "\n";
+        else if (g_txt_list.contains(std::string(print_arg))) {
+            std::cout << "out: " << g_txt_list[std::string(print_arg)] << "\n";
         }
         else {
             if (in_terminal) {
@@ -140,18 +140,18 @@ void parser::exec_basic_instructions(
 
 
                 std::cout << "\n\nnumbers:\n"; {
-                    for (const auto&[num_name_ref, num_ref]: num_list) {
+                    for (const auto&[num_name_ref, num_ref]: g_num_list) {
                        std::cout << "-" << num_name_ref << " with the value of " << num_ref << "\n";
                     }
 
-                    if (num_list.empty()) {
+                    if (g_num_list.empty()) {
                         std::cout << "none\n";
                     }
                 }
 
                 std::cout << "\n\nbits:\n"; {
                     // ReSharper disable once CppUseElementsView
-                   for (const auto&[bit_name_ref, bit_ref]: bit_list) {
+                   for (const auto&[bit_name_ref, bit_ref]: g_bit_list) {
                        if (bit_ref) {
                            std::cout << "-" << bit_name_ref << " with the value of true\n";
                        }
@@ -160,17 +160,17 @@ void parser::exec_basic_instructions(
                        }
                    }
 
-                    if (bit_list.empty()) {
+                    if (g_bit_list.empty()) {
                         std::cout << "none\n";
                     }
                 }
 
                 std::cout << "\n\ntexts:\n"; {
-                    for (const auto&[txt_name_ref, txt_ref]: txt_list) {
+                    for (const auto&[txt_name_ref, txt_ref]: g_txt_list) {
                        std::cout << "-" << txt_ref << " with the value of " << txt_name_ref << "\n";
                     }
 
-                    if (txt_list.empty()) {
+                    if (g_txt_list.empty()) {
                         std::cout << "none\n";
                     }
                 }
@@ -205,7 +205,7 @@ void parser::try_add_variables(const instruction& instruction_in, const bool in_
         return is_special_sign;
     };
 #define not_custom_for_new_variable_condition(X) (X != "num" && X != "txt" && X != "bit" && !is_in_special_signs(X))
-#define new_variable_condition (!num_list.contains(name) && !txt_list.contains(name) && !bit_list.contains(name) && \
+#define new_variable_condition (!g_num_list.contains(name) && !g_txt_list.contains(name) && !g_bit_list.contains(name) && \
     not_custom_for_new_variable_condition(name) && \
     not_custom_for_new_variable_condition(assigment)\
     )
@@ -222,7 +222,7 @@ void parser::try_add_variables(const instruction& instruction_in, const bool in_
             try {
                 const double& num = std::stod(std::string(assigment));
 
-                num_list[std::string(name)] = num;
+                g_num_list[std::string(name)] = num;
 
                 if (in_terminal) {
                     printf("%s\n", std::format("NOTED: {} = {}", name, assigment).c_str());
@@ -239,7 +239,7 @@ void parser::try_add_variables(const instruction& instruction_in, const bool in_
     const std::function try_create_txt = [&](const std::string& name, const std::string& assigment) {
         if (new_variable_condition) {
             if (is_txt(assigment)) {
-                txt_list[name] = assigment;
+                g_txt_list[name] = assigment;
 
                 if (in_terminal) {
                     std::cout << std::format("NOTED: {} = {}", name, assigment) << "\n";
@@ -270,11 +270,11 @@ void parser::try_add_variables(const instruction& instruction_in, const bool in_
 
             if (assigment == "true") {
                 assigment_buffer = assigment_enum::_true;
-                bit_list[std::string(name)] = true;
+                g_bit_list[std::string(name)] = true;
             }
             else if (assigment == "false") {
                 assigment_buffer = assigment_enum::_false;
-                bit_list[std::string(name)] = false;
+                g_bit_list[std::string(name)] = false;
             }
 
             if (assigment_buffer != assigment_enum::_null && in_terminal) {
@@ -319,7 +319,7 @@ bool parser::is_txt(
 
     for (uint32_t i = 0; i < str_in.size(); ++i) {
         if (first_instruction || last_instruction) {
-            if (str_in.at(i) != TXT_INDICATOR) {
+            if (str_in.at(i) != G_TXT_INDICATOR) {
                 is_txt = false;
             }
         }

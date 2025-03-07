@@ -1,5 +1,5 @@
 #include "tree.h"
-
+#include "globals/global_variables.h"
 
 void tree::exec()
 {
