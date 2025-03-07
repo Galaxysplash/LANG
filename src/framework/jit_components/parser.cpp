@@ -118,8 +118,24 @@ void parser::exec_basic_instructions(
     const bool in_terminal,
     const std::unordered_map<std::string_view, std::function<void()>>& one_word_commands_in
 ) {
-    filter_instruction(instructions, {"print", ANYTHING_STR}, [&in_terminal](const std::vector<std::string_view>& txt) {
-
+    filter_instruction(instructions, {"print", ANYTHING_STR}, [&in_terminal](const std::vector<std::string_view>& list) {
+        if (const std::string_view print_arg = list.at(0); is_txt(print_arg)) {
+            std::cout << print_arg << "\n";
+        }
+        else if (num_list.contains(print_arg)) {
+            std::cout << num_list[print_arg] << "\n";
+        }
+        else if (bit_list.contains(print_arg)) {
+            std::cout << bit_list[print_arg] << "\n";
+        }
+        else if (txt_list.contains(print_arg)) {
+            std::cout << txt_list[print_arg] << "\n";
+        }
+        else {
+            if (in_terminal) {
+                std::cerr << "error, what you wanted to be printed out was nor in '\"', neither could the system find it in the known variables.\n";
+            }
+        }
     });
 
     if (in_terminal) {
