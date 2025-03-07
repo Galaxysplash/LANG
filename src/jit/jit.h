@@ -5,7 +5,7 @@
 #include <unordered_map>
 #include <functional>
 
-#include "framework/code.h"
+#include "classes/code.h"
 
 struct jit {
     static void run(
