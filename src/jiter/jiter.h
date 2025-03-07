@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <functional>
 
-#include "framework/classes/instruction.h"
+#include "language/classes/instruction.h"
 
 struct jiter {
     static void run(

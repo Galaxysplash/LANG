@@ -10,21 +10,21 @@ include_directories(
 add_executable(
     Lang
     src/main.cpp
-        src/framework/init/import.cpp
-        src/framework/init/import.h
-        src/framework/jit_components/parser.cpp
-        src/framework/jit_components/parser.h
+        src/language/init/import.cpp
+        src/language/init/import.h
+        src/language/jit_components/parser.cpp
+        src/language/jit_components/parser.h
         src/jiter/jiter.cpp
         src/jiter/jiter.h
-        src/framework/classes/instruction.cpp
-        src/framework/classes/instruction.h
-        src/framework/tests/run.cpp
-        src/framework/tests/run.h
-        src/framework/jit_components/lexer.cpp
-        src/framework/jit_components/lexer.h
+        src/language/classes/instruction.cpp
+        src/language/classes/instruction.h
+        src/language/tests/run.cpp
+        src/language/tests/run.h
+        src/language/jit_components/lexer.cpp
+        src/language/jit_components/lexer.h
         src/globals/typedefs.h
         src/globals/global_variables.h
-        src/framework/jit_components/tree.cpp
-        src/framework/jit_components/tree.h
+        src/language/jit_components/tree.cpp
+        src/language/jit_components/tree.h
         src/globals/globals_precompiled.h
 )

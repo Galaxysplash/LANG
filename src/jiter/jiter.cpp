@@ -8,12 +8,12 @@
 #include <unordered_map>
 #include <string>
 
-#include "framework/jit_components/parser.h"
-#include "framework/init/import.h"
-#include "framework/classes/instruction.h"
+#include "language/jit_components/parser.h"
+#include "language/init/import.h"
+#include "language/classes/instruction.h"
 #include "globals/typedefs.h"
-#include "framework/jit_components/lexer.h"
-#include "framework/jit_components/tree.h"
+#include "language/jit_components/lexer.h"
+#include "language/jit_components/tree.h"
 
 
 void jiter::run(

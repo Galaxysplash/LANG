@@ -1,4 +1,4 @@
-#include "framework/classes/instruction.h"
+#include "language/classes/instruction.h"
 #include "jiter/jiter.h"
 
 int main(const int argc, const char **argv) {

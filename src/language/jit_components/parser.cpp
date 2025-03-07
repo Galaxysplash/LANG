@@ -5,7 +5,7 @@
 #include <format>
 #include <iostream>
 
-#include "framework/classes/instruction.h"
+#include "language/classes/instruction.h"
 #include "globals/global_variables.h"
 #include "globals/globals_precompiled.h"
 
