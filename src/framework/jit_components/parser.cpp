@@ -143,24 +143,29 @@ void parser::try_add_variables(const instruction& instructions, const bool in_te
                     printf("%s\n", std::format("NOTED: {} = {}", name, assigment).c_str());
                 }
             } catch (...) {
-               printf("error for num var, because the assigment couldn't be converted to a number.\n");
+               std::cerr << "error, variable could not be created, because the assigment NEEDS to be a number.\n";
             }
         }
         else {
-            printf("error, variable could not be created, it already exists.\n");
+            std::cerr << "error, variable could not be created, it already exists.\n";
         }
     });
 
     filter_variable(instructions, "txt", [&in_terminal](const std::string_view& name, const std::string_view& assigment) {
         if (!txt_list.contains(name)) {
-            txt_list[name] = assigment;
+            if (is_txt(assigment)) {
+                txt_list[name] = assigment;
 
-            if (in_terminal) {
-                std::cout << std::format("NOTED: {} = {}", name, assigment) << "\n";
+               if (in_terminal) {
+                   std::cout << std::format("NOTED: {} = {}", name, assigment) << "\n";
+               }
+            }
+            else {
+                std::cerr << "error, variable of type txt could not be created assigment NEEDS the '\"' at the begin as well, as at the end.\n";
             }
         }
         else {
-            printf("error, variable could not be created, it already exists.\n");
+            std::cerr << "error, variable could not be created, it already exists.\n";
         }
     });
 
@@ -187,10 +192,10 @@ void parser::try_add_variables(const instruction& instructions, const bool in_te
                 printf("%s\n", std::format("NOTED: {} = {}", name, assigment).c_str());
             }
             else {
-                printf("%s\n", std::format("error, bit could not be created, assignment is '{}'!", name).c_str());
+                std::cerr << "error, variable could not be created, because the assigment NEEDS to be true or false.\n";
             }
         } else {
-            printf("error, variable could not be created, it already exists.\n");
+            std::cerr <<"error, variable could not be created, it already exists.\n";
         }
     });
 }
@@ -203,8 +208,8 @@ void parser::analyze_code(
     try_add_variables(instruction_in, in_terminal);
 }
 
-bool parser::check_if_its_txt(
-    const std::string & str_in
+bool parser::is_txt(
+    const std::string_view & str_in
 ) {
 #pragma region check_if_its_txt
 #define last_instruction (i == str_in.size() - 1)

@@ -62,7 +62,7 @@ void jiter::run(
             try {
                 analyze_and_exec(in_terminal, code_ref, one_word_commands);
             } catch (const std::exception& e) {
-                printf("Internal C++ error, when running the code: %s\n", e.what());
+                std::cerr << "Internal C++ error, when running the code: " << e.what() << "\n";
             }
 
             code_ref.clear();
