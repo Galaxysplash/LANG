@@ -12,19 +12,19 @@ struct parser {
     static void filter_instruction(
       const instruction & code_in,
       const std::vector<std::string_view> & filter_ref,
-      const std::function<void(std::vector<std::string_view>& str_list_ref)> & func_in
+      const std::function<void(std::vector<std::string>& str_list_ref)> & func_in
     );
 
     static void filter_instruction(
         const instruction & code_in,
         const std::vector<std::string_view> && filter_move,
-        const std::function<void(std::vector<std::string_view>& str_list_ref)> && func_in
+        const std::function<void(std::vector<std::string>& str_list_ref)> && func_in
     );
 
     static void filter_variable(
         const instruction & code_in,
         const std::string_view && type_name_move,
-        const std::function<void(const std::string_view& name, const std::string_view& assigment)> && func_in
+        const std::function<void(const std::string& name, const std::string& assigment)> && func_in
     );
 
     static void check_for_one_word_instruction(
@@ -35,7 +35,7 @@ struct parser {
 
     static void exec_basic_instructions(
         const instruction &instructions, bool in_terminal,
-        const std::unordered_map<std::string_view, std::function<void()>> &
+        const std::unordered_map<std::string, std::function<void()>> &
         one_word_commands_in
     );
 

@@ -78,7 +78,7 @@ void jiter::run(
 void jiter::analyze_and_exec(
     const bool in_terminal,
     const instruction& code_in,
-    const std::unordered_map<std::string_view, std::function<void()>>& one_word_commands_in
+    const std::unordered_map<std::string, std::function<void()>>& one_word_commands_in
 )
 {
     parser::analyze_code(code_in, {"+-", "*/"}, in_terminal);

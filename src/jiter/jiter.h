@@ -17,7 +17,7 @@ struct jiter {
     static void analyze_and_exec(
         bool in_terminal,
         const instruction& code_in,
-        const std::unordered_map<std::string_view, std::function<void()>>& one_word_commands_in
+        const std::unordered_map<std::string, std::function<void()>>& one_word_commands_in
     );
 
     ///Pulls the code from the file and formats it.
