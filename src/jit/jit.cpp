@@ -8,12 +8,12 @@
 #include <unordered_map>
 #include <string>
 
-#include "framework/parser.h"
-#include "framework/import.h"
-#include "framework/code.h"
-#include "../globals/typedefs.h"
-#include "framework/lexer.h"
-#include "framework/tree.h"
+#include "framework/jit/parser.h"
+#include "framework/init/import.h"
+#include "classes/code.h"
+#include "globals/typedefs.h"
+#include "framework/jit/lexer.h"
+#include "framework/jit/tree.h"
 
 
 void jit::run(

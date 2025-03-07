@@ -18,8 +18,6 @@ add_executable(
         src/jit/jit.h
         src/classes/code.cpp
         src/classes/code.h
-        src/exceptions/custom_err.cpp
-        src/exceptions/custom_err.h
         src/tests/run.cpp
         src/tests/run.h
         src/framework/jit/lexer.cpp
