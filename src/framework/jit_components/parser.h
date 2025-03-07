@@ -42,11 +42,11 @@ struct parser {
     );
 
     static void try_add_variables(
-        const instruction &instructions,
+        const instruction &instruction_in,
         bool in_terminal
     );
 
-    static void analyze_code(
+    static void build_abstract_syntax_tree(
         const instruction &instruction_in,
         const std::initializer_list<std::string_view> &&ops_priority,
         bool in_terminal

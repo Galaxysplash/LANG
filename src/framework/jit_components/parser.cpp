@@ -189,7 +189,7 @@ void parser::exec_basic_instructions(
     }
 }
 
-void parser::try_add_variables(const instruction& instructions, const bool in_terminal) {
+void parser::try_add_variables(const instruction& instruction_in, const bool in_terminal) {
 #pragma region try_add_variables
     const std::function is_in_special_signs = [&](const std::string& str_ref) -> bool {
         bool is_special_sign = false;
@@ -209,9 +209,9 @@ void parser::try_add_variables(const instruction& instructions, const bool in_te
     not_custom_for_new_variable_condition(name) && \
     not_custom_for_new_variable_condition(assigment)\
     )
-#define filter_five_args_and_lamda(ARG1, ARG2, ARG3, ARG4, ARG5, LAMBDA) \
+#define var_syntax_five_parts(ARG1, ARG2, ARG3, ARG4, ARG5, LAMBDA) \
     filter_variable( \
-    instructions, \
+    instruction_in, \
     {ARG1, ARG2, ARG3, ARG4, ARG5}, \
     [&LAMBDA](const std::string& name, const std::string& assigment) { \
         LAMBDA(name, assigment); \
@@ -293,28 +293,27 @@ void parser::try_add_variables(const instruction& instructions, const bool in_te
     };
 
 #pragma region num
-    filter_five_args_and_lamda(ANYTHING_STR, ":", "num", "=", ANYTHING_STR, try_create_num)
-    filter_five_args_and_lamda("num", ":", ANYTHING_STR, "=", ANYTHING_STR, try_create_num)
+    var_syntax_five_parts(ANYTHING_STR, ":", "num", "=", ANYTHING_STR, try_create_num)
+    var_syntax_five_parts("num", ":", ANYTHING_STR, "=", ANYTHING_STR, try_create_num)
 #pragma endregion
 
 #pragma region txt
-    filter_five_args_and_lamda(ANYTHING_STR, ":", "txt", "=", ANYTHING_STR, try_create_txt)
-    filter_five_args_and_lamda("txt", ":", ANYTHING_STR, "=", ANYTHING_STR, try_create_txt)
+    var_syntax_five_parts(ANYTHING_STR, ":", "txt", "=", ANYTHING_STR, try_create_txt)
+    var_syntax_five_parts("txt", ":", ANYTHING_STR, "=", ANYTHING_STR, try_create_txt)
 #pragma endregion
 
 #pragma region bit
-    filter_five_args_and_lamda(ANYTHING_STR, ":", "bit", "=", ANYTHING_STR, try_create_bit)
-    filter_five_args_and_lamda("bit", ":", ANYTHING_STR, "=", ANYTHING_STR, try_create_bit)
+    var_syntax_five_parts(ANYTHING_STR, ":", "bit", "=", ANYTHING_STR, try_create_bit)
+    var_syntax_five_parts("bit", ":", ANYTHING_STR, "=", ANYTHING_STR, try_create_bit)
 #pragma endregion
 #pragma endregion try_add_variables
 }
 
-void parser::analyze_code(
+void parser::build_abstract_syntax_tree(
     const instruction& instruction_in,
     const std::initializer_list<std::string_view>&& ops_priority,
     const bool in_terminal
 ) {
-    try_add_variables(instruction_in, in_terminal);
 }
 
 bool parser::is_txt(

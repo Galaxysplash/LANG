@@ -77,14 +77,14 @@ void jiter::run(
 
 void jiter::analyze_and_exec(
     const bool in_terminal,
-    const instruction& code_in,
+    const instruction& instruction_in,
     const std::unordered_map<std::string, std::function<void()>>& one_word_commands_in
 )
 {
-    parser::analyze_code(code_in, {"+-", "*/"}, in_terminal);
-
+    parser::build_abstract_syntax_tree(instruction_in, {"+-", "*/"}, in_terminal);
+    parser::try_add_variables(instruction_in, in_terminal);
     tree::exec_absract_syntax_tree();
-    parser::exec_basic_instructions(code_in, in_terminal, one_word_commands_in);
+    parser::exec_basic_instructions(instruction_in, in_terminal, one_word_commands_in);
 }
 
 void jiter::get_code(const int argc, const char** argv, instruction& ret)
