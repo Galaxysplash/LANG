@@ -309,13 +309,6 @@ void parser::try_add_variables(const instruction& instruction_in, const bool in_
 #pragma endregion try_add_variables
 }
 
-void parser::build_abstract_syntax_tree(
-    const instruction& instruction_in,
-    const std::initializer_list<std::string_view>&& ops_priority,
-    const bool in_terminal
-) {
-}
-
 bool parser::is_txt(
     const std::string_view & str_in
 ) {

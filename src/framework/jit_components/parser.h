@@ -46,12 +46,6 @@ struct parser {
         bool in_terminal
     );
 
-    static void build_abstract_syntax_tree(
-        const instruction &instruction_in,
-        const std::initializer_list<std::string_view> &&ops_priority,
-        bool in_terminal
-    );
-
     static bool is_txt(
         const std::string_view &str_in
     );
