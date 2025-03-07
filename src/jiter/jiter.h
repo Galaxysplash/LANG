@@ -7,7 +7,7 @@
 
 #include "classes/code.h"
 
-struct jit {
+struct jiter {
     static void run(
       int argc,
       const char** argv,

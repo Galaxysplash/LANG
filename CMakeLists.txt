@@ -12,18 +12,18 @@ add_executable(
     src/main.cpp
         src/framework/init/import.cpp
         src/framework/init/import.h
-        src/framework/jit/parser.cpp
-        src/framework/jit/parser.h
-        src/jit/jit.cpp
-        src/jit/jit.h
+        src/framework/jit_components/parser.cpp
+        src/framework/jit_components/parser.h
+        src/jiter/jiter.cpp
+        src/jiter/jiter.h
         src/classes/code.cpp
         src/classes/code.h
         src/tests/run.cpp
         src/tests/run.h
-        src/framework/jit/lexer.cpp
-        src/framework/jit/lexer.h
+        src/framework/jit_components/lexer.cpp
+        src/framework/jit_components/lexer.h
         src/globals/typedefs.h
         src/globals/global_variables.h
-        src/framework/jit/tree.cpp
-        src/framework/jit/tree.h
+        src/framework/jit_components/tree.cpp
+        src/framework/jit_components/tree.h
 )

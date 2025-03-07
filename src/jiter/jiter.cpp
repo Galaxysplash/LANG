@@ -1,4 +1,4 @@
-#include "jit.h"
+#include "jiter.h"
 
 #include <chrono>
 #include <thread>
@@ -8,15 +8,15 @@
 #include <unordered_map>
 #include <string>
 
-#include "framework/jit/parser.h"
+#include "framework/jit_components/parser.h"
 #include "framework/init/import.h"
 #include "classes/code.h"
 #include "globals/typedefs.h"
-#include "framework/jit/lexer.h"
-#include "framework/jit/tree.h"
+#include "framework/jit_components/lexer.h"
+#include "framework/jit_components/tree.h"
 
 
-void jit::run(
+void jiter::run(
     const int argc,
     const char** argv,
     code& code_ref
@@ -74,7 +74,7 @@ void jit::run(
     }
 }
 
-void jit::analyze_and_exec(
+void jiter::analyze_and_exec(
     const bool in_terminal,
     const code& code_in,
     const std::unordered_map<std::string_view, std::function<void()>>& one_word_commands_in
@@ -86,7 +86,7 @@ void jit::analyze_and_exec(
     parser::exec_basic_instructions(code_in, in_terminal, one_word_commands_in);
 }
 
-void jit::get_code(const int argc, const char** argv, code& ret)
+void jiter::get_code(const int argc, const char** argv, code& ret)
 {
     std::string str_buffer;
 
