@@ -5,12 +5,12 @@
 
 #define __CODE_BUFFER_TYPE_IN_CODE_CLASS std::vector<std::string>
 
-struct code {
-    code();
-    code(const std::initializer_list<std::string_view> && ini_list_move);
+struct instruction {
+    instruction();
+    instruction(const std::initializer_list<std::string_view> && ini_list_move);
 
-    bool operator==(const code & other) const;
-    bool operator==(const code && other) const;
+    bool operator==(const instruction & other) const;
+    bool operator==(const instruction && other) const;
     std::string operator[](int index) const;
     std::vector<std::string>& get();
     [[nodiscard]] const __CODE_BUFFER_TYPE_IN_CODE_CLASS & get() const;
@@ -25,7 +25,7 @@ struct code {
 private:
      __CODE_BUFFER_TYPE_IN_CODE_CLASS _code_buffer{};
 
-    [[nodiscard]] bool is_equal(const code & other) const;
+    [[nodiscard]] bool is_equal(const instruction & other) const;
 
 public:
     auto begin() { return _code_buffer.begin(); }

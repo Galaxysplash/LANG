@@ -2,7 +2,7 @@
 
 #include <format>
 
-#include "classes/code.h"
+#include "framework/classes/instruction.h"
 #include "globals/global_variables.h"
 
 //private
@@ -11,7 +11,7 @@ static constexpr char SPECIAL_CHARS[] = {',', ';', '\n', ':', '.', '\t', '\r', '
 static constexpr char SPACE = ' ';
 
 void lexer::str_to_code(
-    code &ret, const std::string &txt
+    instruction &ret, const std::string &txt
 ) {
     std::string word{};
     word.reserve(STR_START_SIZE);
@@ -23,7 +23,7 @@ void lexer::str_to_code(
     new_word(ret, word);
 }
 
-void lexer::new_word(code &ret, std::string &word_ref) {
+void lexer::new_word(instruction &ret, std::string &word_ref) {
     if (!word_ref.empty()) {
         ret.get().emplace_back(word_ref);
         word_ref.clear();
@@ -31,7 +31,7 @@ void lexer::new_word(code &ret, std::string &word_ref) {
     }
 }
 
-void lexer::process_char(code &ret_ref, std::string& word_ref, const char c) {
+void lexer::process_char(instruction &ret_ref, std::string& word_ref, const char c) {
     bool special_char = false;
 
     if (c == TXT_INDICATOR) {

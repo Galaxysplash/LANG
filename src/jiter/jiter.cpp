@@ -10,7 +10,7 @@
 
 #include "framework/jit_components/parser.h"
 #include "framework/init/import.h"
-#include "classes/code.h"
+#include "framework/classes/instruction.h"
 #include "globals/typedefs.h"
 #include "framework/jit_components/lexer.h"
 #include "framework/jit_components/tree.h"
@@ -19,7 +19,7 @@
 void jiter::run(
     const int argc,
     const char** argv,
-    code& code_ref
+    instruction& code_ref
 )
 {
     const bool in_terminal = argc <= 1;
@@ -76,7 +76,7 @@ void jiter::run(
 
 void jiter::analyze_and_exec(
     const bool in_terminal,
-    const code& code_in,
+    const instruction& code_in,
     const std::unordered_map<std::string_view, std::function<void()>>& one_word_commands_in
 )
 {
@@ -86,7 +86,7 @@ void jiter::analyze_and_exec(
     parser::exec_basic_instructions(code_in, in_terminal, one_word_commands_in);
 }
 
-void jiter::get_code(const int argc, const char** argv, code& ret)
+void jiter::get_code(const int argc, const char** argv, instruction& ret)
 {
     std::string str_buffer;
 

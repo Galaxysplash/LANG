@@ -5,12 +5,12 @@
 #include <format>
 #include <iostream>
 
-#include "classes/code.h"
+#include "framework/classes/instruction.h"
 #include "globals/global_variables.h"
 
 
 void parser::filter_instruction(
-    const code & code_in,
+    const instruction & code_in,
     const std::vector<std::string_view> & filter_ref,
     const std::function<void(std::vector<std::string_view>& str_list_ref)> & func_in
 )
@@ -62,7 +62,7 @@ void parser::filter_instruction(
 }
 
 void parser::filter_instruction(
-    const code & code_in,
+    const instruction & code_in,
     const std::vector<std::string_view> && filter_move,
     const std::function<void(std::vector<std::string_view>& str_list_ref)> && func_in
 )
@@ -71,7 +71,7 @@ void parser::filter_instruction(
 }
 
 void parser::filter_variable(
-    const code & code_in,
+    const instruction & code_in,
     const std::string_view && type_name_move,
     const std::function<void(const std::string_view& name, const std::string_view& assigment)> && func_in
 )
@@ -104,7 +104,7 @@ void parser::filter_variable(
 }
 
 void parser::check_for_one_word_instruction(
-    const code& code_in,
+    const instruction& code_in,
     const std::string_view& instruction_in,
     const std::function<void()>& func_in
 ) {
@@ -116,7 +116,7 @@ void parser::check_for_one_word_instruction(
 }
 
 void parser::exec_basic_instructions(
-    const code& instructions,
+    const instruction& instructions,
     const bool in_terminal,
     const std::unordered_map<std::string_view, std::function<void()>>& one_word_commands_in
 ) {
@@ -133,7 +133,7 @@ void parser::exec_basic_instructions(
     }
 }
 
-void parser::try_add_variables(const code& instructions, const bool in_terminal) {
+void parser::try_add_variables(const instruction& instructions, const bool in_terminal) {
     filter_variable(instructions, "num", [&in_terminal](const std::string_view& name, const std::string_view& assigment) {
         if (!num_list.contains(name)) {
             try {
@@ -198,7 +198,7 @@ void parser::try_add_variables(const code& instructions, const bool in_terminal)
 }
 
 void parser::analyze_code(
-    const code& code_in,
+    const instruction& code_in,
     const std::initializer_list<std::string_view>&& ops_priority,
     const bool in_terminal
 )
@@ -206,6 +206,6 @@ void parser::analyze_code(
     try_add_variables(code_in, in_terminal);
 }
 
-void parser::check_if_its_txt(const code &code_in) {
+void parser::check_if_its_txt(const instruction & instruction_in) {
 
 }

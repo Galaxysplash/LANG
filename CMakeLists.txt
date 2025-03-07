@@ -16,8 +16,8 @@ add_executable(
         src/framework/jit_components/parser.h
         src/jiter/jiter.cpp
         src/jiter/jiter.h
-        src/framework/classes/code.cpp
-        src/framework/classes/code.h
+        src/framework/classes/instruction.cpp
+        src/framework/classes/instruction.h
         src/framework/tests/run.cpp
         src/framework/tests/run.h
         src/framework/jit_components/lexer.cpp
