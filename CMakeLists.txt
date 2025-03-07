@@ -26,4 +26,5 @@ add_executable(
         src/globals/global_variables.h
         src/framework/jit_components/tree.cpp
         src/framework/jit_components/tree.h
+        src/globals/globals_precompiled.h
 )

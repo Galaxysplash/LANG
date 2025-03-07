@@ -7,12 +7,12 @@
 
 #include "framework/classes/instruction.h"
 #include "globals/global_variables.h"
-
+#include "globals/globals_precompiled.h"
 
 void parser::filter_instruction(
     const instruction & code_in,
     const std::vector<std::string_view> & filter_ref,
-    const std::function<void(std::vector<std::string>& str_list_ref)> & func_in
+    const std::function<void(instruction& str_list_ref)> & func_in
 ) {
     if (filter_ref.empty()) {
         return;
@@ -64,34 +64,34 @@ void parser::filter_instruction(
 void parser::filter_instruction(
     const instruction & code_in,
     const std::vector<std::string_view> && filter_move,
-    const std::function<void(std::vector<std::string>& str_list_ref)> && func_in
+    const std::function<void(instruction& instruction_ref)> && func_in
 ) {
     filter_instruction(code_in, filter_move, func_in);
 }
 
 void parser::filter_variable(
     const instruction & code_in,
-    const std::string_view && type_name_move,
+    const std::initializer_list<std::string_view> && variable_syntax_move,
     const std::function<void(const std::string& name, const std::string& assigment)> && func_in
 ) {
     filter_instruction(
         code_in,
-        {ANYTHING_STR, ":", type_name_move, "=", ANYTHING_STR},
+        variable_syntax_move,
         // ReSharper disable once CppParameterMayBeConstPtrOrRef
-        [&](std::vector<std::string>& code_ref) -> void {
+        [&](instruction& instruction_ref) -> void {
             unsigned char counter = 0;
 
             std::string instruction_1{}, instruction_2{};
 
-            for (const std::string& instruction_ref: code_ref) {
+            for (const std::string& instruction_part_ref: instruction_ref) {
                 if (counter == 0) {
                     // ReSharper disable once CppJoinDeclarationAndAssignment
-                    instruction_1 = instruction_ref;
+                    instruction_1 = instruction_part_ref;
                 }
 
-                if (counter == code_ref.size() -1) {
+                if (counter == instruction_ref.get().size() -1) {
                     // ReSharper disable once CppJoinDeclarationAndAssignment
-                    instruction_2 = instruction_ref;
+                    instruction_2 = instruction_part_ref;
                 }
                 ++counter;
             }
@@ -191,34 +191,59 @@ void parser::exec_basic_instructions(
 
 void parser::try_add_variables(const instruction& instructions, const bool in_terminal) {
 #pragma region try_add_variables
-#define new_variable_condition (!num_list.contains(name) && !txt_list.contains(name) && !bit_list.contains(name))
-    filter_variable(instructions, "num", [&in_terminal](const std::string& name, const std::string& assigment) {
+    std::function is_in_special_signs = [&](const std::string& str_ref) -> bool {
+        bool is_special_sign = false;
+
+        for (const auto& special_sign: SPECIAL_SIGNS) {
+            std::string temp_str;
+            temp_str += special_sign;
+            if (temp_str == str_ref) {
+                is_special_sign = true;
+            }
+        }
+
+        return is_special_sign;
+    };
+#define not_custom_for_new_variable_condition(X) X != "num" && X != "txt" && X != "bit" && is_special_sign(X)
+#define new_variable_condition (!num_list.contains(name) && !txt_list.contains(name) && !bit_list.contains(name) && \
+    name != "num" && name != "txt" && name != "bit" && \
+    assigment != "num" && assigment != "txt" && assigment != "bit"\
+    )
+#define filter_five_args_and_lamda(ARG1, ARG2, ARG3, ARG4, ARG5, LAMBDA) \
+    filter_variable( \
+    instructions, \
+    {ARG1, ARG2, ARG3, ARG4, ARG5}, \
+    [&LAMBDA](const std::string& name, const std::string& assigment) { \
+        LAMBDA(name, assigment); \
+    });
+
+    const std::function try_create_num = [&in_terminal](const std::string& name, const std::string& assigment) {
         if (new_variable_condition) {
             try {
-               const double& num = std::stod(std::string(assigment));
+                const double& num = std::stod(std::string(assigment));
 
-               num_list[std::string(name)] = num;
+                num_list[std::string(name)] = num;
 
                 if (in_terminal) {
                     printf("%s\n", std::format("NOTED: {} = {}", name, assigment).c_str());
                 }
             } catch (...) {
-               std::cerr << "error, variable could not be created, because the assigment NEEDS to be a number.\n";
+                std::cerr << "error, variable could not be created, because the assigment NEEDS to be a number.\n";
             }
         }
         else {
             std::cerr << "error, variable could not be created, it already exists.\n";
         }
-    });
+    };
 
-    filter_variable(instructions, "txt", [&in_terminal](const std::string& name, const std::string& assigment) {
+    const std::function try_create_txt = [&in_terminal](const std::string& name, const std::string& assigment) {
         if (new_variable_condition) {
             if (is_txt(assigment)) {
                 txt_list[name] = assigment;
 
-               if (in_terminal) {
-                   std::cout << std::format("NOTED: {} = {}", name, assigment) << "\n";
-               }
+                if (in_terminal) {
+                    std::cout << std::format("NOTED: {} = {}", name, assigment) << "\n";
+                }
             }
             else {
                 if (in_terminal) {
@@ -231,9 +256,9 @@ void parser::try_add_variables(const instruction& instructions, const bool in_te
                 std::cerr << "error, variable could not be created, it already exists.\n";
             }
         }
-    });
+    };
 
-    filter_variable(instructions, "bit", [&in_terminal](const std::string& name, const std::string& assigment) {
+    const std::function try_create_bit = [&in_terminal](const std::string& name, const std::string& assigment) {
         if (new_variable_condition) {
             enum class assigment_enum {
                 _null,
@@ -265,7 +290,30 @@ void parser::try_add_variables(const instruction& instructions, const bool in_te
                 std::cerr <<"error, variable could not be created, it already exists.\n";
             }
         }
+    };
+
+#pragma region num
+    filter_five_args_and_lamda(ANYTHING_STR, ":", "num", "=", ANYTHING_STR, try_create_num)
+    filter_five_args_and_lamda("num", ":", ANYTHING_STR, "=", ANYTHING_STR, try_create_num)
+#pragma endregion
+
+#pragma region txt
+    filter_variable(
+        instructions,
+        {ANYTHING_STR, ":", "txt", "=", ANYTHING_STR},
+        [&try_create_txt](const std::string& name, const std::string& assigment) {
+        try_create_txt(name, assigment);
     });
+#pragma endregion
+
+#pragma region bit
+    filter_variable(
+        instructions,
+        {ANYTHING_STR, ":", "bit", "=", ANYTHING_STR},
+        [&try_create_bit](const std::string& name, const std::string& assigment) {
+        try_create_bit(name, assigment);
+    });
+#pragma endregion
 #pragma endregion try_add_variables
 }
 

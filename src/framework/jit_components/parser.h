@@ -4,6 +4,8 @@
 #include <string_view>
 #include <functional>
 
+#include "framework/classes/instruction.h"
+
 struct instruction;
 
 constexpr std::string_view ANYTHING_STR = "???";
@@ -12,18 +14,18 @@ struct parser {
     static void filter_instruction(
       const instruction & code_in,
       const std::vector<std::string_view> & filter_ref,
-      const std::function<void(std::vector<std::string>& str_list_ref)> & func_in
+      const std::function<void(instruction& str_list_ref)> & func_in
     );
 
     static void filter_instruction(
         const instruction & code_in,
         const std::vector<std::string_view> && filter_move,
-        const std::function<void(std::vector<std::string>& str_list_ref)> && func_in
+        const std::function<void(instruction& str_list_ref)> && func_in
     );
 
     static void filter_variable(
         const instruction & code_in,
-        const std::string_view && type_name_move,
+        const std::initializer_list<std::string_view> && variable_syntax_move,
         const std::function<void(const std::string& name, const std::string& assigment)> && func_in
     );
 

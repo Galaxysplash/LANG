@@ -4,11 +4,10 @@
 
 #include "framework/classes/instruction.h"
 #include "globals/global_variables.h"
+#include "globals/globals_precompiled.h"
 
 //private
 static constexpr unsigned char STR_START_SIZE = 5;
-static constexpr char SPECIAL_CHARS[] = {',', ';', '\n', ':', '.', '\t', '\r', '='};
-static constexpr char SPACE = ' ';
 
 void lexer::str_to_code(
     instruction &ret, const std::string &txt
@@ -47,7 +46,7 @@ void lexer::process_char(instruction &ret_ref, std::string& word_ref, const char
             return;
         }
 
-        for (const char SIGN: SPECIAL_CHARS) {
+        for (const char SIGN: SPECIAL_SIGNS) {
             if (c == SIGN) {
                 special_char = true;
 
