@@ -1,7 +1,6 @@
 #pragma once
 
-#include <initializer_list>
-#include <string_view>
+#include <functional>
 
 #include "globals/typedefs.h"
 
@@ -10,9 +9,10 @@ struct instruction;
 struct tree {
     static void exec();
 
-    static void scan_though_list(
+    static void scan_trough_list(
         const instruction & instruction_in,
-        const priority_list_t & priority_list_in
+        const priority_list_t & priority_list_in,
+        const std::function<void()> && func_move
     );
 
     static void build(
