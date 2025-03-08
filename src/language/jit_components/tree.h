@@ -15,7 +15,7 @@ struct tree {
 
     static void go_trough_ops(
         const instruction &instruction_in,
-        const std::initializer_list<std::string_view> & ops_priority_ref,
+        const std::initializer_list<std::string_view> & ops_priority_list_ref,
         bool in_terminal
     );
 };
