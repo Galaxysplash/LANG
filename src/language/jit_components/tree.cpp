@@ -4,15 +4,25 @@
 void tree::exec() {
 }
 
+void tree::scan_though_list(
+    const priority_list &
+) {
+
+}
+
 void tree::build(
-    const instruction &instruction_in,
-    const PRIORITY_LIST && ops_priority_list_move,
-    const PRIORITY_LIST && keyword_priority_list_move,
+    const instruction & instruction_in,
+    const priority_list && ops_priority_list_move,
+    const priority_list && keyword_priority_list_move,
     const bool in_terminal
 ) {
     for (const std::initializer_list<std::string_view> & ops_priority_ref : ops_priority_list_move) {
         for (const std::string_view & op_ref : ops_priority_ref) {
+            for (const std::string & instruction_part_ref : instruction_in) {
+                if (op_ref.data() == instruction_part_ref.c_str()) {
 
+                }
+            }
         }
     }
 }

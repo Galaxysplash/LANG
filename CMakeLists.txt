@@ -27,4 +27,5 @@ add_executable(
         src/language/jit_components/tree.cpp
         src/language/jit_components/tree.h
         src/globals/constexprs.h
+        src/globals/typedefs.h
 )
