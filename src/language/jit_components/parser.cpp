@@ -5,76 +5,17 @@
 #include <format>
 #include <iostream>
 
-#include "language/classes/instruction.h"
-#include "globals/global_variables.h"
-#include "globals/constexprs.h"
-
-void parser::filter_instruction(
-    const instruction & instruction_in,
-    const std::vector<std::string_view> & filter_ref,
-    const std::function<void(instruction & instruction_ref)> & func_in
-) {
-    if (filter_ref.empty()) {
-        return;
-    }
-#pragma region filter_instruction
-#define GENERAL_CODE_COUNTER (known_code_counter + unknown_code_counter)
-#define UNKNOWN_IS_WANTED (filter_ref[i] == ANYTHING_STR && !instruction_in[i].empty())
-
-    uint8_t
-        known_code_counter = 0,
-        unknown_code_counter = 0,
-        unknown_code_counter_limit = 0;
-
-    for (const auto& filter_part_ref: filter_ref) {
-        if (filter_part_ref == ANYTHING_STR) {
-            ++unknown_code_counter_limit;
-        }
-    }
-
-    instruction unknown_code_buffer{};
-
-    for (int32_t i = 0; i < instruction_in.get().size(); ++i) {
-        //body
-        if (UNKNOWN_IS_WANTED) {
-            unknown_code_buffer.emplace_back(instruction_in.get().at(i));
-            ++unknown_code_counter;
-        }
-        else {
-            if ((filter_ref[i] == instruction_in[i])) {
-                ++known_code_counter;
-            }
-            else {
-                return;
-            }
-        }
-
-        //footer
-        if (GENERAL_CODE_COUNTER == filter_ref.size()) {
-            break;
-        }
-    }
-
-    if (GENERAL_CODE_COUNTER == filter_ref.size()) {
-        func_in(unknown_code_buffer);
-    }
-#pragma endregion
-}
-
-void parser::filter_instruction(
-    const instruction & instruction_in,
-    const std::vector<std::string_view> && filter_move,
-    const std::function<void(instruction & instruction_ref)> && func_in
-) {
-    filter_instruction(instruction_in, filter_move, func_in);
-}
+#include "classes/instruction.h"
+#include "global/variables.h"
+#include "global/pre_compiled.h"
+#include "global/core.h"
 
 void parser::filter_variable(
     const instruction & code_in,
     const std::initializer_list<std::string_view> && variable_syntax_move,
     const std::function<void(const std::string& name, const std::string& assigment)> && func_in
 ) {
-    filter_instruction(
+    core::filter_instruction(
         code_in,
         variable_syntax_move,
         // ReSharper disable once CppParameterMayBeConstPtrOrRef
@@ -118,7 +59,7 @@ void parser::exec_basic_instructions(
     const bool in_terminal,
     const std::unordered_map<std::string, std::function<void()>>& one_word_commands_in
 ) {
-    filter_instruction(instructions, {"print", ANYTHING_STR}, [&in_terminal](const std::vector<std::string>& list) {
+    core::filter_instruction(instructions, {"print", ANYTHING_STR}, [&in_terminal](const std::vector<std::string>& list) {
         if (const std::string_view print_arg = list.at(0); is_txt(print_arg)) {
             std::cout << "out: " << print_arg << "\n";
         }
@@ -189,7 +130,15 @@ void parser::exec_basic_instructions(
     }
 }
 
-void parser::try_add_variables(const instruction& instruction_in, const bool in_terminal) {
+void parser::try_add_variables(
+    const instruction& instruction_in,
+    const bool in_terminal,
+    const std::function<void(
+        const std::function<void(const std::string&, const std::string&)> & try_create_num_func_ref,
+        const std::function<void(const std::string&, const std::string&)> & try_create_txt_func_ref,
+        const std::function<void(const std::string&, const std::string&)> & try_create_bit_func_ref
+    )> && create_variables_lambda_in
+) {
 #pragma region try_add_variables
     const std::function is_in_special_signs = [&](const std::string& str_ref) -> bool {
         bool is_special_sign = false;
@@ -209,13 +158,6 @@ void parser::try_add_variables(const instruction& instruction_in, const bool in_
     NOT_CUSTOM_FOR_NEW_VARIABLE_CONDITION(name) && \
     NOT_CUSTOM_FOR_NEW_VARIABLE_CONDITION(assigment)\
     )
-#define VAR_SYNTAX_FIVE_PARTS(ARG1, ARG2, ARG3, ARG4, ARG5, LAMBDA) \
-    filter_variable( \
-    instruction_in, \
-    {ARG1, ARG2, ARG3, ARG4, ARG5}, \
-    [&LAMBDA](const std::string& name, const std::string& assigment) { \
-        LAMBDA(name, assigment); \
-    });
 
     const std::function try_create_num = [&](const std::string& name, const std::string& assigment) {
         if (NEW_VARIABLE_CONDITION) {
@@ -292,20 +234,7 @@ void parser::try_add_variables(const instruction& instruction_in, const bool in_
         }
     };
 
-#pragma region num
-    VAR_SYNTAX_FIVE_PARTS(ANYTHING_STR, ":", "num", "=", ANYTHING_STR, try_create_num)
-    VAR_SYNTAX_FIVE_PARTS("num", ":", ANYTHING_STR, "=", ANYTHING_STR, try_create_num)
-#pragma endregion
-
-#pragma region txt
-    VAR_SYNTAX_FIVE_PARTS(ANYTHING_STR, ":", "txt", "=", ANYTHING_STR, try_create_txt)
-    VAR_SYNTAX_FIVE_PARTS("txt", ":", ANYTHING_STR, "=", ANYTHING_STR, try_create_txt)
-#pragma endregion
-
-#pragma region bit
-    VAR_SYNTAX_FIVE_PARTS(ANYTHING_STR, ":", "bit", "=", ANYTHING_STR, try_create_bit)
-    VAR_SYNTAX_FIVE_PARTS("bit", ":", ANYTHING_STR, "=", ANYTHING_STR, try_create_bit)
-#pragma endregion
+    create_variables_lambda_in(try_create_num, try_create_txt, try_create_bit);
 #pragma endregion try_add_variables
 }
 

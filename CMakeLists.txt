@@ -7,6 +7,10 @@ include_directories(
     src
 )
 
+include_directories(
+    src/language
+)
+
 add_executable(
     Lang
     src/main.cpp
@@ -22,10 +26,12 @@ add_executable(
         src/tests/run.h
         src/language/jit_components/lexer.cpp
         src/language/jit_components/lexer.h
-        src/language/globals/macros.h
-        src/language/globals/global_variables.h
+        src/language/global/variables.h
         src/language/jit_components/tree.cpp
         src/language/jit_components/tree.h
-        src/language/globals/constexprs.h
-        src/language/globals/typedefs.h
+        src/language/global/pre_compiled.h
+        src/language/classes/implicit_func.cpp
+        src/language/classes/implicit_func.h
+        src/language/global/core.cpp
+        src/language/global/core.h
 )

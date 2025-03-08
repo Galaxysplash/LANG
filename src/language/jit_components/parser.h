@@ -4,25 +4,12 @@
 #include <string_view>
 #include <functional>
 
-#include "language/classes/instruction.h"
+#include "classes/instruction.h"
+#include "global/pre_compiled.h"
 
 struct instruction;
 
-constexpr std::string_view ANYTHING_STR = "???";
-
 struct parser {
-    static void filter_instruction(
-      const instruction & instruction_in,
-      const std::vector<std::string_view> & filter_ref,
-      const std::function<void(instruction& instruction_ref)> & func_in
-    );
-
-    static void filter_instruction(
-        const instruction & instruction_in,
-        const std::vector<std::string_view> && filter_move,
-        const std::function<void(instruction& instruction_ref)> && func_in
-    );
-
     static void filter_variable(
         const instruction & code_in,
         const std::initializer_list<std::string_view> && variable_syntax_move,
@@ -42,8 +29,13 @@ struct parser {
     );
 
     static void try_add_variables(
-        const instruction &instruction_in,
-        bool in_terminal
+        const instruction& instruction_in,
+        bool in_terminal,
+        const std::function<void(
+            const std::function<void(const std::string&, const std::string&)> & try_create_num_func_ref,
+            const std::function<void(const std::string&, const std::string&)> & try_create_txt_func_ref,
+            const std::function<void(const std::string&, const std::string&)> & try_create_bit_func_ref
+        )> && create_variables_lambda_in
     );
 
     static bool is_txt(

@@ -2,9 +2,9 @@
 
 #include <format>
 
-#include "language/classes/instruction.h"
-#include "globals/global_variables.h"
-#include "globals/constexprs.h"
+#include "classes/instruction.h"
+#include "global/variables.h"
+#include "global/pre_compiled.h"
 
 //private
 static constexpr unsigned char S_STR_START_SIZE = 5;
