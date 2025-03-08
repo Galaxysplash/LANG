@@ -12,15 +12,15 @@ constexpr std::string_view ANYTHING_STR = "???";
 
 struct parser {
     static void filter_instruction(
-      const instruction & code_in,
+      const instruction & instruction_in,
       const std::vector<std::string_view> & filter_ref,
-      const std::function<void(instruction& str_list_ref)> & func_in
+      const std::function<void(instruction& instruction_ref)> & func_in
     );
 
     static void filter_instruction(
-        const instruction & code_in,
+        const instruction & instruction_in,
         const std::vector<std::string_view> && filter_move,
-        const std::function<void(instruction& str_list_ref)> && func_in
+        const std::function<void(instruction& instruction_ref)> && func_in
     );
 
     static void filter_variable(

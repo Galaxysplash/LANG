@@ -10,16 +10,16 @@
 #include "globals/constexprs.h"
 
 void parser::filter_instruction(
-    const instruction & code_in,
+    const instruction & instruction_in,
     const std::vector<std::string_view> & filter_ref,
-    const std::function<void(instruction& str_list_ref)> & func_in
+    const std::function<void(instruction & instruction_ref)> & func_in
 ) {
     if (filter_ref.empty()) {
         return;
     }
 #pragma region filter_instruction
 #define GENERAL_CODE_COUNTER (known_code_counter + unknown_code_counter)
-#define UNKNOWN_IS_WANTED (filter_ref[i] == ANYTHING_STR && !code_in[i].empty())
+#define UNKNOWN_IS_WANTED (filter_ref[i] == ANYTHING_STR && !instruction_in[i].empty())
 
     uint8_t
         known_code_counter = 0,
@@ -34,14 +34,14 @@ void parser::filter_instruction(
 
     instruction unknown_code_buffer{};
 
-    for (int32_t i = 0; i < code_in.get().size(); ++i) {
+    for (int32_t i = 0; i < instruction_in.get().size(); ++i) {
         //body
         if (UNKNOWN_IS_WANTED) {
-            unknown_code_buffer.emplace_back(code_in.get().at(i));
+            unknown_code_buffer.emplace_back(instruction_in.get().at(i));
             ++unknown_code_counter;
         }
         else {
-            if ((filter_ref[i] == code_in[i])) {
+            if ((filter_ref[i] == instruction_in[i])) {
                 ++known_code_counter;
             }
             else {
@@ -62,11 +62,11 @@ void parser::filter_instruction(
 }
 
 void parser::filter_instruction(
-    const instruction & code_in,
+    const instruction & instruction_in,
     const std::vector<std::string_view> && filter_move,
-    const std::function<void(instruction& instruction_ref)> && func_in
+    const std::function<void(instruction & instruction_ref)> && func_in
 ) {
-    filter_instruction(code_in, filter_move, func_in);
+    filter_instruction(instruction_in, filter_move, func_in);
 }
 
 void parser::filter_variable(
