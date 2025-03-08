@@ -19,5 +19,17 @@ struct tree {
 
 private:
     static std::vector<double> _nums_list_for_current_line;
-    static std::vector<std::string_view> _ops_list_for_current_line;
+    static std::vector<std::vector<std::string_view>> _ops_list_for_current_line;
+
+    static void scan_trough_list(
+    const instruction & instruction_in,
+    const priority_list & priority_list_in,
+    const std::function<void(
+        uint16_t i = 0,
+        const std::string_view &op,
+        const std::string_view &tail
+    )> && func_move
+    );
+
+    static void clear();
 };
