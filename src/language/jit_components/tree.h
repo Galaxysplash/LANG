@@ -9,7 +9,12 @@ struct instruction;
 
 struct tree {
     static void exec();
-    static void scan_though_list(const priority_list_t& priority_list_in);
+
+    static void scan_though_list(
+        const instruction & instruction_in,
+        const priority_list_t & priority_list_in
+    );
+
     static void build(
         const instruction & instruction_in,
         const priority_list_t && ops_priority_list_move,
