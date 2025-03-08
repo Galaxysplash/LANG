@@ -10,7 +10,7 @@
 
 #include "init/import.h"
 #include "classes/instruction.h"
-#include "globals/typedefs.h"
+#include "globals/macros.h"
 #include "jit_components/lexer.h"
 #include "jit_components/parser.h"
 #include "jit_components/tree.h"
@@ -23,7 +23,7 @@ void jiter::run(
 )
 {
     const bool in_terminal = argc <= 1;
-    const hash_table(std::function<void()>) one_word_commands = {
+    const HASH_TABLE(std::function<void()>) one_word_commands = {
         {"exit", [&]() {
             exit(0);
         }},
@@ -89,7 +89,7 @@ void jiter::analyze_and_exec(
     const std::unordered_map<std::string, std::function<void()>>& one_word_commands_in
 )
 {
-    tree::build(instruction_in, {{"+", "-"}, {"*", "/"}, {"if"}}, in_terminal);
+    tree::build(instruction_in, {{"*", "/"}, {"+", "-"}, {"if"}}, in_terminal);
     parser::try_add_variables(instruction_in, in_terminal);
     tree::exec();
     parser::exec_basic_instructions(instruction_in, in_terminal, one_word_commands_in);

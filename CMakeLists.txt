@@ -22,9 +22,9 @@ add_executable(
         src/tests/run.h
         src/language/jit_components/lexer.cpp
         src/language/jit_components/lexer.h
-        src/globals/typedefs.h
+        src/globals/macros.h
         src/globals/global_variables.h
         src/language/jit_components/tree.cpp
         src/language/jit_components/tree.h
-        src/globals/globals_precompiled.h
+        src/globals/constexprs.h
 )

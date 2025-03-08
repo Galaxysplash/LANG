@@ -4,7 +4,7 @@
 
 #include "language/classes/instruction.h"
 #include "globals/global_variables.h"
-#include "globals/globals_precompiled.h"
+#include "globals/constexprs.h"
 
 //private
 static constexpr unsigned char S_STR_START_SIZE = 5;

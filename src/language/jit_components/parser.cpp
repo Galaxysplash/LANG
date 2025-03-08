@@ -7,7 +7,7 @@
 
 #include "language/classes/instruction.h"
 #include "globals/global_variables.h"
-#include "globals/globals_precompiled.h"
+#include "globals/constexprs.h"
 
 void parser::filter_instruction(
     const instruction & code_in,
