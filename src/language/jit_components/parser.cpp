@@ -18,8 +18,8 @@ void parser::filter_instruction(
         return;
     }
 #pragma region filter_instruction
-#define general_code_counter (known_code_counter + unknown_code_counter)
-#define unknown_is_wanted (filter_ref[i] == ANYTHING_STR && !code_in[i].empty())
+#define GENERAL_CODE_COUNTER (known_code_counter + unknown_code_counter)
+#define UNKNOWN_IS_WANTED (filter_ref[i] == ANYTHING_STR && !code_in[i].empty())
 
     uint8_t
         known_code_counter = 0,
@@ -36,7 +36,7 @@ void parser::filter_instruction(
 
     for (int32_t i = 0; i < code_in.get().size(); ++i) {
         //body
-        if (unknown_is_wanted) {
+        if (UNKNOWN_IS_WANTED) {
             unknown_code_buffer.emplace_back(code_in.get().at(i));
             ++unknown_code_counter;
         }
@@ -50,12 +50,12 @@ void parser::filter_instruction(
         }
 
         //footer
-        if (general_code_counter == filter_ref.size()) {
+        if (GENERAL_CODE_COUNTER == filter_ref.size()) {
             break;
         }
     }
 
-    if (general_code_counter == filter_ref.size()) {
+    if (GENERAL_CODE_COUNTER == filter_ref.size()) {
         func_in(unknown_code_buffer);
     }
 #pragma endregion
@@ -204,12 +204,12 @@ void parser::try_add_variables(const instruction& instruction_in, const bool in_
 
         return is_special_sign;
     };
-#define not_custom_for_new_variable_condition(X) (X != "num" && X != "txt" && X != "bit" && !is_in_special_signs(X))
-#define new_variable_condition (!g_num_list.contains(name) && !g_txt_list.contains(name) && !g_bit_list.contains(name) && \
-    not_custom_for_new_variable_condition(name) && \
-    not_custom_for_new_variable_condition(assigment)\
+#define NOT_CUSTOM_FOR_NEW_VARIABLE_CONDITION(X) (X != "num" && X != "txt" && X != "bit" && !is_in_special_signs(X))
+#define NEW_VARIABLE_CONDITION (!g_num_list.contains(name) && !g_txt_list.contains(name) && !g_bit_list.contains(name) && \
+    NOT_CUSTOM_FOR_NEW_VARIABLE_CONDITION(name) && \
+    NOT_CUSTOM_FOR_NEW_VARIABLE_CONDITION(assigment)\
     )
-#define var_syntax_five_parts(ARG1, ARG2, ARG3, ARG4, ARG5, LAMBDA) \
+#define VAR_SYNTAX_FIVE_PARTS(ARG1, ARG2, ARG3, ARG4, ARG5, LAMBDA) \
     filter_variable( \
     instruction_in, \
     {ARG1, ARG2, ARG3, ARG4, ARG5}, \
@@ -218,7 +218,7 @@ void parser::try_add_variables(const instruction& instruction_in, const bool in_
     });
 
     const std::function try_create_num = [&](const std::string& name, const std::string& assigment) {
-        if (new_variable_condition) {
+        if (NEW_VARIABLE_CONDITION) {
             try {
                 const double& num = std::stod(std::string(assigment));
 
@@ -237,7 +237,7 @@ void parser::try_add_variables(const instruction& instruction_in, const bool in_
     };
 
     const std::function try_create_txt = [&](const std::string& name, const std::string& assigment) {
-        if (new_variable_condition) {
+        if (NEW_VARIABLE_CONDITION) {
             if (is_txt(assigment)) {
                 g_txt_list[name] = assigment;
 
@@ -259,7 +259,7 @@ void parser::try_add_variables(const instruction& instruction_in, const bool in_
     };
 
     const std::function try_create_bit = [&](const std::string& name, const std::string& assigment) {
-        if (new_variable_condition) {
+        if (NEW_VARIABLE_CONDITION) {
             enum class assigment_enum {
                 _null,
                 _true,
@@ -293,18 +293,18 @@ void parser::try_add_variables(const instruction& instruction_in, const bool in_
     };
 
 #pragma region num
-    var_syntax_five_parts(ANYTHING_STR, ":", "num", "=", ANYTHING_STR, try_create_num)
-    var_syntax_five_parts("num", ":", ANYTHING_STR, "=", ANYTHING_STR, try_create_num)
+    VAR_SYNTAX_FIVE_PARTS(ANYTHING_STR, ":", "num", "=", ANYTHING_STR, try_create_num)
+    VAR_SYNTAX_FIVE_PARTS("num", ":", ANYTHING_STR, "=", ANYTHING_STR, try_create_num)
 #pragma endregion
 
 #pragma region txt
-    var_syntax_five_parts(ANYTHING_STR, ":", "txt", "=", ANYTHING_STR, try_create_txt)
-    var_syntax_five_parts("txt", ":", ANYTHING_STR, "=", ANYTHING_STR, try_create_txt)
+    VAR_SYNTAX_FIVE_PARTS(ANYTHING_STR, ":", "txt", "=", ANYTHING_STR, try_create_txt)
+    VAR_SYNTAX_FIVE_PARTS("txt", ":", ANYTHING_STR, "=", ANYTHING_STR, try_create_txt)
 #pragma endregion
 
 #pragma region bit
-    var_syntax_five_parts(ANYTHING_STR, ":", "bit", "=", ANYTHING_STR, try_create_bit)
-    var_syntax_five_parts("bit", ":", ANYTHING_STR, "=", ANYTHING_STR, try_create_bit)
+    VAR_SYNTAX_FIVE_PARTS(ANYTHING_STR, ":", "bit", "=", ANYTHING_STR, try_create_bit)
+    VAR_SYNTAX_FIVE_PARTS("bit", ":", ANYTHING_STR, "=", ANYTHING_STR, try_create_bit)
 #pragma endregion
 #pragma endregion try_add_variables
 }
