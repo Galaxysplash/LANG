@@ -6,18 +6,12 @@ void tree::exec() {
 
 void tree::build(
     const instruction &instruction_in,
-    const std::initializer_list<std::string_view> && ops_priority_move,
+    const std::initializer_list<std::initializer_list<std::string_view>> && ops_priority_list_move,
     const bool in_terminal
 ) {
-    go_trough_ops(instruction_in, ops_priority_move, in_terminal);
-}
+    for (const std::initializer_list<std::string_view> & ops_priority_ref : ops_priority_list_move) {
+        for (const std::string_view & op_ref : ops_priority_ref) {
 
-void tree::go_trough_ops(
-    const instruction &instruction_in,
-    const std::initializer_list<std::string_view> & ops_priority_list_ref,
-    const bool in_terminal
-) {
-    for (const std::string_view & ops_priority_ref : ops_priority_list_ref) {
-
+        }
     }
 }

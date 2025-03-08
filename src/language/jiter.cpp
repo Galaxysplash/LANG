@@ -75,22 +75,22 @@ void jiter::run(
     }
 }
 
-void jiter::analyze_and_exec(
-    const bool in_terminal,
-    const instruction& instruction_in,
-    const std::unordered_map<std::string, std::function<void()>>& one_word_commands_in
-)
-{
-    tree::build(instruction_in, {"+-", "*/"}, in_terminal);
-    parser::try_add_variables(instruction_in, in_terminal);
-    tree::exec();
-    parser::exec_basic_instructions(instruction_in, in_terminal, one_word_commands_in);
-}
-
 void jiter::get_code(const int argc, const char** argv, instruction& ret)
 {
     std::string str_buffer;
 
     import::file(argc, argv, str_buffer);
     lexer::str_to_code(ret, str_buffer);
+}
+
+void jiter::analyze_and_exec(
+    const bool in_terminal,
+    const instruction& instruction_in,
+    const std::unordered_map<std::string, std::function<void()>>& one_word_commands_in
+)
+{
+    tree::build(instruction_in, {{"+", "-"}, {"*", "/"}, {"if"}}, in_terminal);
+    parser::try_add_variables(instruction_in, in_terminal);
+    tree::exec();
+    parser::exec_basic_instructions(instruction_in, in_terminal, one_word_commands_in);
 }

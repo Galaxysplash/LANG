@@ -8,14 +8,8 @@ struct instruction;
 struct tree {
     static void exec();
     static void build(
-        const instruction& instruction_in,
-        const std::initializer_list<std::string_view>&& ops_priority_move,
-        bool in_terminal
-    );
-
-    static void go_trough_ops(
         const instruction &instruction_in,
-        const std::initializer_list<std::string_view> & ops_priority_list_ref,
+        const std::initializer_list<std::initializer_list<std::string_view>> && ops_priority_list_move,
         bool in_terminal
     );
 };
