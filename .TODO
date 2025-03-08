@@ -1,2 +1,4 @@
 
--in parser.cpp replace in filter_instruction "std::vector" with "std::initializer_list"
+-in parser.cpp replace in 'filter_instruction' "std::vector" with "std::initializer_list"
+
+-make a new static struct 'core' and put 'filter_instruction' in it

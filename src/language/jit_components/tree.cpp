@@ -11,7 +11,6 @@ void tree::scan_trough_list(
     const priority_list_t & priority_list_in,
     const std::function<void(const std::string_view &op, const std::string_view &head)> && func_move
 ) {
-
     for (const std::string & instruction_part_ref : instruction_in) {
         for (const std::initializer_list<std::string_view> & ops_priority_ref : priority_list_in) {
             for (const std::string_view & op_ref : ops_priority_ref) {
