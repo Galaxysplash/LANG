@@ -12,7 +12,7 @@ struct tree {
     static void scan_trough_list(
         const instruction & instruction_in,
         const priority_list_t & priority_list_in,
-        const std::function<void(const std::string_view& op, const std::string_view& head)> && func_move
+        const std::function<void(const std::string_view & op, const std::string_view & tail)> && func_move
     );
 
     static void build(

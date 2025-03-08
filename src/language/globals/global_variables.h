@@ -10,3 +10,4 @@ inline HASH_TABLE(std::string) g_txt_list;
 inline HASH_TABLE(bool) g_bit_list;
 
 inline instruction g_sorted_instruction;
+
