@@ -68,7 +68,6 @@ void tree::build(
             } catch (...) {
                 _ops_list_for_current_line.emplace_back(std::vector{op_ref});
             }
-
             try {
                 _nums_list_for_current_line.emplace_back(std::stod(std::string(tail_ref)));
             }catch(...) {
