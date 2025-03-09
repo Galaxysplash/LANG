@@ -80,9 +80,9 @@ void tree::get_numbers_and_head(
     std::string str_buffer{};
 
     for (const std::string& instruction_part_ref: instruction_in) {
-        try {
+        if (g_num_list.contains(instruction_part_ref)) {
             func_in(g_num_list[instruction_part_ref], str_buffer);
-        } catch (...) {
+        } else {
             try {
                 func_in(std::stod(instruction_part_ref), str_buffer);
                 str_buffer.clear();
