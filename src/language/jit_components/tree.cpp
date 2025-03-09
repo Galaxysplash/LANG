@@ -5,6 +5,7 @@
 #include <stack>
 
 #include "parser.h"
+#include "global/variables.h"
 
 void tree::run(
     const instruction & instruction_in
@@ -80,10 +81,14 @@ void tree::get_numbers_and_head(
 
     for (const std::string& instruction_part_ref: instruction_in) {
         try {
-            func_in(std::stod(instruction_part_ref), str_buffer);
-            str_buffer.clear();
-        } catch(...) {
-            str_buffer += instruction_part_ref;
+            func_in(g_num_list[instruction_part_ref], str_buffer);
+        } catch (...) {
+            try {
+                func_in(std::stod(instruction_part_ref), str_buffer);
+                str_buffer.clear();
+            } catch(...) {
+                str_buffer += instruction_part_ref;
+            }
         }
     }
 }
