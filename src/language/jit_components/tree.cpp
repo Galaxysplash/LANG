@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <iostream>
+#include <stack>
 
 #include "parser.h"
 
@@ -22,32 +23,34 @@ void tree::exec() {
 
 double tree::eval_numbers() {
     double sum = 0;
+    std::vector<double> num_stack;
 
     for (double data_buffer = s_nums[0].data, i = 0; const auto& [data, head]: s_nums) {
-        switch (head) {
-            case '*':
-                data_buffer *= data;
+        if (i != 0) {
+            switch (head) {
+                case '*':
+                    data_buffer *= data;
                 break;
-            case '/':
-                data_buffer /= data;
+                case '/':
+                    data_buffer /= data;
                 break;
-            case '%':
-                data_buffer = static_cast<int>(data_buffer) % static_cast<int>(data);
+                default:
+                    num_stack.push_back(data_buffer);
+                    data_buffer = data;
                 break;
-            default:
-                data_buffer += data;
-                break;
+            }
+
+            if (i <= (static_cast<unsigned int>(s_nums.size()) - 1)) {
+                std::cout << "pushed_back_end: " << data_buffer << "\n";
+                num_stack.push_back(data_buffer);
+            }
         }
-
-        std::cout << "data_buffer: " << data_buffer << "\n";
-
-        if (static_cast<int>(i) == s_nums.size() - 1) {
-            sum = data_buffer;
-        }
-
-        //foot
-        data_buffer = data;
         ++i;
+    }
+
+    for (const auto& num: num_stack) {
+        std::cout << "num: " << num << "\n";
+        sum += num;
     }
 
     return sum;
