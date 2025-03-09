@@ -68,8 +68,6 @@ void jiter::run(
 
             code_ref.clear();
 
-            std::this_thread::sleep_for(std::chrono::seconds(1));
-
             printf("\n");
         }
     }
@@ -119,6 +117,6 @@ void jiter::analyze_and_exec(
         VAR_SYNTAX_FIVE_PARTS("bit", ":", ANYTHING_STR, "=", ANYTHING_STR, try_create_bit_func_ref)
         #pragma endregion bit
     });
-    tree::exec();
+
     parser::exec_basic_instructions(instruction_in, in_terminal, one_word_commands_in);
 }

@@ -21,7 +21,8 @@ private:
         const instruction & instruction_in
     );
 
-    [[nodiscard]] static long double eval_numbers();
+    [[nodiscard]] static double eval_numbers();
+
     static void get_numbers_and_head(
         const instruction & instruction_in,
         const std::function<void(
@@ -29,4 +30,6 @@ private:
             const std::string & head_in
         )> & func_in
     );
+
+    static void clear();
 };

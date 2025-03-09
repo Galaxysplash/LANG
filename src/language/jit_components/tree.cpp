@@ -9,40 +9,46 @@ void tree::run(
     const instruction & instruction_in
 ) {
     build(instruction_in);
+    for (const auto& num: s_nums) {
+        std::cout << "num: (data: " << num.data << ", head: " << num.head << ")\n";
+    }
     exec();
+    clear();
 }
 
 void tree::exec() {
     std::cout << eval_numbers() << "\n";
 }
 
-long double tree::eval_numbers() {
-    double num_buffer = 0;
-    long double sum_buffer = 0;
+double eval_numbers() {
+    double sum = 0;
 
-    for (const auto& num: s_nums) {
-        switch (num.head) {
+    for (double data_buffer = s_nums[0].data, i = 0; const auto& [data, head]: s_nums) {
+        switch (head) {
             case '*':
-                sum_buffer += num_buffer * num.data;
+                data_buffer *= data;
                 break;
             case '/':
-                sum_buffer += num_buffer / num.data;
+                data_buffer /= data;
                 break;
             case '%':
-                sum_buffer += static_cast<long double>(
-                    static_cast<uint32_t>(num_buffer) %
-                    static_cast<uint32_t>(num.data)
-                );
+                data_buffer = static_cast<int>(data_buffer) % static_cast<int>(data);
                 break;
             default:
+                data_buffer += data;
                 break;
         }
 
-        num_buffer = num.data;
+        if (static_cast<int>(i) == s_nums.size() - 1) {
+            sum = data_buffer;
+        }
+
+        //foot
+        data_buffer = data;
+        ++i;
     }
 
-    s_nums.clear();
-    return sum_buffer;
+    return sum;
 }
 
 void tree::build(
@@ -75,4 +81,8 @@ void tree::get_numbers_and_head(
             str_buffer += instruction_part_ref;
         }
     }
+}
+
+void tree::clear() {
+    s_nums.clear();
 }
