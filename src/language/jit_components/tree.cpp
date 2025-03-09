@@ -20,7 +20,7 @@ void tree::exec() {
     std::cout << eval_numbers() << "\n";
 }
 
-double eval_numbers() {
+double tree::eval_numbers() {
     double sum = 0;
 
     for (double data_buffer = s_nums[0].data, i = 0; const auto& [data, head]: s_nums) {
@@ -38,6 +38,8 @@ double eval_numbers() {
                 data_buffer += data;
                 break;
         }
+
+        std::cout << "data_buffer: " << data_buffer << "\n";
 
         if (static_cast<int>(i) == s_nums.size() - 1) {
             sum = data_buffer;
