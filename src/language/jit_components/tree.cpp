@@ -2,16 +2,15 @@
 
 #include <cstdint>
 #include <iostream>
+#include <stack>
 
 #include "parser.h"
+#include "global/variables.h"
 
 void tree::run(
     const instruction & instruction_in
 ) {
     build(instruction_in);
-    for (const auto& num: s_nums) {
-        std::cout << "num: (data: " << num.data << ", head: " << num.head << ")\n";
-    }
     exec();
     clear();
 }
@@ -22,34 +21,39 @@ void tree::exec() {
 
 double tree::eval_numbers() {
     double sum = 0;
+    double data_buffer = s_nums[0].data;
+    std::vector<double> between_results;
 
-    for (double data_buffer = s_nums[0].data, i = 0; const auto& [data, head]: s_nums) {
-        switch (head) {
-            case '*':
-                data_buffer *= data;
+    for (size_t i = 0; const auto& [data, head]: s_nums) {
+        bool already_pushed_back = false;
+        if (i != 0) {
+            switch (head) {
+                default:
+                    between_results.push_back(data_buffer);
+                    data_buffer = data;
+                    already_pushed_back = true;
                 break;
-            case '/':
-                data_buffer /= data;
+                case '*':
+                    data_buffer *= data;
                 break;
-            case '%':
-                data_buffer = static_cast<int>(data_buffer) % static_cast<int>(data);
+                case '/':
+                    data_buffer /= data;
                 break;
-            default:
-                data_buffer += data;
-                break;
+            }
         }
 
-        std::cout << "data_buffer: " << data_buffer << "\n";
-
-        if (static_cast<int>(i) == s_nums.size() - 1) {
-            sum = data_buffer;
+        if (!already_pushed_back && i == s_nums.size() - 1) {
+            between_results.push_back(data_buffer);
+            data_buffer = data;
         }
-
         //foot
-        data_buffer = data;
         ++i;
     }
 
+    for (const auto& e: between_results) {
+        sum += e;
+    }
+    
     return sum;
 }
 
@@ -75,12 +79,17 @@ void tree::get_numbers_and_head(
 ) {
     std::string str_buffer{};
 
-    for (const std::string& instruction_part_ref: instruction_in) {
-        try {
-            func_in(std::stod(instruction_part_ref), str_buffer);
-            str_buffer.clear();
-        } catch(...) {
-            str_buffer += instruction_part_ref;
+    for (const std::string& potential_number_ref: instruction_in) {
+        if (g_num_list.contains(potential_number_ref)) {
+            func_in(g_num_list[potential_number_ref], str_buffer);
+        }
+        else {
+            try {
+                func_in(std::stod(potential_number_ref), str_buffer);
+                str_buffer.clear();
+            } catch(...) {
+                str_buffer += potential_number_ref;
+            }
         }
     }
 }

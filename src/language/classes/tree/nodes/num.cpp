@@ -14,7 +14,7 @@ char num::multiply_or_divide_or_remainder
     const std::string_view & list_in
 ) {
     for (const char& e: list_in) {
-        if (e == '*' || e == '/' || e == '%') {
+        if (e == '*' || e == '/') {
             return e;
         }
     }
