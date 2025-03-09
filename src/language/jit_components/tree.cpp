@@ -27,30 +27,35 @@ void tree::build(
 ) {
     get_numbers_and_head(
         instruction_in,
-        char_list{'*', '/'},
         [&](
             const char & op_ref,
             const std::string_view & tail_ref
         ) {
+            _multiplication_division.emplace_back(op_ref);
 
-
+            try {
+                _nums_list_for_current_line.emplace_back(std::stod(std::string(tail_ref)));
+            } catch(...) {
+                _nums_list_for_current_line.emplace_back(1);
+            }
     });
-
-    //---
-    _multiplication_division.emplace_back(op_ref);
-
-    try {
-        _nums_list_for_current_line.emplace_back(std::stod(std::string(tail_ref)));
-    }catch(...) {
-        _nums_list_for_current_line.emplace_back(1);
-    }
-    //---
 }
 
 void tree::get_numbers_and_head(
     const instruction & instruction_in,
-    std::function<void(
-
-    )> func
+    const std::function<void(
+        const double & number_in,
+        const std::string & head_in
+    )> & func_in
 ) {
+    std::string str_buffer;
+
+    for (const std::string& instruction_part_ref: instruction_in) {
+        try {
+            func_in(std::stod(instruction_part_ref), str_buffer);
+            str_buffer.clear();
+        } catch(...) {
+            str_buffer += instruction_part_ref;
+        }
+    }
 }

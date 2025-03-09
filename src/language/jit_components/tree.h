@@ -22,8 +22,11 @@ private:
     static std::vector<char> _multiplication_division;
 
     static void get_numbers_and_head(
-        const char_list & char_list_in,
-
+        const instruction & instruction_in,
+        const std::function<void(
+            const double& number_in,
+            const std::string & head_in
+        )> & func_in
     );
 
     static void clear();
