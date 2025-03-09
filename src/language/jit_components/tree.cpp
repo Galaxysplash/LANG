@@ -31,6 +31,7 @@ double tree::eval_numbers() {
                 default:
                     between_results.push_back(data_buffer);
                     data_buffer = data;
+                    std::cout << "pushed_back in i = " << i << "\n";
                     already_pushed_back = true;
                 break;
                 case '*':
@@ -43,6 +44,7 @@ double tree::eval_numbers() {
         }
 
         if (!already_pushed_back && i == s_nums.size() - 1) {
+            std::cout << "loop_end!\n";
             between_results.push_back(data_buffer);
             data_buffer = data;
         }
@@ -51,6 +53,7 @@ double tree::eval_numbers() {
     }
 
     for (const auto& e: between_results) {
+        std::cout << "e " << e << "\n";
         sum += e;
     }
     

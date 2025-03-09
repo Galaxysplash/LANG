@@ -170,7 +170,11 @@ void parser::try_add_variables(
                     printf("%s\n", std::format("NOTED: {} = {}", name, assigment).c_str());
                 }
             } catch (...) {
-                std::cerr << "error, variable could not be created, because the assigment NEEDS to be a number.\n";
+                if (false) {
+
+                }else {
+                    std::cerr << "error, variable could not be created, because the assigment NEEDS to be a number.\n";
+                }
             }
         }
         else {
