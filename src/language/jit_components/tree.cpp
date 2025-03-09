@@ -1,19 +1,52 @@
 #include "tree.h"
 
+#include <cstdint>
+#include <iostream>
+
 #include "parser.h"
 
-void tree::exec() {
-    for (const auto& num: s_nums) {
+void tree::run(
+    const instruction & instruction_in
+) {
+    build(instruction_in);
+    exec();
+}
 
+void tree::exec() {
+    std::cout << eval_numbers() << "\n";
+}
+
+long double tree::eval_numbers() {
+    double num_buffer = 0;
+    long double sum_buffer = 0;
+
+    for (const auto& num: s_nums) {
+        switch (num.head) {
+            case '*':
+                sum_buffer += num_buffer * num.data;
+                break;
+            case '/':
+                sum_buffer += num_buffer / num.data;
+                break;
+            case '%':
+                sum_buffer += static_cast<long double>(
+                    static_cast<uint32_t>(num_buffer) %
+                    static_cast<uint32_t>(num.data)
+                );
+                break;
+            default:
+                break;
+        }
+
+        num_buffer = num.data;
     }
 
-    clear();
+    s_nums.clear();
+    return sum_buffer;
 }
 
 void tree::build(
-    const instruction & instruction_in,
-    const str_list && keyword_priority_list_move,
-    const bool in_terminal
+    const instruction & instruction_in
 ) {
     get_numbers_and_head(
         instruction_in,
@@ -42,8 +75,4 @@ void tree::get_numbers_and_head(
             str_buffer += instruction_part_ref;
         }
     }
-}
-
-void tree::clear() {
-    s_nums.clear();
 }

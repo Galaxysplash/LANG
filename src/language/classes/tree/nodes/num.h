@@ -11,8 +11,8 @@ struct num : node {
         const std::string_view & head_ref
     );
 
-    double _num;
-    char _head;
+    double data;
+    char head;
 
 private:
     static char multiply_or_divide_or_remainder(
