@@ -34,4 +34,6 @@ add_executable(
         src/language/classes/implicit_func.h
         src/language/global/core.cpp
         src/language/global/core.h
+        src/language/classes/num.cpp
+        src/language/classes/num.h
 )

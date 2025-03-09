@@ -7,29 +7,33 @@
 
 struct instruction;
 
+
 struct tree {
     static void exec();
 
     static void build(
         const instruction & instruction_in,
-        const priority_list && ops_priority_list_move,
-        const priority_list && keyword_priority_list_move,
+        const str_list && keyword_priority_list_move,
         bool in_terminal
     );
 
 private:
     static std::vector<double> _nums_list_for_current_line;
-    static std::vector<std::vector<std::string_view>> _ops_list_for_current_line;
+    static std::vector<char> _multiplication_division;
 
-    static void scan_trough_list(
-    const instruction & instruction_in,
-    const priority_list & priority_list_in,
-    const std::function<void(
-        uint16_t i = 0,
-        const std::string_view &op,
-        const std::string_view &tail
-    )> && func_move
+    static void get_numbers_and_head(
+        const char_list & char_list_in,
+
     );
 
     static void clear();
+};
+
+struct a {
+
+};
+
+template <a T>
+struct b {
+
 };

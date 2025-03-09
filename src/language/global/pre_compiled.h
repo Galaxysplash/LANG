@@ -11,4 +11,5 @@ constexpr std::string_view ANYTHING_STR = "???";
 
 #define HASH_TABLE(DATA_TYPE) std::unordered_map<std::string, DATA_TYPE>
 
-using priority_list = std::initializer_list<std::initializer_list<std::string_view>>;
+using str_list = std::initializer_list<std::string_view>;
+using char_list = std::initializer_list<char>;
