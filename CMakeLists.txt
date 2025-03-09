@@ -20,8 +20,8 @@ add_executable(
         src/language/jit_components/parser.h
         src/language/jiter.cpp
         src/language/jiter.h
-        src/language/classes/instruction.cpp
-        src/language/classes/instruction.h
+        src/language/classes/core/instruction.cpp
+        src/language/classes/core/instruction.h
         src/tests/run.cpp
         src/tests/run.h
         src/language/jit_components/lexer.cpp
@@ -30,10 +30,12 @@ add_executable(
         src/language/jit_components/tree.cpp
         src/language/jit_components/tree.h
         src/language/global/pre_compiled.h
-        src/language/classes/implicit_func.cpp
-        src/language/classes/implicit_func.h
+        src/language/classes/tree/implicit_func.cpp
+        src/language/classes/tree/implicit_func.h
         src/language/global/core.cpp
         src/language/global/core.h
-        src/language/classes/num.cpp
-        src/language/classes/num.h
+        src/language/classes/tree/nodes/num.cpp
+        src/language/classes/tree/nodes/num.h
+        src/language/classes/tree/nodes/node.cpp
+        src/language/classes/tree/nodes/node.h
 )

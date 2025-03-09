@@ -2,7 +2,7 @@
 
 #include <format>
 
-#include "classes/instruction.h"
+#include "classes/core/instruction.h"
 #include "global/variables.h"
 #include "global/pre_compiled.h"
 

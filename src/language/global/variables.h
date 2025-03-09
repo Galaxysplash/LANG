@@ -1,7 +1,7 @@
 #pragma once
 
 #include "global/pre_compiled.h"
-#include "classes/implicit_func.h"
+#include "../classes/tree/implicit_func.h"
 
 
 constexpr inline unsigned char G_TXT_INDICATOR = '"';

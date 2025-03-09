@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <functional>
 
-#include "classes/instruction.h"
+#include "classes/core/instruction.h"
 #include "global/pre_compiled.h"
 
 void core::filter_instruction(

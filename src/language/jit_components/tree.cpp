@@ -1,24 +1,14 @@
 #include "tree.h"
 
-#include <cstdint>
-#include <iostream>
-#include <ostream>
-
 #include "parser.h"
-#include "classes/implicit_func.h"
-#include "global/core.h"
-#include "global/variables.h"
 
 void tree::exec() {
+    for (const auto& num: s_nums) {
+
+    }
 
     clear();
 }
-
-void tree::clear() {
-    _nums_list_for_current_line.clear();
-    _multiplication_division.clear();
-}
-
 
 void tree::build(
     const instruction & instruction_in,
@@ -28,16 +18,10 @@ void tree::build(
     get_numbers_and_head(
         instruction_in,
         [&](
-            const char & op_ref,
-            const std::string_view & tail_ref
+            const double & number_in,
+            const std::string_view & head_ref
         ) {
-            _multiplication_division.emplace_back(op_ref);
-
-            try {
-                _nums_list_for_current_line.emplace_back(std::stod(std::string(tail_ref)));
-            } catch(...) {
-                _nums_list_for_current_line.emplace_back(1);
-            }
+        s_nums.emplace_back(number_in, head_ref);
     });
 }
 
@@ -48,7 +32,7 @@ void tree::get_numbers_and_head(
         const std::string & head_in
     )> & func_in
 ) {
-    std::string str_buffer;
+    std::string str_buffer{};
 
     for (const std::string& instruction_part_ref: instruction_in) {
         try {
@@ -58,4 +42,8 @@ void tree::get_numbers_and_head(
             str_buffer += instruction_part_ref;
         }
     }
+}
+
+void tree::clear() {
+    s_nums.clear();
 }

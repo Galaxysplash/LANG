@@ -1,12 +1,14 @@
 #pragma once
 
-#include <cstdint>
+#include <vector>
 #include <functional>
 
+#include "classes/tree/nodes/num.h"
 #include "global/pre_compiled.h"
 
 struct instruction;
 
+static std::vector<num> s_nums;
 
 struct tree {
     static void exec();
@@ -18,9 +20,6 @@ struct tree {
     );
 
 private:
-    static std::vector<double> _nums_list_for_current_line;
-    static std::vector<char> _multiplication_division;
-
     static void get_numbers_and_head(
         const instruction & instruction_in,
         const std::function<void(
@@ -30,13 +29,4 @@ private:
     );
 
     static void clear();
-};
-
-struct a {
-
-};
-
-template <a T>
-struct b {
-
 };

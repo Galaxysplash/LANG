@@ -9,7 +9,7 @@
 #include <string>
 
 #include "init/import.h"
-#include "classes/instruction.h"
+#include "classes/core/instruction.h"
 #include "global/pre_compiled.h"
 #include "jit_components/lexer.h"
 #include "jit_components/parser.h"
@@ -89,7 +89,8 @@ void jiter::analyze_and_exec(
     const std::unordered_map<std::string, std::function<void()>>& one_word_commands_in
 )
 {
-    tree::build(instruction_in, {{"*", "/"}, {"+", "-"}}, {{"if"}}, in_terminal);
+    tree::build(instruction_in, {"if"}, in_terminal);
+
     parser::try_add_variables(instruction_in, in_terminal, [&](
         const std::function<void(const std::string&, const std::string&)> & try_create_num_func_ref,
         const std::function<void(const std::string&, const std::string&)> & try_create_txt_func_ref,

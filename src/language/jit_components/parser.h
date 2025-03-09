@@ -4,7 +4,7 @@
 #include <string_view>
 #include <functional>
 
-#include "classes/instruction.h"
+#include "classes/core/instruction.h"
 #include "global/pre_compiled.h"
 
 struct instruction;
