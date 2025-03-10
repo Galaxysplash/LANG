@@ -72,7 +72,7 @@ void tree::build(
 ) {
     get_numbers_and_head(
         instruction_in,
-        [&](bool stop,
+        [&](bool & stop,
             const int i,
             const double & number_in,
             const std::string_view & head_ref
@@ -119,10 +119,6 @@ void tree::get_numbers_and_head(
 #pragma region func_in_not_allowed_to_call___func_in___directly_but_instead_call___call_func
 #define func_in FORBIDDEN
     for (int count_for_calls = 0; const std::string& potential_number_ref: instruction_in) {
-        if (stop) {
-            s_nums.clear();
-            return;
-        };
         if (g_num_list.contains(potential_number_ref)) {
             call_func(stop, count_for_calls, g_num_list[potential_number_ref], str_buffer);
         }
@@ -133,6 +129,11 @@ void tree::get_numbers_and_head(
             } catch(...) {
                 str_buffer += potential_number_ref;
             }
+        }
+
+        if (stop) {
+            s_nums.clear();
+            return;
         }
     }
 #pragma endregion
