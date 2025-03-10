@@ -22,11 +22,11 @@ private:
     );
 
     [[nodiscard]] static double eval_numbers();
-    
+
     static void get_numbers_and_head(
         const instruction & instruction_in,
         const std::function<void(
-            uint16_t index,
+            int idx,
             const double & number_in,
             const std::string & head_in
         )> & func_in
