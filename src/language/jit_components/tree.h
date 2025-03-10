@@ -8,7 +8,7 @@
 
 struct instruction;
 
-static std::vector<num> s_nums;
+static std::vector<num> s_nums{};
 
 struct tree {
     static double numbers(

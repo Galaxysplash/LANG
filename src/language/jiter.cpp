@@ -13,7 +13,6 @@
 #include "global/pre_compiled.h"
 #include "jit_components/lexer.h"
 #include "jit_components/parser.h"
-#include "jit_components/tree.h"
 
 
 void jiter::run(
@@ -63,6 +62,7 @@ void jiter::run(
                 analyze_and_exec(in_terminal, code_ref, one_word_commands);
             } catch (const std::exception& e) {
                 std::cerr << "Internal C++ error, when running the code: " << e.what() << "\n";
+                std::this_thread::sleep_for(std::chrono::milliseconds(1000));
                 std::cout << "Please report this error to the github repository:\n https://github.com/Galaxysplash/LANG!\n";
             }
 
@@ -87,8 +87,6 @@ void jiter::analyze_and_exec(
     const std::unordered_map<std::string, std::function<void()>>& one_word_commands_in
 )
 {
-    tree::numbers(instruction_in);
-
     parser::try_add_variables(in_terminal, [&](
         const std::function<void(const std::string&, const std::string&)> & try_create_num_func_ref,
         const std::function<void(const std::string&, const std::string&)> & try_create_txt_func_ref,

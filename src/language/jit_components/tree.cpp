@@ -15,8 +15,15 @@ double tree::numbers(
 }
 
 double tree::eval_numbers() {
-    double sum = 0;
-    double data_buffer = s_nums[0].data;
+    double sum = 0.0;
+    double data_buffer = 0.0; {
+        try {
+            if (!s_nums.empty()) {
+                data_buffer = s_nums[0].data;
+            }
+        }catch(...) {}
+    }
+
     std::vector<double> between_results{};
 
     for (size_t i = 0; const auto& [data, head]: s_nums) {
@@ -43,11 +50,16 @@ double tree::eval_numbers() {
         ++i;
     }
 
-    for (const auto& e : between_results) {
-        sum += e;
+    if (!between_results.empty()) {
+        for (const auto& e : between_results) {
+            sum += e;
+        }
     }
 
-    s_nums.clear();
+    if (!s_nums.empty()) {
+        s_nums.clear();
+    }
+
     return sum;
 }
 

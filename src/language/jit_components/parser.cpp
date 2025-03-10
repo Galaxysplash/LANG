@@ -71,65 +71,67 @@ void parser::exec_basic_instructions(
             } catch (...) {}
         }
 
-        if (const std::string_view print_arg = list.at(0); is_txt(print_arg)) {
-            std::cout << "out: " << print_arg << "\n";
-        }
-        else if (NumberInInstruction) {
-            std::cout << "out num: " << tree::numbers(instructions) << "\n";
-        }
-        else if (g_bit_list.contains(std::string(print_arg))) {
-            std::cout << "out bit: " << g_bit_list[std::string(print_arg)] << "\n";
-        }
-        else if (g_txt_list.contains(std::string(print_arg))) {
-            std::cout << "out txt: " << g_txt_list[std::string(print_arg)] << "\n";
-        }
-        else {
-            if (in_terminal) {
-                std::cerr << "error, what you wanted to be printed out was nor in '\"'," <<
-                " neither could the system find it in the known variables.\n";
-                std::cout << "info: what the system saw is '" << print_arg << "'\n";
-                std::cout << "\nknown variables are:";
-
-
-                std::cout << "\n\nnumbers:\n"; {
-                    for (const auto&[num_name_ref, num_ref]: g_num_list) {
-                       std::cout << "-" << num_name_ref << " with the value of " << num_ref << "\n";
-                    }
-
-                    if (g_num_list.empty()) {
-                        std::cout << "none\n";
-                    }
-                }
-
-                std::cout << "\n\nbits:\n"; {
-                    // ReSharper disable once CppUseElementsView
-                   for (const auto&[bit_name_ref, bit_ref]: g_bit_list) {
-                       if (bit_ref) {
-                           std::cout << "-" << bit_name_ref << " with the value of true\n";
-                       }
-                       else {
-                           std::cout << "-" << bit_name_ref << " with the value of false\n";
-                       }
-                   }
-
-                    if (g_bit_list.empty()) {
-                        std::cout << "none\n";
-                    }
-                }
-
-                std::cout << "\n\ntexts:\n"; {
-                    for (const auto&[txt_name_ref, txt_ref]: g_txt_list) {
-                       std::cout << "-" << txt_ref << " with the value of " << txt_name_ref << "\n";
-                    }
-
-                    if (g_txt_list.empty()) {
-                        std::cout << "none\n";
-                    }
-                }
-
-                std::cout << "\n";
+        try {
+            if (const std::string_view print_arg = list.at(0); is_txt(print_arg)) {
+                std::cout << "out: " << print_arg << "\n";
             }
-        }
+            else if (NumberInInstruction) {
+                std::cout << "out num: " << tree::numbers(instructions) << "\n";
+            }
+            else if (g_bit_list.contains(std::string(print_arg))) {
+                std::cout << "out bit: " << g_bit_list[std::string(print_arg)] << "\n";
+            }
+            else if (g_txt_list.contains(std::string(print_arg))) {
+                std::cout << "out txt: " << g_txt_list[std::string(print_arg)] << "\n";
+            }
+            else {
+                if (in_terminal) {
+                    std::cerr << "error, what you wanted to be printed out was nor in '\"'," <<
+                    " neither could the system find it in the known variables.\n";
+                    std::cout << "info: what the system saw is '" << print_arg << "'\n";
+                    std::cout << "\nknown variables are:";
+
+
+                    std::cout << "\n\nnumbers:\n"; {
+                        for (const auto&[num_name_ref, num_ref]: g_num_list) {
+                           std::cout << "-" << num_name_ref << " with the value of " << num_ref << "\n";
+                        }
+
+                        if (g_num_list.empty()) {
+                            std::cout << "none\n";
+                        }
+                    }
+
+                    std::cout << "\n\nbits:\n"; {
+                        // ReSharper disable once CppUseElementsView
+                       for (const auto&[bit_name_ref, bit_ref]: g_bit_list) {
+                           if (bit_ref) {
+                               std::cout << "-" << bit_name_ref << " with the value of true\n";
+                           }
+                           else {
+                               std::cout << "-" << bit_name_ref << " with the value of false\n";
+                           }
+                       }
+
+                        if (g_bit_list.empty()) {
+                            std::cout << "none\n";
+                        }
+                    }
+
+                    std::cout << "\n\ntexts:\n"; {
+                        for (const auto&[txt_name_ref, txt_ref]: g_txt_list) {
+                           std::cout << "-" << txt_ref << " with the value of " << txt_name_ref << "\n";
+                        }
+
+                        if (g_txt_list.empty()) {
+                            std::cout << "none\n";
+                        }
+                    }
+
+                    std::cout << "\n";
+                }
+            }
+        } catch (...) {}
     });
 
     if (in_terminal) {

@@ -18,7 +18,11 @@ bool instruction::operator==(const instruction &&other) const {
 }
 
 std::string instruction::operator[](const int index) const {
-    return _code_buffer[index];
+    if (index < _code_buffer.size()) {
+        return _code_buffer[index];
+    }
+
+    return "";
 }
 
 std::vector<std::string>& instruction::get() {
