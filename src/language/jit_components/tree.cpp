@@ -1,6 +1,8 @@
 #include "tree.h"
 
 #include <cstdint>
+#include <iostream>
+#include <ostream>
 #include <stack>
 
 #include "parser.h"
@@ -92,9 +94,11 @@ void tree::build(
            }
 
             {
-                stop = valid;
+                stop = !valid;
                if (valid) {
                    s_nums.emplace_back(number_in, head_ref);
+               } else {
+                    std::cerr << "error, you HAVE to put a operator between the numbers or else you code will miserably fail!\n";
                }
             }
     });
@@ -132,6 +136,7 @@ void tree::get_numbers_and_head(
         }
 
         if (stop) {
+            printf("stop!");
             s_nums.clear();
             return;
         }

@@ -58,12 +58,19 @@ void jiter::run(
             lexer::str_to_code(code_ref, c_str_buffer);
             printf("\n");
 
+#define WAIT std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+            bool contact_msg_printed = false;
             try {
                 analyze_and_exec(in_terminal, code_ref, one_word_commands);
             } catch (const std::exception& e) {
                 std::cerr << "Internal C++ error, when running the code: " << e.what() << "\n";
-                std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+                WAIT
                 std::cout << "Please report this error to the github repository:\n https://github.com/Galaxysplash/LANG!\n";
+                contact_msg_printed = true;
+            }
+
+            if (!contact_msg_printed) {
+                WAIT
             }
 
             code_ref.clear();
