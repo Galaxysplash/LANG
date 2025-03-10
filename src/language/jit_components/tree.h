@@ -11,7 +11,7 @@ struct instruction;
 static std::vector<num> s_nums;
 
 struct tree {
-    static void run(
+    static double num_run(
         const instruction & instruction_in
     );
 private:

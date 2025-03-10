@@ -8,16 +8,12 @@
 
 void core::filter_instruction(
     const instruction & instruction_in,
-    const std::vector<std::string_view> & filter_ref,
+    const std::initializer_list<std::string_view> & filter_ref,
     const std::function<void(instruction & instruction_ref)> & func_in
 ) {
-    if (filter_ref.empty()) {
+    if (filter_ref.size() == 0) {
         return;
     }
-#pragma region filter_instruction
-#define GENERAL_CODE_COUNTER (known_code_counter + unknown_code_counter)
-#define UNKNOWN_IS_WANTED (filter_ref[i] == ANYTHING_STR && !instruction_in[i].empty())
-
     uint8_t
         known_code_counter = 0,
         unknown_code_counter = 0,
@@ -30,15 +26,17 @@ void core::filter_instruction(
     }
 
     instruction unknown_code_buffer{};
+#pragma region filter_instruction
+    for (int32_t i = 0; const auto& filter_part_ref: filter_ref) {
+#define GENERAL_CODE_COUNTER (known_code_counter + unknown_code_counter)
 
-    for (int32_t i = 0; i < instruction_in.get().size(); ++i) {
         //body
-        if (UNKNOWN_IS_WANTED) {
+        if ((filter_part_ref == ANYTHING_STR && !instruction_in[i].empty())) {
             unknown_code_buffer.emplace_back(instruction_in.get().at(i));
             ++unknown_code_counter;
         }
         else {
-            if ((filter_ref[i] == instruction_in[i])) {
+            if (filter_part_ref == instruction_in[i]) {
                 ++known_code_counter;
             }
             else {
@@ -50,6 +48,7 @@ void core::filter_instruction(
         if (GENERAL_CODE_COUNTER == filter_ref.size()) {
             break;
         }
+        ++i;
     }
 
     if (GENERAL_CODE_COUNTER == filter_ref.size()) {
@@ -60,7 +59,7 @@ void core::filter_instruction(
 
 void core::filter_instruction(
     const instruction & instruction_in,
-    const std::vector<std::string_view> && filter_move,
+    const std::initializer_list<std::string_view> && filter_move,
     const std::function<void(instruction & instruction_ref)> && func_in
 ) {
     filter_instruction(instruction_in, filter_move, func_in);

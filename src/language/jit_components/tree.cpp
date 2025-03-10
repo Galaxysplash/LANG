@@ -7,15 +7,12 @@
 #include "parser.h"
 #include "global/variables.h"
 
-void tree::run(
+double tree::num_run(
     const instruction & instruction_in
 ) {
     build(instruction_in);
-    for (const auto& num: s_nums) {
-        std::cout << "num: (data: " << num.data << ", head: " << num.head << ")\n";
-    }
-    exec();
-    clear();
+    
+    return eval_numbers();
 }
 
 void tree::exec() {
@@ -24,36 +21,39 @@ void tree::exec() {
 
 double tree::eval_numbers() {
     double sum = 0;
-    std::vector<double> num_stack;
+    double data_buffer = s_nums[0].data;
+    std::vector<double> between_results;
 
-    for (double data_buffer = s_nums[0].data, i = 0; const auto& [data, head]: s_nums) {
+    for (size_t i = 0; const auto& [data, head]: s_nums) {
         if (i != 0) {
             switch (head) {
+                default:
+                    between_results.push_back(data_buffer);
+                    data_buffer = data;
+                break;
                 case '*':
                     data_buffer *= data;
                 break;
                 case '/':
                     data_buffer /= data;
                 break;
-                default:
-                    num_stack.push_back(data_buffer);
-                    data_buffer = data;
-                break;
-            }
-
-            if (i <= (static_cast<unsigned int>(s_nums.size()) - 1)) {
-                std::cout << "pushed_back_end: " << data_buffer << "\n";
-                num_stack.push_back(data_buffer);
             }
         }
+
+        if (i == s_nums.size() - 1) {
+            between_results.push_back(data_buffer);
+            data_buffer = data;
+        }
+        //foot
         ++i;
     }
 
-    for (const auto& num: num_stack) {
-        std::cout << "num: " << num << "\n";
-        sum += num;
+    for (const auto& e: between_results) {
+        std::cout << "e " << e << "\n";
+        sum += e;
     }
 
+    s_nums.clear();
     return sum;
 }
 
@@ -79,20 +79,20 @@ void tree::get_numbers_and_head(
 ) {
     std::string str_buffer{};
 
-    for (const std::string& instruction_part_ref: instruction_in) {
-        if (g_num_list.contains(instruction_part_ref)) {
-            func_in(g_num_list[instruction_part_ref], str_buffer);
-        } else {
+    for (const std::string& potential_number_ref: instruction_in) {
+        if (g_num_list.contains(potential_number_ref)) {
+            func_in(g_num_list[potential_number_ref], str_buffer);
+        }
+        else {
             try {
-                func_in(std::stod(instruction_part_ref), str_buffer);
+                func_in(std::stod(potential_number_ref), str_buffer);
                 str_buffer.clear();
             } catch(...) {
-                str_buffer += instruction_part_ref;
+                str_buffer += potential_number_ref;
             }
         }
     }
 }
 
 void tree::clear() {
-    s_nums.clear();
 }
