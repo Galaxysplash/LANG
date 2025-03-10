@@ -1,28 +1,23 @@
 #include "tree.h"
 
 #include <cstdint>
-#include <iostream>
 #include <stack>
 
 #include "parser.h"
 #include "global/variables.h"
 
-double tree::num_run(
+double tree::numbers(
     const instruction & instruction_in
 ) {
     build(instruction_in);
-    
-    return eval_numbers();
-}
 
-void tree::exec() {
-    std::cout << eval_numbers() << "\n";
+    return eval_numbers();
 }
 
 double tree::eval_numbers() {
     double sum = 0;
     double data_buffer = s_nums[0].data;
-    std::vector<double> between_results;
+    std::vector<double> between_results{};
 
     for (size_t i = 0; const auto& [data, head]: s_nums) {
         if (i != 0) {
@@ -48,8 +43,7 @@ double tree::eval_numbers() {
         ++i;
     }
 
-    for (const auto& e: between_results) {
-        std::cout << "e " << e << "\n";
+    for (const auto& e : between_results) {
         sum += e;
     }
 
@@ -92,7 +86,4 @@ void tree::get_numbers_and_head(
             }
         }
     }
-}
-
-void tree::clear() {
 }

@@ -14,6 +14,7 @@ void core::filter_instruction(
     if (filter_ref.size() == 0) {
         return;
     }
+
     uint8_t
         known_code_counter = 0,
         unknown_code_counter = 0,
@@ -26,10 +27,8 @@ void core::filter_instruction(
     }
 
     instruction unknown_code_buffer{};
-#pragma region filter_instruction
-    for (int32_t i = 0; const auto& filter_part_ref: filter_ref) {
-#define GENERAL_CODE_COUNTER (known_code_counter + unknown_code_counter)
 
+    for (int32_t i = 0; const auto& filter_part_ref: filter_ref) {
         //body
         if ((filter_part_ref == ANYTHING_STR && !instruction_in[i].empty())) {
             unknown_code_buffer.emplace_back(instruction_in.get().at(i));
@@ -45,16 +44,15 @@ void core::filter_instruction(
         }
 
         //footer
-        if (GENERAL_CODE_COUNTER == filter_ref.size()) {
+        if ((known_code_counter + unknown_code_counter) == filter_ref.size()) {
             break;
         }
         ++i;
     }
 
-    if (GENERAL_CODE_COUNTER == filter_ref.size()) {
+    if ((known_code_counter + unknown_code_counter) == filter_ref.size()) {
         func_in(unknown_code_buffer);
     }
-#pragma endregion
 }
 
 void core::filter_instruction(

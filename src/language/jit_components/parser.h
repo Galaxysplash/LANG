@@ -29,7 +29,6 @@ struct parser {
     );
 
     static void try_add_variables(
-        const instruction& instruction_in,
         bool in_terminal,
         const std::function<void(
             const std::function<void(const std::string&, const std::string&)> & try_create_num_func_ref,

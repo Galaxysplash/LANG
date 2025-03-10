@@ -5,6 +5,7 @@
 #include <format>
 #include <iostream>
 
+#include "tree.h"
 #include "classes/core/instruction.h"
 #include "global/variables.h"
 #include "global/pre_compiled.h"
@@ -59,18 +60,28 @@ void parser::exec_basic_instructions(
     const bool in_terminal,
     const std::unordered_map<std::string, std::function<void()>>& one_word_commands_in
 ) {
-    core::filter_instruction(instructions, {"print", ANYTHING_STR}, [&in_terminal](const std::vector<std::string>& list) {
+    core::filter_instruction(instructions, {"print", ANYTHING_STR}, [&](const std::vector<std::string>& list) {
+        bool NumberInInstruction = false;
+
+        for (const auto& potential_num: instructions) {
+            try {
+                std::stod(potential_num);
+                NumberInInstruction = true;
+                break;
+            } catch (...) {}
+        }
+
         if (const std::string_view print_arg = list.at(0); is_txt(print_arg)) {
             std::cout << "out: " << print_arg << "\n";
         }
-        else if (g_num_list.contains(std::string(print_arg))) {
-            std::cout << "out: " << g_num_list[std::string(print_arg)] << "\n";
+        else if (NumberInInstruction) {
+            std::cout << "out num: " << tree::numbers(instructions) << "\n";
         }
         else if (g_bit_list.contains(std::string(print_arg))) {
-            std::cout << "out: " << g_bit_list[std::string(print_arg)] << "\n";
+            std::cout << "out bit: " << g_bit_list[std::string(print_arg)] << "\n";
         }
         else if (g_txt_list.contains(std::string(print_arg))) {
-            std::cout << "out: " << g_txt_list[std::string(print_arg)] << "\n";
+            std::cout << "out txt: " << g_txt_list[std::string(print_arg)] << "\n";
         }
         else {
             if (in_terminal) {
@@ -131,7 +142,6 @@ void parser::exec_basic_instructions(
 }
 
 void parser::try_add_variables(
-    const instruction& instruction_in,
     const bool in_terminal,
     const std::function<void(
         const std::function<void(const std::string&, const std::string&)> & try_create_num_func_ref,
@@ -165,10 +175,6 @@ void parser::try_add_variables(
                 const double& num = std::stod(std::string(assigment));
 
                 g_num_list[std::string(name)] = num;
-
-                if (in_terminal) {
-                    printf("%s\n", std::format("NOTED: {} = {}", name, assigment).c_str());
-                }
             } catch (...) {
                 std::cerr << "error, variable could not be created, because the assigment NEEDS to be a number.\n";
             }
@@ -182,10 +188,6 @@ void parser::try_add_variables(
         if (NEW_VARIABLE_CONDITION) {
             if (is_txt(assigment)) {
                 g_txt_list[name] = assigment;
-
-                if (in_terminal) {
-                    std::cout << std::format("NOTED: {} = {}", name, assigment) << "\n";
-                }
             }
             else {
                 if (in_terminal) {
@@ -219,10 +221,7 @@ void parser::try_add_variables(
                 g_bit_list[std::string(name)] = false;
             }
 
-            if (assigment_buffer != assigment_enum::_null && in_terminal) {
-                printf("%s\n", std::format("NOTED: {} = {}", name, assigment).c_str());
-            }
-            else {
+            if (assigment_buffer == assigment_enum::_null && !in_terminal) {
                 if (in_terminal) {
                     std::cerr << "error, variable could not be created, because the assigment NEEDS to be true or false.\n";
                 }
@@ -241,13 +240,10 @@ void parser::try_add_variables(
 bool parser::is_txt(
     const std::string_view & str_in
 ) {
-#pragma region check_if_its_txt
-#define last_instruction (i == str_in.size() - 1)
-#define first_instruction (i == 0)
     bool is_txt = true;
 
     for (uint32_t i = 0; i < str_in.size(); ++i) {
-        if (first_instruction || last_instruction) {
+        if ((i == 0) || (i == str_in.size() - 1)) {
             if (str_in.at(i) != G_TXT_INDICATOR) {
                 is_txt = false;
             }
@@ -255,5 +251,4 @@ bool parser::is_txt(
     }
 
     return is_txt;
-#pragma endregion
 }

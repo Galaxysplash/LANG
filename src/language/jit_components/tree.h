@@ -11,12 +11,11 @@ struct instruction;
 static std::vector<num> s_nums;
 
 struct tree {
-    static double num_run(
+    static double numbers(
         const instruction & instruction_in
     );
-private:
-    static void exec();
 
+private:
     static void build(
         const instruction & instruction_in
     );
@@ -30,6 +29,4 @@ private:
             const std::string & head_in
         )> & func_in
     );
-
-    static void clear();
 };

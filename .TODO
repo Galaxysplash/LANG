@@ -1,2 +1,0 @@
-
--in parser.cpp replace in 'filter_instruction' "std::vector" with "std::initializer_list"

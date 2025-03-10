@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <string_view>
 
-static constexpr char SPECIAL_SIGNS[] = {',', ';', '\n', ':', '.', '\t', '\r', '='};
+static constexpr char SPECIAL_SIGNS[] = {',', ';', '\n', ':', '.', '\t', '\r', '=', '+', '-', '/', '*'};
 static constexpr char SPACE = ' ';
 
 constexpr std::string_view ANYTHING_STR = "???";

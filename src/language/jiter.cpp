@@ -87,9 +87,9 @@ void jiter::analyze_and_exec(
     const std::unordered_map<std::string, std::function<void()>>& one_word_commands_in
 )
 {
-    tree::num_run(instruction_in);
+    tree::numbers(instruction_in);
 
-    parser::try_add_variables(instruction_in, in_terminal, [&](
+    parser::try_add_variables(in_terminal, [&](
         const std::function<void(const std::string&, const std::string&)> & try_create_num_func_ref,
         const std::function<void(const std::string&, const std::string&)> & try_create_txt_func_ref,
         const std::function<void(const std::string&, const std::string&)> & try_create_bit_func_ref
