@@ -36,8 +36,4 @@ struct parser {
             const std::function<void(const std::string&, const std::string&)> & try_create_bit_func_ref
         )> && create_variables_lambda_in
     );
-
-    static bool is_txt(
-        const std::string_view &str_in
-    );
 };

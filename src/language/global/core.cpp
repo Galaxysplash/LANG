@@ -62,3 +62,23 @@ void core::filter_instruction(
 ) {
     filter_instruction(instruction_in, filter_move, func_in);
 }
+
+bool core::is_a_sign(const char c_in) {
+    return c_in == '+' || c_in == '-' || c_in == '*' || c_in == '/' || c_in == '%';
+}
+
+bool core::is_txt(
+    const std::string_view & str_in
+) {
+    bool is_txt = true;
+
+    for (uint32_t i = 0; i < str_in.size(); ++i) {
+        if ((i == 0) || (i == str_in.size() - 1)) {
+            if (str_in.at(i) != G_TXT_INDICATOR) {
+                is_txt = false;
+            }
+        }
+    }
+
+    return is_txt;
+}

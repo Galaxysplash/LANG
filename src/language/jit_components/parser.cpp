@@ -72,7 +72,7 @@ void parser::exec_basic_instructions(
         }
 
         try {
-            if (const std::string_view print_arg = list.at(0); is_txt(print_arg)) {
+            if (const std::string_view print_arg = list.at(0); core::is_txt(print_arg)) {
                 std::cout << "out: " << print_arg << "\n";
             }
             else if (NumberInInstruction) {
@@ -188,7 +188,7 @@ void parser::try_add_variables(
 
     const std::function try_create_txt = [&](const std::string& name, const std::string& assigment) {
         if (NEW_VARIABLE_CONDITION) {
-            if (is_txt(assigment)) {
+            if (core::is_txt(assigment)) {
                 g_txt_list[name] = assigment;
             }
             else {
@@ -237,20 +237,4 @@ void parser::try_add_variables(
 
     create_variables_lambda_in(try_create_num, try_create_txt, try_create_bit);
 #pragma endregion try_add_variables
-}
-
-bool parser::is_txt(
-    const std::string_view & str_in
-) {
-    bool is_txt = true;
-
-    for (uint32_t i = 0; i < str_in.size(); ++i) {
-        if ((i == 0) || (i == str_in.size() - 1)) {
-            if (str_in.at(i) != G_TXT_INDICATOR) {
-                is_txt = false;
-            }
-        }
-    }
-
-    return is_txt;
 }

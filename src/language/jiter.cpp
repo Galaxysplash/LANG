@@ -22,7 +22,7 @@ void jiter::run(
 )
 {
     const bool in_terminal = argc <= 1;
-    const HASH_TABLE(std::function<void()>) one_word_commands = {
+    const VAR_LIST(std::function<void()>) one_word_commands = {
         {"exit", [&]() {
             exit(0);
         }},

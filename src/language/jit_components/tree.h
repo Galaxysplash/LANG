@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <vector>
 #include <functional>
 
@@ -21,12 +22,13 @@ private:
     );
 
     [[nodiscard]] static double eval_numbers();
-
+    
     static void get_numbers_and_head(
         const instruction & instruction_in,
         const std::function<void(
-            const double& number_in,
+            uint16_t index,
+            const double & number_in,
             const std::string & head_in
         )> & func_in
-    );
+    ) ;
 };

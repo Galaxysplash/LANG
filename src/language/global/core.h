@@ -2,7 +2,6 @@
 
 #include <functional>
 #include <string_view>
-#include <vector>
 
 
 struct instruction;
@@ -19,4 +18,8 @@ struct core {
         const std::initializer_list<std::string_view> &&filter_move,
         const std::function<void(instruction &instruction_ref)> &&func_in
     );
+
+    static bool is_a_sign(char c_in);
+
+    static bool is_txt(const std::string_view &str_in);
 };
