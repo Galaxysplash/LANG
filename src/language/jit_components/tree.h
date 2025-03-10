@@ -26,6 +26,7 @@ private:
     static void get_numbers_and_head(
         const instruction & instruction_in,
         const std::function<void(
+            bool& stop,
             int idx,
             const double & number_in,
             const std::string & head_in
