@@ -24,13 +24,13 @@ double tree::eval_numbers() {
         }catch(...) {}
     }
 
-    std::vector<double> between_results{};
+    std::stack<double> results_stack{};
 
     for (size_t i = 0; const auto& [data, head]: s_nums) {
         if (i != 0) {
             switch (head) {
                 default:
-                    between_results.push_back(data_buffer);
+                    results_stack.push(data_buffer);
                     data_buffer = data;
                 break;
                 case '*':
@@ -43,16 +43,18 @@ double tree::eval_numbers() {
         }
 
         if (i == s_nums.size() - 1) {
-            between_results.push_back(data_buffer);
+            results_stack.push(data_buffer);
             data_buffer = data;
         }
         //foot
         ++i;
     }
 
-    if (!between_results.empty()) {
-        for (const auto& e : between_results) {
-            sum += e;
+    if (!results_stack.empty()) {
+        const uint16_t start_stack_size = results_stack.size();
+        for (uint16_t i = 0; i < start_stack_size; ++i) {
+            sum += results_stack.top();
+            results_stack.pop();
         }
     }
 

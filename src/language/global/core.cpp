@@ -9,7 +9,7 @@
 void core::filter_instruction(
     const instruction & instruction_in,
     const std::initializer_list<std::string_view> & filter_ref,
-    const std::function<void(instruction & instruction_ref)> & func_in
+    const std::function<void(instruction & unknown_instruction_ref)> & func_in
 ) {
     if (filter_ref.size() == 0) {
         return;
@@ -30,7 +30,7 @@ void core::filter_instruction(
 
     for (int32_t i = 0; const auto& filter_part_ref: filter_ref) {
         //body
-        if ((filter_part_ref == ANYTHING_STR && !instruction_in[i].empty())) {
+        if (filter_part_ref == ANYTHING_STR && !instruction_in[i].empty()) {
             unknown_code_buffer.emplace_back(instruction_in.get().at(i));
             ++unknown_code_counter;
         }
@@ -58,7 +58,7 @@ void core::filter_instruction(
 void core::filter_instruction(
     const instruction & instruction_in,
     const std::initializer_list<std::string_view> && filter_move,
-    const std::function<void(instruction & instruction_ref)> && func_in
+    const std::function<void(instruction & unknown_instruction_ref)> && func_in
 ) {
     filter_instruction(instruction_in, filter_move, func_in);
 }
